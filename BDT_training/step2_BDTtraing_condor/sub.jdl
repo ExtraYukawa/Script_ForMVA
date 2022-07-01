@@ -1,0 +1,14 @@
+Universe = vanilla
+Notification = Error
+Output = condor_output
+Log = condor_log
+Error = condor_error
+
+transfer_input_files = TMVAClassification.C, wrapper.sh
+transfer_output_files = aa.tar.gz
+Executable = ttc_PARTICLE_COUP_MCPARTMASS_$(Process)/wrapper.sh
+Initialdir = ttc_PARTICLE_COUP_MCPARTMASS_$(Process)
+notification = Error
+when_to_transfer_output = ON_EXIT
++JobFlavour = "nextweek"
+queue NUMBER

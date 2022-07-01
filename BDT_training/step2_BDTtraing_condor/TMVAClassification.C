@@ -45,6 +45,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <cctype>
 
 #include "TChain.h"
 #include "TFile.h"
@@ -59,7 +60,7 @@
 #include "TMVA/Tools.h"
 #include "TMVA/TMVAGui.h"
 
-int TMVAClassification( TString myMethodList = "" )
+void TMVAClassification_run( TString myMethodList = "", string mass="",string system_unc="", string type_="", string cp="")
 {
    // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
    // if you use your private .rootrc, or run from a different directory, please copy the
@@ -77,7 +78,7 @@ int TMVAClassification( TString myMethodList = "" )
    std::map<std::string,int> Use;
 
    // Cut optimisation
-   Use["Cuts"]            = 1;
+   Use["Cuts"]            = 0;
    Use["CutsD"]           = 0;
    Use["CutsPCA"]         = 0;
    Use["CutsGA"]          = 0;
@@ -135,7 +136,7 @@ int TMVAClassification( TString myMethodList = "" )
    Use["SVM"]             = 0;
    //
    // Boosted Decision Trees
-   Use["BDT"]             = 1; // uses Adaptive Boost
+   Use["BDT"]             = 0; // uses Adaptive Boost
    Use["BDTG"]            = 1; // uses Gradient Boost
    Use["BDTB"]            = 0; // uses Bagging
    Use["BDTD"]            = 0; // decorrelation + Adaptive Boost
@@ -173,17 +174,65 @@ int TMVAClassification( TString myMethodList = "" )
    // Read training and test data
    // (it is also possible to use ASCII format as input -> see TMVA Users Guide)
    TFile *input_S(0);
-   TFile *input_B(0);
+   TFile *input_B1(0);
+   TFile *input_B2(0);
+   TFile *input_B3(0);
+   TFile *input_B4(0);
+   TFile *input_B5(0);
+   TFile *input_B6(0);
+   TFile *input_B7(0);
+   TFile *input_B8(0);
+   TFile *input_B9(0);
+   TFile *input_B10(0);
+   TFile *input_B11(0);
+   TFile *input_B12(0);
+   TFile *input_B13(0);
 
    // Register the training and test trees
-   input_S=TFile::Open("TAToTTQ.root");
-   input_B=TFile::Open("TTTo1L.root");
+   string signal_name="ttc_a_rtu10_MA"+mass;
+   string signal_filename="ttc_a_rtu10_MA"+mass+".root";
+   if (type_=="A"){
+	signal_name="ttc_a_"+cp+"_MA"+mass;
+	signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
+	}
+   if (type_=="S"){
+	signal_name="ttc_s0_"+cp+"_MS0"+mass;
+	signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
+	}
+
+   input_S=TFile::Open(signal_filename.c_str());
+   input_B1=TFile::Open("TTTo1L.root");
+   input_B2=TFile::Open("ttWW.root");
+   input_B3=TFile::Open("ttWZ.root");
+   input_B4=TFile::Open("ttWtoLNu.root");
+   input_B5=TFile::Open("ttZ.root");
+   input_B6=TFile::Open("TTTo2L.root");
+   input_B7=TFile::Open("WWW.root");
+   input_B8=TFile::Open("ttZtoQQ.root");
+   input_B9=TFile::Open("tttJ.root");
+   input_B10=TFile::Open("tttW.root");
+   input_B11=TFile::Open("tttt.root");
+   input_B12=TFile::Open("tzq.root");
+   input_B13=TFile::Open("ttZZ.root");
 
    TTree *signalTree     = (TTree*)input_S->Get("SlimTree");
-   TTree *background     = (TTree*)input_B->Get("SlimTree");
+   TTree *background1     = (TTree*)input_B1->Get("SlimTree");
+   TTree *background2     = (TTree*)input_B2->Get("SlimTree");
+   TTree *background3     = (TTree*)input_B3->Get("SlimTree");
+   TTree *background4     = (TTree*)input_B4->Get("SlimTree");
+   TTree *background5     = (TTree*)input_B5->Get("SlimTree");
+   TTree *background6     = (TTree*)input_B6->Get("SlimTree");
+   TTree *background7     = (TTree*)input_B7->Get("SlimTree");
+   TTree *background8     = (TTree*)input_B8->Get("SlimTree");
+   TTree *background9     = (TTree*)input_B9->Get("SlimTree");
+   TTree *background10     = (TTree*)input_B10->Get("SlimTree");
+   TTree *background11     = (TTree*)input_B11->Get("SlimTree");
+   TTree *background12     = (TTree*)input_B12->Get("SlimTree");
+   TTree *background13     = (TTree*)input_B13->Get("SlimTree");
 
    // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
-   TString outfileName( "TMVA.root" );
+   string output_name="TMVA_"+signal_name+"_"+system_unc+".root";
+   TString outfileName( output_name.c_str());
    TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
 
    // Create the factory object. Later you can choose the methods
@@ -199,7 +248,9 @@ int TMVAClassification( TString myMethodList = "" )
    TMVA::Factory *factory = new TMVA::Factory( "TMVAClassification", outputFile,
                                                "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification" );
 
-   TMVA::DataLoader *dataloader=new TMVA::DataLoader("dataset");
+   string dataset_name="dataset_"+signal_name+"_"+system_unc;
+
+   TMVA::DataLoader *dataloader=new TMVA::DataLoader(dataset_name.c_str());
    // If you wish to modify default settings
    // (please check "src/Config.h" to see all available global options)
    //
@@ -209,49 +260,146 @@ int TMVAClassification( TString myMethodList = "" )
    // Define the input variables that shall be used for the MVA training
    // note that you may also use variable expressions, such as: "3*var1/var2*abs(var3)"
    // [all types of expressions that can also be parsed by TTree::Draw( "expression" )]
-   dataloader->AddVariable( "HT", 'F' );
-   dataloader->AddVariable( "j1_pt", 'F' );
-   dataloader->AddVariable( "j1_eta", 'F' );
-   dataloader->AddVariable( "j1_phi", 'F' );
-   dataloader->AddVariable( "j1_mass", 'F' );
-   dataloader->AddVariable( "j2_pt", 'F' );
-   dataloader->AddVariable( "j2_eta", 'F' );
-   dataloader->AddVariable( "j2_phi", 'F' );
-   dataloader->AddVariable( "j2_mass", 'F' );
-   dataloader->AddVariable( "j3_pt", 'F' );
-   dataloader->AddVariable( "j3_eta", 'F' );
-   dataloader->AddVariable( "j3_phi", 'F' );
-   dataloader->AddVariable( "j3_mass", 'F' );
-   dataloader->AddVariable( "j1_FlavB", 'F' );
-   dataloader->AddVariable( "j1_FlavCvB", 'F' );
-   dataloader->AddVariable( "j1_FlavCvL", 'F' );
-   dataloader->AddVariable( "j2_FlavB", 'F' );
-   dataloader->AddVariable( "j2_FlavCvB", 'F' );
-   dataloader->AddVariable( "j2_FlavCvL", 'F' );
-   dataloader->AddVariable( "j3_FlavB", 'F' );
-   dataloader->AddVariable( "j3_FlavCvB", 'F' );
-   dataloader->AddVariable( "j3_FlavCvL", 'F' );
-   dataloader->AddVariable( "PV_npvsGood", 'I' );
-   dataloader->AddVariable( "PV_x", 'F' );
-   dataloader->AddVariable( "PV_y", 'F' );
-   dataloader->AddVariable( "PV_z", 'F' );
-   dataloader->AddVariable( "nSV", 'I' );
-//   dataloader->AddVariable( "ttc_region", 'I' );
-   dataloader->AddVariable( "ttc_l1_pt", 'F' );
-   dataloader->AddVariable( "ttc_l1_eta", 'F' );
-   dataloader->AddVariable( "ttc_l1_phi", 'F' );
-   dataloader->AddVariable( "ttc_l1_mass", 'F' );
-   dataloader->AddVariable( "ttc_l2_pt", 'F' );
-   dataloader->AddVariable( "ttc_l2_eta", 'F' );
-   dataloader->AddVariable( "ttc_l2_phi", 'F' );
-   dataloader->AddVariable( "ttc_l2_mass", 'F' );
-   dataloader->AddVariable( "ttc_met", 'F' );
-   dataloader->AddVariable( "ttc_met_phi", 'F' );
-   dataloader->AddVariable( "ttc_mll", 'F' );
-   dataloader->AddVariable( "ttc_mllj1", 'F' );
-   dataloader->AddVariable( "ttc_mllj2", 'F' );
-   dataloader->AddVariable( "ttc_mllj3", 'F' );
-
+   if(system_unc=="central"){
+     dataloader->AddVariable( "HT", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met", 'F' );
+     dataloader->AddVariable( "ttc_met_phi", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1", 'F' );
+     dataloader->AddVariable( "ttc_mllj2", 'F' );
+     dataloader->AddVariable( "ttc_mllj3", 'F' );
+   }
+   if(system_unc=="jesup"){
+     dataloader->AddVariable( "HT_jesup", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_jesup", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_jesup", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_jesup", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_jesup", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_jesup", 'F' );
+   }
+   if(system_unc=="jesdo"){
+     dataloader->AddVariable( "HT_jesdo", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_jesdo", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_jesdo", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_jesdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_jesdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_jesdo", 'F' );
+   }
+   if(system_unc=="jerup"){
+     dataloader->AddVariable( "HT_jerup", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_jerup", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_jerup", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_jerup", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_jerup", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_jerup", 'F' );
+   }
+   if(system_unc=="jerdo"){
+     dataloader->AddVariable( "HT_jerdo", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_jerdo", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_jerdo", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_jerdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_jerdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_jerdo", 'F' );
+   }
+   if(system_unc=="metUnslusEnup"){
+     dataloader->AddVariable( "HT", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_unclusterEup", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_unclusterEup", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1", 'F' );
+     dataloader->AddVariable( "ttc_mllj2", 'F' );
+     dataloader->AddVariable( "ttc_mllj3", 'F' );
+   }
+   if(system_unc=="metUnslusEndo"){
+     dataloader->AddVariable( "HT", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt", 'F' );
+     dataloader->AddVariable( "ttc_met_unclusterEdo", 'F' );
+     dataloader->AddVariable( "ttc_met_phi_unclusterEdo", 'F' );
+     dataloader->AddVariable( "ttc_mll", 'F' );
+     dataloader->AddVariable( "ttc_mllj1", 'F' );
+     dataloader->AddVariable( "ttc_mllj2", 'F' );
+     dataloader->AddVariable( "ttc_mllj3", 'F' );
+   }
    // You can add so-called "Spectator variables", which are not used in the MVA training,
    // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
    // input variables, the response values of all trained MVAs, and the spectator variables
@@ -266,9 +414,22 @@ int TMVAClassification( TString myMethodList = "" )
 
    // You can add an arbitrary number of signal or background trees
    dataloader->AddSignalTree    ( signalTree);
-   dataloader->AddBackgroundTree( background);
-   dataloader->SetSignalWeightExpression("genweight");
-   dataloader->SetBackgroundWeightExpression("genweight");
+   dataloader->AddBackgroundTree( background1,365./32866);//TTto1L weight=xs/number_of_events
+   dataloader->AddBackgroundTree( background2,0.007/9860);//ttWW
+   dataloader->AddBackgroundTree( background3,0.002/3261);//ttWZ
+   dataloader->AddBackgroundTree( background4,0.18/161542);//ttW
+   dataloader->AddBackgroundTree( background5,0.26/257);//ttZ
+   dataloader->AddBackgroundTree( background6,88.34/2473);//TTto2L
+   dataloader->AddBackgroundTree( background7,0.2086/341);//WWW
+   dataloader->AddBackgroundTree( background8,0.6012/648);//ttZtoQQ
+   dataloader->AddBackgroundTree( background9,0.0004/3364);//tttJ
+   dataloader->AddBackgroundTree( background10,0.00073/5574);//tttW
+   dataloader->AddBackgroundTree( background11,0.0082/145337);//tttt
+   dataloader->AddBackgroundTree( background12,0.0756/15976);//tzq
+   dataloader->AddBackgroundTree( background13,0.0014/42939);//ttZZ
+
+   dataloader->SetSignalWeightExpression("puWeight");
+   dataloader->SetBackgroundWeightExpression("puWeight");
 
    // To give different trees for training and testing, do as follows:
    //
@@ -324,7 +485,7 @@ int TMVAClassification( TString myMethodList = "" )
    // If no numbers of events are given, half of the events in the tree are used
    // for training, and the other half for testing:
    //
-       dataloader->PrepareTrainingAndTestTree( mycuts, mycutb, "SplitMode=random:!V" );
+       dataloader->PrepareTrainingAndTestTree( mycuts, mycutb, "SplitMode=random:!V");
    //
    // To also specify the number of testing events, use:
    //
@@ -519,11 +680,11 @@ int TMVAClassification( TString myMethodList = "" )
    // Boosted Decision Trees
    if (Use["BDTG"]) // Gradient Boost
       factory->BookMethod( dataloader, TMVA::Types::kBDT, "BDTG",
-                           "!H:!V:NTrees=1000:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.5:nCuts=20:MaxDepth=2" );
+                           "!H:!V:NTrees=500:MinNodeSize=5%:BoostType=Grad:Shrinkage=0.1:UseBaggedBoost:BaggedSampleFraction=0.5:nCuts=20:MaxDepth=2" );
 
    if (Use["BDT"])  // Adaptive Boost
       factory->BookMethod( dataloader, TMVA::Types::kBDT, "BDT",
-                           "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20" );
+                           "!H:!V:NTrees=450:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20" );
 
    if (Use["BDTB"]) // Bagging
       factory->BookMethod( dataloader, TMVA::Types::kBDT, "BDTB",
@@ -577,18 +738,23 @@ int TMVAClassification( TString myMethodList = "" )
    // Launch the GUI for the root macros
    if (!gROOT->IsBatch()) TMVA::TMVAGui( outfileName );
 
-   return 0;
+//   return 0;
 }
 
-int main( int argc, char** argv )
+int TMVAClassification()
 {
-   // Select methods (don't look at this code - not of interest)
    TString methodList;
-   for (int i=1; i<argc; i++) {
-      TString regMethod(argv[i]);
-      if(regMethod=="-b" || regMethod=="--batch") continue;
-      if (!methodList.IsNull()) methodList += TString(",");
-      methodList += regMethod;
-   }
-   return TMVAClassification(methodList);
+
+//   string signal_scans[7]={"200","300","350","400","500","600","700"};
+//   string system_unc[7]={"central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo"};
+//   for(int ii=0;ii<7;ii++){
+//     if(ii<2)continue;
+//     for(int i=0;i<7;i++){
+       TMVAClassification_run(methodList,"MASS","SYSTEMATICS","A","rtc01");
+//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"A","rtu01");
+//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"S","rtc01");
+//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"S","rtu01");
+//     }
+//   }
+   return 0;
 }

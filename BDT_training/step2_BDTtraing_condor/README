@@ -1,0 +1,17 @@
+1. "python prepare_condor.py", to get the condor config files for TA/TS0, rtc/rtu and all the mass point
+2. before submission, there are some modifications needed in TMVAClassification.C, from line417 to line429, the cross sections have been set correctly, but the event numbers need to be modified to the correct event numbers obtained in "step1"
+3. "sh submit.sh" to submit the condor jobs
+4. after all the condor job completed, run "sh extract.sh" to get the extracted weights
+5. this scripts only save the weights of BDT, if you want the TMVA root file, just do a local run
+
+e.g., in ttc_a_rtc01_MA200, the structure looks like:
+[melu@lxplus784 Condor]$ ls ttc_a_rtc01_MA200
+sub.jdl              ttc_a_rtc01_MA200_1  ttc_a_rtc01_MA200_3  ttc_a_rtc01_MA200_5
+ttc_a_rtc01_MA200_0  ttc_a_rtc01_MA200_2  ttc_a_rtc01_MA200_4  ttc_a_rtc01_MA200_6
+
+those directories with "_0/1/.." stands for the central/jesup/..., and totally one nominal and 6 systematics.
+
+e.g., in ttc_a_rtc01_MA200_3, after job completed the structure looks like (the aa.tar.gz is returned from condor and it's dataset_ttc_a_rtc01_MA200_jerup):
+[melu@lxplus784 ttc_a_rtc01_MA200_3]$ ls
+TMVAClassification.C  condor_error  condor_output                    wrapper.sh
+aa.tar.gz             condor_log    dataset_ttc_a_rtc01_MA200_jerup

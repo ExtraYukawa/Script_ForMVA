@@ -191,11 +191,11 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    // Register the training and test trees
    string signal_name="ttc_a_rtu10_MA"+mass;
    string signal_filename="ttc_a_rtu10_MA"+mass+".root";
-   if (type_=="A"){
+   if (type_=="a"){
 	signal_name="ttc_a_"+cp+"_MA"+mass;
 	signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
 	}
-   if (type_=="S"){
+   if (type_=="s0"){
 	signal_name="ttc_s0_"+cp+"_MS0"+mass;
 	signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
 	}
@@ -745,16 +745,6 @@ int TMVAClassification()
 {
    TString methodList;
 
-//   string signal_scans[7]={"200","300","350","400","500","600","700"};
-//   string system_unc[7]={"central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo"};
-//   for(int ii=0;ii<7;ii++){
-//     if(ii<2)continue;
-//     for(int i=0;i<7;i++){
-       TMVAClassification_run(methodList,"MASS","SYSTEMATICS","A","rtc01");
-//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"A","rtu01");
-//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"S","rtc01");
-//       TMVAClassification_run(methodList,signal_scans[i],system_unc[ii],"S","rtu01");
-//     }
-//   }
+   TMVAClassification_run(methodList,"MASS","SYSTEMATICS","PARTICLE","COUP");
    return 0;
 }

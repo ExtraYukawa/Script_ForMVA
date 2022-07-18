@@ -1,20 +1,20 @@
 #!/bin/bash -e 
 echo "TEST FIRST" 
 echo "copy input root file"
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/SIGNALROOT .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/tttJ.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/TTTo1L.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/TTTo2L.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/tttt.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/tttW.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttWtoLNu.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttWW.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttWZ.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttZ.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttZtoQQ.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/ttZZ.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/tzq.root .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT_input/YEAR/WWW.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/SIGNALROOT .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/tttJ.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/TTTo1L.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/TTTo2L.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/tttt.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/tttW.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttWtoLNu.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttWW.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttWZ.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttZ.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttZtoQQ.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/ttZZ.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/tzq.root .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_forTraining/YEAR/WWW.root .
 PWD=`pwd`
 HOME=$PWD
 echo $HOME 

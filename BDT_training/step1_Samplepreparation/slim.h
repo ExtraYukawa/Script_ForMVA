@@ -126,8 +126,8 @@ float chargeflip_SF(int OS_flag, float lep1_pt, float lep1_eta, float lep1_phi, 
     float prob2_mc=Prob_mc->GetBinContent(Prob_mc->FindBin(lep2_pt,abs(lep2_eta)));
     sf=(prob1_data+prob2_data-2*prob1_data*prob2_data)/(prob1_mc+prob2_mc-2*prob1_mc*prob2_mc);
     if(iw==0) return sf;
-    if(iw==1) return (sf+Chaflip_unc_num);
-    if(iw==2) return (sf-Chaflip_unc_num);
+    if(iw==1) return (sf*(1.+Chaflip_unc_num));
+    if(iw==2) return (sf*(1.-Chaflip_unc_num));
   }
   else {return 1.;}
 }
@@ -543,6 +543,10 @@ float deltaR_jet( ROOT::VecOps::RVec<float> jet_pt, ROOT::VecOps::RVec<float> je
 
 //channel 3 is ee, 2 is me, 1 is mm, in me channel, the leading lepton is always muon
 float muid(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>119.) lep1_pt=119.;
+  if (lep2_pt>119.) lep2_pt=119.;
+
   float sf=1.;
   if(channel==1)
   { 
@@ -558,6 +562,10 @@ float muid(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int cha
 }
 
 float muid_sysup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>119.) lep1_pt=119.;
+  if (lep2_pt>119.) lep2_pt=119.;
+
   float sf=1.;
   if(channel==1)
   {
@@ -573,6 +581,10 @@ float muid_sysup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
 }
 
 float muid_sysdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>119.) lep1_pt=119.;
+  if (lep2_pt>119.) lep2_pt=119.;
+
   float sf=1.;
   if(channel==1)
   { 
@@ -588,6 +600,10 @@ float muid_sysdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
 }
 
 float muid_statup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>119.) lep1_pt=119.;
+  if (lep2_pt>119.) lep2_pt=119.;
+
   float sf=1.;
   float U_all1=0.;
   float U_sys1=0.;
@@ -619,6 +635,10 @@ float muid_statup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
 }
 
 float muid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>119.) lep1_pt=119.;
+  if (lep2_pt>119.) lep2_pt=119.;
+
   float sf=1.;
   float U_all1=0.;
   float U_sys1=0.;

@@ -86,6 +86,7 @@ if __name__ == "__main__":
   nonTraining_list = GetTrainingFile(era,0)
   
   for iin in Training_list:
+    if "TTTo1L" in iin: continue
     print('Processing ',iin)
     ftemp=ROOT.TFile.Open(path+iin)
     ttemp=ftemp.Get('Events')

@@ -4,6 +4,7 @@
 #include "TH1D.h"
 #include "TLatex.h"
 #include "Math/Vector4D.h"
+#include "Math/Vector4Dfwd.h"
 #include "TStyle.h"
 
 using namespace ROOT;

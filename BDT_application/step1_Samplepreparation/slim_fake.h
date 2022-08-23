@@ -74,3 +74,16 @@ float deltaR_jet( ROOT::VecOps::RVec<float> jet_pt, ROOT::VecOps::RVec<float> je
   if(id==3) deltar= ROOT::Math::VectorUtil::DeltaR(j2,j3);
   return deltar;
 }
+
+bool Triggers(int run, bool triggers, std::vector<int> vec){
+    if(!triggers || vec.at(0) == -1 ){
+        return triggers;
+    }
+    for(auto v : vec){
+        if(run == v){
+            return triggers;
+        }
+    }
+    return false;
+}
+

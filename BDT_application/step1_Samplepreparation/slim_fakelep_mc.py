@@ -2,6 +2,7 @@ import ROOT
 import time
 import os
 import math
+import optparse
 from math import sqrt
 from common import inputFile_path
 from common import GetTrainingFile, GetTrigger_MC, GetMETFilter_MC
@@ -10,10 +11,9 @@ ROOT.gSystem.Load("libGenVector.so")
 TTC_header_path = os.path.join("slim.h")
 ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
-era  = '2018'
-path = str(inputFile_path[era])
+def Slim_module(filein,nin,mass_flag, use_fortraining, channel, era):
 
-def Slim_module(filein,nin,mass_flag, use_fortraining, channel):
+  path = str(inputFile_path[era])
 
   if channel == "DoubleMuon":
 
@@ -34,11 +34,14 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, channel):
     channel_name = 'em'
 
   fileOut = filein.split('.')[0]+"_fake_" + channel_name + ".root"
+  fileOut = "sample/" + era + "/" + fileOut
+
   treeOut = "SlimTree"
   nevent=nin
 
   if use_fortraining:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+    print(df_filein_tree_temp, path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
   else:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
@@ -79,30 +82,34 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, channel):
 if __name__ == "__main__":
   start = time.time()
   start1 = time.clock()
-  
-  channel = "DoubleElectron"
 
-  Training_list    = GetTrainingFile(era,1)
-  nonTraining_list = GetTrainingFile(era,0)
-  
-  for iin in Training_list:
-    if "TTTo1L" in iin: continue
-    print('Processing ',iin)
-    ftemp=ROOT.TFile.Open(path+iin)
-    ttemp=ftemp.Get('Events')
-    ntemp=ttemp.GetEntriesFast()
-    #those samples are used for BDT training, so only half of the events will be used in the application
-    Slim_module(iin,ntemp*0.5,'dummy',True, channel)
-    ftemp.Close()
+  usage = 'usage: %prog [options]'
+  parser = optparse.OptionParser(usage)
+  parser.add_option('-e','--era', dest='era', help='era: [2016apv/2016postapv/2017/2018]', default='2018', type='string')
+  parser.add_option('-t','--train', dest='train', help='file used for training or not', default=1, type=int)
+  parser.add_option('-i','--iin',   dest='iin',   help='input file name', default=None, type='string')
+  parser.add_option('-f','--flag',  dest='flag',  help='flag',            default='dummy', type='string')
+  parser.add_option('-c','--channel',dest='channel', help='[DoubleElectron/DoubleMuon/ElectronMuon]')
 
-  for iin in nonTraining_list:
-    print('Processing ',iin)
-    ftemp=ROOT.TFile.Open(path+iin)
-    ttemp=ftemp.Get('Events')
-    ntemp=ttemp.GetEntriesFast()
-    #those samples are not used for BDT training, so all of the events will be used in the application
-    Slim_module(iin,ntemp,'dummy', False, channel)
-    ftemp.Close()
+  (args,opt) = parser.parse_args()
+
+  iin = args.iin
+  istrain = args.train
+  flag = args.flag
+  channel = args.channel
+  era = args.era
+  
+  path = str(inputFile_path[era])
+
+  print('Processing ',iin)
+  ftemp=ROOT.TFile.Open(path+iin)
+  ttemp=ftemp.Get('Events')
+  ntemp=ttemp.GetEntriesFast()
+  if istrain:
+    ntemp = ntemp*0.5
+  #those samples are used for BDT training, so only half of the events will be used in the application
+  Slim_module(iin,ntemp,flag,istrain, channel, era)
+  ftemp.Close()
 
   end = time.time()
   end1 = time.clock()

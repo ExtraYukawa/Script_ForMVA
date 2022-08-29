@@ -3,6 +3,7 @@ import time
 import os
 import math
 import json
+import optparse
 from collections import OrderedDict
 from math import sqrt
 from common import inputFile_path
@@ -12,10 +13,10 @@ ROOT.gSystem.Load("libGenVector.so")
 TTC_header_path = os.path.join("slim.h")
 ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
-era  = '2018'
-path = str(inputFile_path[era])
 
-def Slim_module(filein,nin,mass_flag, use_fortraining):
+def Slim_module(filein,nin,mass_flag, use_fortraining, era):
+
+  path = str(inputFile_path[era])
 
   filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3"
   Trigger      = GetTrigger_MC(era)
@@ -30,6 +31,8 @@ def Slim_module(filein,nin,mass_flag, use_fortraining):
     OS_flag=0
 
   fileOut = filein.split('.')[0]+".root"
+  fileOut = "sample/" + era + "/" + fileOut
+
   treeOut = "SlimTree"
   nevent=nin
   if 'TTTo1L' in filein:
@@ -37,6 +40,8 @@ def Slim_module(filein,nin,mass_flag, use_fortraining):
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
      fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
+     fileOut = "sample/" + era + "/" + fileOut
+
      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
      df_filein_tree_temp2 = df_filein_tree_temp.Filter(mass_flag)
      df_filein_tree = df_filein_tree_temp2.Range(int(nevent),0)
@@ -45,7 +50,9 @@ def Slim_module(filein,nin,mass_flag, use_fortraining):
     df_filein_tree = df_filein_tree_temp.Range(int(nevent))
   elif use_fortraining:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+    print(df_filein_tree_temp,path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
+#    df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
   else:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent))
@@ -160,45 +167,35 @@ def Slim_module(filein,nin,mass_flag, use_fortraining):
   dOut.Snapshot(treeOut,fileOut,columns)
 
 if __name__ == "__main__":
+
   start = time.time()
   start1 = time.clock()
 
-  Training_list    = GetTrainingFile(era,1)
-  nonTraining_list = GetTrainingFile(era,0)
+  usage = 'usage: %prog [options]'
+  parser = optparse.OptionParser(usage)
+  parser.add_option('-e','--era', dest='era', help='era: [2016apv/2016postapv/2017/2018]', default='2018', type='string')
+  parser.add_option('-t','--train', dest='train', help='file used for training or not', default=1, type=int)
+  parser.add_option('-i','--iin',   dest='iin',   help='input file name', default=None, type='string')
+  parser.add_option('-f','--flag',  dest='flag',  help='flag',            default='dummy', type='string')
 
-  for iin in Training_list:
-    if not iin=='TTTo2L.root':continue
-    print('Processing ',iin)
-    ftemp=ROOT.TFile.Open(path+iin)
-    ttemp=ftemp.Get('Events')
-    ntemp=ttemp.GetEntriesFast()
-    #those samples are used for BDT training, so only half of the events will be used in the application
-    Slim_module(iin,ntemp*0.5,'dummy',True)
-    ftemp.Close()
+  (args,opt) = parser.parse_args()
 
-  for iin in nonTraining_list:
-    print('Processing ',iin)
-    ftemp=ROOT.TFile.Open(path+iin)
-    ttemp=ftemp.Get('Events')
-    ntemp=ttemp.GetEntriesFast()
-    #those samples are not used for BDT training, so all of the events will be used in the application
-    Slim_module(iin,ntemp,'dummy', False)
-    ftemp.Close()
 
-  coups=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-  cps=['A','S0']
-  masses=['200','300','350','400','500','600','700']
-  for ic in range(0,len(cps)):
-    continue
-    for icp in range(0,len(coups)):
-      ftemp=ROOT.TFile.Open(path+'ttc_'+cps[ic].lower()+'_'+coups[icp]+'.root')
-      ttemp=ftemp.Get('Events')
-      for im in range(0,len(masses)):
-        flag='GenModel_T'+cps[ic]+'ToTTQ_M'+cps[ic]+'_'+masses[im]+'_TuneCP5_13TeV_G2HDM_'+coups[icp]+'_madgraphMLM_pythia8'
-        ntemp=ttemp.GetEntries(flag)
-        print('flag ',flag,' has event number:',ntemp)
-        Slim_module('ttc_'+cps[ic].lower()+'_'+coups[icp]+'.root',ntemp*0.5, flag, True)
-      ftemp.Close()
+  era = args.era
+  istrain = args.train
+  iin = args.iin
+  flag = args.flag
+
+  path = str(inputFile_path[era])
+
+  print('Processing ',iin)
+  ftemp=ROOT.TFile.Open(path+iin)   
+  ttemp=ftemp.Get('Events')
+  ntemp=ttemp.GetEntriesFast()
+  # Samples used for BDT training only leaves half of the events in the application while others use full events
+  ntrain = ntemp*0.5 if istrain else ntemp
+  Slim_module(iin,ntrain,flag,istrain,era)
+  ftemp.Close()
 
   end = time.time()
   end1 = time.clock()

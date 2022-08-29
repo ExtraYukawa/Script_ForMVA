@@ -2,19 +2,18 @@ import ROOT
 import time
 import os
 import math
+import optparse
 from math import sqrt
 from common import inputFile_path
 from common import GetDataFile, GetTrigger_Data, GetMETFilter_Data
-
-era = '2018'
 
 ROOT.gSystem.Load("libGenVector.so")
 TTC_header_path = os.path.join("slim_fake.h")
 ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
-path = str(inputFile_path[era])
+def Slim_module(filein,nin,mass_flag,channel, era):
 
-def Slim_module(filein,nin,mass_flag,channel):
+  path = str(inputFile_path[era])
 
   nevent=nin
 
@@ -42,6 +41,7 @@ def Slim_module(filein,nin,mass_flag,channel):
 
 
   fileOut = filein.split('.')[0]+"_" + channel_name + ".root"
+  fileOut = "sample/" + era + "/" + fileOut
   treeOut = "SlimTree"
 
   Trigger      = GetTrigger_Data(era, filein, channel)
@@ -76,16 +76,30 @@ if __name__ == "__main__":
   start = time.time()
   start1 = time.clock()
 
-  channel = 'DoubleElectron'
-  FileList = GetDataFile(era,channel)
+  usage = 'usage: %prog [options]'
+  parser = optparse.OptionParser(usage)
+  parser.add_option('-e','--era', dest='era', help='era: [2016apv/2016postapv/2017/2018]', default='2018', type='string')
+  parser.add_option('-t','--train', dest='train', help='file used for training or not', default=1, type=int)
+  parser.add_option('-i','--iin',   dest='iin',   help='input file name', default=None, type='string')
+  parser.add_option('-f','--flag',  dest='flag',  help='flag',            default='dummy', type='string')
+  parser.add_option('-c','--channel',dest='channel', help='[DoubleElectron/DoubleMuon/ElectronMuon]')
 
-  for iin in FileList:
-    print('Processing ',iin)
-    ftemp=ROOT.TFile.Open(path+iin)
-    ttemp=ftemp.Get('Events')
-    ntemp=ttemp.GetEntriesFast()
-    Slim_module(iin,ntemp,'dummy',channel)
-    ftemp.Close()
+  (args,opt) = parser.parse_args()
+
+  iin = args.iin
+  istrain = args.train
+  flag = args.flag
+  channel = args.channel
+  era = args.era
+
+  path = str(inputFile_path[era])
+
+  print('Processing ',iin)
+  ftemp=ROOT.TFile.Open(path+iin)
+  ttemp=ftemp.Get('Events')
+  ntemp=ttemp.GetEntriesFast()
+  Slim_module(iin,ntemp,'dummy',channel,era)
+  ftemp.Close()
 
   end = time.time()
   end1 = time.clock()

@@ -1,1 +1,6 @@
+To run the whole process with condor,
+```
+  python runCondor.py 
+```
 after having all the inputs root files, put them under e.g., /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/2018/
+

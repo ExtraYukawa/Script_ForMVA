@@ -7,11 +7,13 @@ from math import sqrt
 from common import inputFile_path
 from common import GetDataFile, GetTrigger_Data, GetMETFilter_Data
 
-ROOT.gSystem.Load("libGenVector.so")
-TTC_header_path = os.path.join("slim_fake.h")
-ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
 def Slim_module(filein,nin,mass_flag, channel,era):
+
+  ROOT.gSystem.Load("libGenVector.so")
+  TTC_header_path = os.path.join("script/slim_fake_%s.h"%era)
+  ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
+
   
   path = str(inputFile_path[era])
 

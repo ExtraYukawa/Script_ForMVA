@@ -39,6 +39,7 @@ if __name__=='__main__':
   FarmDir   = '%s/Farm_BDT'%cmsswBase
   cwd       = os.getcwd()
   os.system('mkdir -p %s'%FarmDir)
+  os.system('cp %s/../../python/common.py .'%cwd)
 
   condor = open('%s/condor.sub'%FarmDir,'w')
   condor.write('output = %s/job_common.out\n'%FarmDir)
@@ -52,7 +53,15 @@ if __name__=='__main__':
   cwd = os.getcwd()
 
   for Era in Eras:
-   
+  
+    template = "%s/../../script/slim.h"%cwd
+    era_header = "script/slim_%s.h"%Era
+    template_fake = "%s/../../script/slim_fake.h"%cwd
+    era_header_fake = "script/slim_fake_%s.h"%Era
+
+    os.system('mkdir -p script')
+    os.system('cat %s | sed "s/EraToBeReplaced/%s/g" > %s'%(template,Era,era_header))
+    os.system('cat %s | sed "s/EraToBeReplaced/%s/g" > %s'%(template_fake,Era,era_header_fake))
     os.system('mkdir -p sample/%s'%Era)
  
     path = inputFile_path[Era]
@@ -129,6 +138,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-  os.system('condor_submit %s/condor.sub'%FarmDir)
+#  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

@@ -6,12 +6,17 @@
 #include "Math/Vector4D.h"
 #include "Math/Vector4Dfwd.h"
 #include "TStyle.h"
+#include "TString.h"
 
 using namespace ROOT;
 using namespace std;
 using namespace ROOT::VecOps;
-TFile*f_mu=TFile::Open("SFs/fr_data_mu.root");
-TFile*f_ele=TFile::Open("SFs/fr_data_ele.root");
+
+TString era = "EraToBeReplaced";
+
+TFile*f_mu=TFile::Open("../../data/fr_data_mu_"+era+".root");
+TFile*f_ele=TFile::Open("../../data/fr_data_ele_"+era+".root");
+
 
 TH2D*h_m=(TH2D*)f_mu->Get("fakerate");
 TH2D*h_e=(TH2D*)f_ele->Get("fakerate");
@@ -63,13 +68,13 @@ float fake_weight(int ttc_region, bool ttc_1P1F, bool ttc_0P2F, bool ttc_lep1_fa
   return w_temp;
 }
 
-TFile*f_chargeflip=TFile::Open("SFs/ChargeFlipSF.root");
+TFile*f_chargeflip=TFile::Open("../../data/ChargeFlipProbability_"+era+"_MLE.root");
 TH2D*Prob_data=(TH2D*)f_chargeflip->Get("data_CFRate");
 TH2D*Prob_mc=(TH2D*)f_chargeflip->Get("MC_CFRate");
 TH1D*Chaflip_unc=(TH1D*)f_chargeflip->Get("overall_sys");
 float Chaflip_unc_num=Chaflip_unc->GetBinContent(1);
 
-TFile*f_sigunc=TFile::Open("SFs/signalunc.root");
+TFile*f_sigunc=TFile::Open("../../data/signalunc.root");
 TH1D*sig_pdf=(TH1D*)f_sigunc->Get("pdf_unc");
 TH1D*sig_scale=(TH1D*)f_sigunc->Get("scale_unc");
 TH1D*sig_ps=(TH1D*)f_sigunc->Get("ps_unc");
@@ -133,21 +138,19 @@ float chargeflip_SF(int OS_flag, float lep1_pt, float lep1_eta, float lep1_phi, 
   else {return 1.;}
 }
 
-TFile*f_eleSF=TFile::Open("SFs/ele.root");
+TFile*f_eleSF=TFile::Open("../../data/EleIDSF_"+era+".root");
 TH2D *eleSF=(TH2D*)f_eleSF->Get("EleIDSF");
-TFile*f_muSF=TFile::Open("SFs/muon.root");
+TFile*f_muSF=TFile::Open("../../data/muonIdSF_"+era+"UL.root");
 TH2D *muSF=(TH2D*)f_muSF->Get("muIdSF");
 TH2D *muSF_sys=(TH2D*)f_muSF->Get("sys_error");
 TH2D *muSF_all=(TH2D*)f_muSF->Get("combined_error");
 
-TFile*f_diele_trigger=TFile::Open("SFs/diEle_trigger.root");
-TH2D *diele_trigger=(TH2D*)f_diele_trigger->Get("l1l2eta");
-TFile*f_dimu_trigger=TFile::Open("SFs/diMuon_trigger.root");
-TH2D *dimu_trigger=(TH2D*)f_dimu_trigger->Get("l1l2eta");
-TFile*f_muele_trigger=TFile::Open("SFs/MuEle_trigger.root");
-TH2D *muele_trigger=(TH2D*)f_muele_trigger->Get("l1l2eta");
+TFile*f_trigger=TFile::Open("../../data/TriggerSF_"+era+"UL.root");
+TH2D *diele_trigger=(TH2D*)f_trigger->Get("h2D_SF_ee_SF_l1l2pt");
+TH2D *dimu_trigger=(TH2D*)f_trigger->Get("h2D_SF_mumu_SF_l1l2pt");
+TH2D *muele_trigger=(TH2D*)f_trigger->Get("h2D_SF_emu_SF_l1l2pt");
 
-TFile*f_ctag=TFile::Open("SFs/DeepJet_ctagSF.root");
+TFile*f_ctag=TFile::Open("../../data/DeepJet_ctagSF.root");
 TH2F *SFb_hist=(TH2F*)f_ctag->Get("SFb_hist");
 TH2F *SFc_hist=(TH2F*)f_ctag->Get("SFc_hist");
 TH2F *SFl_hist=(TH2F*)f_ctag->Get("SFl_hist");

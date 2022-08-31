@@ -414,20 +414,20 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
 
    // You can add an arbitrary number of signal or background trees
    dataloader->AddSignalTree    ( signalTree);
-   dataloader->AddBackgroundTree( background1,365./32866);//TTto1L weight=xs/number_of_events
-   dataloader->AddBackgroundTree( background2,0.007/9860);//ttWW
-   dataloader->AddBackgroundTree( background3,0.002/3261);//ttWZ
-   dataloader->AddBackgroundTree( background4,0.18/161542);//ttW
-   dataloader->AddBackgroundTree( background5,0.26/257);//ttZ
-   dataloader->AddBackgroundTree( background6,88.34/2473);//TTto2L
-   dataloader->AddBackgroundTree( background7,0.2086/341);//WWW
-   dataloader->AddBackgroundTree( background8,0.6012/648);//ttZtoQQ
-   dataloader->AddBackgroundTree( background9,0.0004/3364);//tttJ
-   dataloader->AddBackgroundTree( background10,0.00073/5574);//tttW
-   dataloader->AddBackgroundTree( background11,0.0082/145337);//tttt
-   dataloader->AddBackgroundTree( background12,0.0756/15976);//tzq
-   dataloader->AddBackgroundTree( background13,0.0014/42939);//ttZZ
-
+   dataloader->AddBackgroundTree( background1,365./background1->GetEntries());//TTto1L weight=xs/number_of_events
+   dataloader->AddBackgroundTree( background2,0.007/background2->GetEntries());//ttWW
+   dataloader->AddBackgroundTree( background3,0.002/background3->GetEntries());//ttWZ
+   dataloader->AddBackgroundTree( background4,0.18/background4->GetEntries());//ttW
+   dataloader->AddBackgroundTree( background5,0.26/background5->GetEntries());//ttZ
+   dataloader->AddBackgroundTree( background6,88.34/background6->GetEntries());//TTto2L
+   dataloader->AddBackgroundTree( background7,0.2086/background7->GetEntries());//WWW
+   dataloader->AddBackgroundTree( background8,0.6012/background8->GetEntries());//ttZtoQQ
+   dataloader->AddBackgroundTree( background9,0.0004/background9->GetEntries());//tttJ
+   dataloader->AddBackgroundTree( background10,0.00073/background10->GetEntries());//tttW
+   dataloader->AddBackgroundTree( background11,0.0082/background11->GetEntries());//tttt
+   dataloader->AddBackgroundTree( background12,0.0756/background12->GetEntries());//tzq
+   dataloader->AddBackgroundTree( background13,0.0014/background13->GetEntries());//ttZZ
+   
    dataloader->SetSignalWeightExpression("puWeight");
    dataloader->SetBackgroundWeightExpression("puWeight");
 

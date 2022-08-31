@@ -25,7 +25,7 @@ if __name__=='__main__':
   
   usage = 'usage: %prog [options]'
   parser = optparse.OptionParser(usage)
-  parser.add_option('-m', '--method', dest='method', help='[data/slim_mc/slim_data/...]',default='all', type='string')
+  parser.add_option('-m', '--method', dest='method', help='[slim]',default='all', type='string')
   parser.add_option('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type='string')
   (args,opt) = parser.parse_args()
 
@@ -91,6 +91,6 @@ if __name__=='__main__':
 
   
   condor.close()
-#  os.system('condor_submit %s/condor.sub'%FarmDir)
+  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

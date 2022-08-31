@@ -25,11 +25,15 @@ def Slim_module(filein,nin,mass_flag,era):
   Trigger      = GetTrigger_MC(era)
   MET_filters  = GetMETFilter_MC(era, filein)
 
-  filters      = str("(" + filters + ")&&(" + MET_filters + ")")
+  filters      = str("(" + filters + " && " + MET_filters + ")")
 
-
+  print ("Final filters: ", filters)
+  print ("mass_flag: ", mass_flag)
+  print ("filein: ", filein)
   fileOut = filein.split('.')[0]+".root"
   fileOut = "sample/" + era + "/" + fileOut
+  
+  print ("Output file: ", fileOut)
 
   treeOut = "SlimTree"
   nevent=nin
@@ -39,6 +43,7 @@ def Slim_module(filein,nin,mass_flag,era):
   if 'ttc_a' in filein or 'ttc_s0' in filein:
      fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
      fileOut = "sample/" + era + "/" + fileOut
+     print ("Output filename changed to: ", fileOut)
      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
      df_filein_tree_temp2 = df_filein_tree_temp.Filter(mass_flag)
      df_filein_tree = df_filein_tree_temp2.Range(int(nevent))
@@ -116,7 +121,7 @@ if __name__ == "__main__":
 
   path = str(inputFile_path[era])
 
-  print('Processing ',iin)
+  print('Processing ',path+iin)
   ftemp=ROOT.TFile.Open(path+iin)
   ttemp=ftemp.Get('Events')
   ntemp=ttemp.GetEntriesFast()

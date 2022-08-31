@@ -171,6 +171,36 @@
                 "Flag_BadPFMuonDzFilter",
                 "Flag_eeBadScFilter"
             ],
+	    "tttJ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+	    "tttW": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+	    "tttt": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
             "ttW": [
                 "Flag_goodVertices",
                 "Flag_globalSuperTightHalo2016Filter",

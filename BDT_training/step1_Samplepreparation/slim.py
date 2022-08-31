@@ -25,7 +25,7 @@ def Slim_module(filein,nin,mass_flag,era):
   Trigger      = GetTrigger_MC(era)
   MET_filters  = GetMETFilter_MC(era, filein)
 
-  filters      = str("(" + filters + " && " + MET_filters + ")")
+  filters      = str("(" + filters + ") && (" + MET_filters + ")")
 
   print ("Final filters: ", filters)
   print ("mass_flag: ", mass_flag)

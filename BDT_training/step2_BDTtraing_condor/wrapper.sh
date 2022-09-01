@@ -23,10 +23,16 @@ cd #PWD
 echo "TEST DIR"
 
 root -b -l TMVAClassification.C 
-rm *.root
-echo "end!!!"
+
+echo "Finished Training!!!"
 ls -lrth
 rm -rf CMSSW_10_6_29
+
+echo "make tar with weight xml file"
 tar zcf aa.tar.gz dataset_ttc_PARTICLE_COUP_MCPARTMASS_SYST
+#echo "make tar with weight xml and output ROOT file"
+#tar zcf aa.tar.gz dataset_ttc_PARTICLE_COUP_MCPARTMASS_SYST TMVA_ttc_PARTICLE_COUP_MCPARTMASS_SYST.root
+echo "Delete all the root files"
+rm *.root
 #ls *.root | grep -v "output.root" |xargs rm
 ls -lrth

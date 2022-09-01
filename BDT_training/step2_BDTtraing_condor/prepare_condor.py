@@ -37,7 +37,7 @@ if __name__ == "__main__":
     
     signals=['a','s']
     couplings=['rtc01','rtu01']
-    masses=['200'] #,'300','350','400','500','600','700'] #fixme gkole
+    masses=['200', '700'] #,'300','350','400','500','600','700'] #fixme gkole
     system_unc=["central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo"]
 
     for isig in range(0,len(signals)):
@@ -57,8 +57,10 @@ if __name__ == "__main__":
             os.system(r'sed -i "s/SIGNALROOT/%s/g" wrapper_%s.sh' %(samples_temp, Era))
             os.system(r'sed -i "s/YEAR/%s/g" wrapper_%s.sh' %(Era, Era))
             os.system(r'sed -i "s/TMVAClassification.C/TMVAClassification_%s.C/g" wrapper_%s.sh' %(Era, Era))
-            
-            os.system(r'cp ../../../TMVAClassification_%s.C .' %(Era))
+            if Era == "2016apv" or Era == "2016postapv":
+              os.system(r'cp ../../../TMVAClassification_%s.C .' %(Era))
+            else:
+              os.system(r'cp ../../../TMVAClassification.C TMVAClassification_%s.C' %(Era))
             os.system(r'sed -i "s/SYSTEMATICS/%s/g" TMVAClassification_%s.C' %(system_unc[isys], Era)) 
             os.system(r'sed -i "s/MASS/%s/g" TMVAClassification_%s.C' %(masses[im], Era)) 
             os.system(r'sed -i "s/TMVAClassification()/TMVAClassification_%s()/g" TMVAClassification_%s.C' %(Era, Era))

@@ -142,8 +142,8 @@ TFile*f_eleSF=TFile::Open("../../data/EleIDSF_"+era+".root");
 TH2D *eleSF=(TH2D*)f_eleSF->Get("EleIDSF");
 TFile*f_muSF=TFile::Open("../../data/muonIdSF_"+era+"UL.root");
 TH2D *muSF=(TH2D*)f_muSF->Get("muIdSF");
-TH2D *muSF_sys=(TH2D*)f_muSF->Get("sys_error");
-TH2D *muSF_all=(TH2D*)f_muSF->Get("combined_error");
+TH2D *muSF_sys=(TH2D*)f_muSF->Get("muIdSF_syst");
+TH2D *muSF_stat=(TH2D*)f_muSF->Get("muIdSF_stat");
 
 TFile*f_trigger=TFile::Open("../../data/TriggerSF_"+era+"UL.root");
 TH2D *diele_trigger=(TH2D*)f_trigger->Get("h2D_SF_ee_SF_l1l2pt");
@@ -248,10 +248,10 @@ TH2F *SFl_hist_jesTotalDo=(TH2F*)f_ctag->Get("SFl_hist_jesTotalDown");
 float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID, ROOT::VecOps::RVec<float> jetpt, ROOT::VecOps::RVec<Int_t> jethadflav, ROOT::VecOps::RVec<float> cvfb, ROOT::VecOps::RVec<float> cvfl, int iw)
 {
   float sf=1.;
-//  int njet=sizeof(jetid)/sizeof(jetid[0]);
-  int njet=3;
+  int njet=jetid.size();
+//  int njet = 3;
   if(iw==0){
-  for (int i=0; i<njet;i++)
+  for (int i=0; i<njet; i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
       if (jethadflav[id_temp]==4) sf*=SFc_hist->GetBinContent(SFc_hist->FindBin(cvfl[id_temp],cvfb[id_temp]));
@@ -573,13 +573,13 @@ float muid_sysup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
   float sf=1.;
   if(channel==1)
   {
-    sf*=(muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF_sys->GetBinContent(muSF_sys->FindBin(lep2_pt, abs(lep2_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(lep2_pt, abs(lep2_eta)))+muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
   }
   if(channel==3) return 1.;
 }
@@ -592,13 +592,13 @@ float muid_sysdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
   float sf=1.;
   if(channel==1)
   { 
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) - muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep2_pt, abs(lep2_eta))));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
   }
   if(channel==3) return 1.;
 }
@@ -609,33 +609,18 @@ float muid_statup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
   if (lep2_pt>119.) lep2_pt=119.;
 
   float sf=1.;
-  float U_all1=0.;
-  float U_sys1=0.;
-  float U_stat1=0.;
-  float U_all2=0.;
-  float U_sys2=0.;
-  float U_stat2=0.;
   if(channel==1)
-  { 
-    U_all1=muSF_all->GetBinContent(muSF_all->FindBin(lep1_pt, abs(lep1_eta)));
-    U_sys1=muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)));
-    U_stat1=sqrt(U_all1*U_all1-U_sys1*U_sys1);
-    U_all2=muSF_all->GetBinContent(muSF_all->FindBin(lep2_pt, abs(lep2_eta)));
-    U_sys2=muSF_sys->GetBinContent(muSF_sys->FindBin(lep2_pt, abs(lep2_eta)));
-    U_stat2=sqrt(U_all2*U_all2-U_sys2*U_sys2);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)))+U_stat1);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta)))+U_stat2);
+  {
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep2_pt, abs(lep2_eta))));
     return sf;
   }
   if(channel==2)
   {
-    U_all1=muSF_all->GetBinContent(muSF_all->FindBin(lep1_pt, abs(lep1_eta)));
-    U_sys1=muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)));
-    U_stat1=sqrt(U_all1*U_all1-U_sys1*U_sys1);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)))+U_stat1);
-    return sf;
+    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
   }
   if(channel==3) return 1.;
+
 }
 
 float muid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
@@ -644,33 +629,18 @@ float muid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
   if (lep2_pt>119.) lep2_pt=119.;
 
   float sf=1.;
-  float U_all1=0.;
-  float U_sys1=0.;
-  float U_stat1=0.;
-  float U_all2=0.;
-  float U_sys2=0.;
-  float U_stat2=0.;
   if(channel==1)
-  { 
-    U_all1=muSF_all->GetBinContent(muSF_all->FindBin(lep1_pt, abs(lep1_eta)));
-    U_sys1=muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)));
-    U_stat1=sqrt(U_all1*U_all1-U_sys1*U_sys1);
-    U_all2=muSF_all->GetBinContent(muSF_all->FindBin(lep2_pt, abs(lep2_eta)));
-    U_sys2=muSF_sys->GetBinContent(muSF_sys->FindBin(lep2_pt, abs(lep2_eta)));
-    U_stat2=sqrt(U_all2*U_all2-U_sys2*U_sys2);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)))-U_stat1);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta)))-U_stat2);
+  {
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep2_pt, abs(lep2_eta))));
     return sf;
   }
   if(channel==2)
   {
-    U_all1=muSF_all->GetBinContent(muSF_all->FindBin(lep1_pt, abs(lep1_eta)));
-    U_sys1=muSF_sys->GetBinContent(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)));
-    U_stat1=sqrt(U_all1*U_all1-U_sys1*U_sys1);
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)))-U_stat1);
-    return sf;
+    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
   }
   if(channel==3) return 1.;
+
 }
 
 //channel 3 is ee, 2 is me, 1 is mm, in me channel, the leading lepton is always muon

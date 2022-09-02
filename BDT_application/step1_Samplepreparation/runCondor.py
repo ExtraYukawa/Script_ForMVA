@@ -73,7 +73,7 @@ if __name__=='__main__':
       Training_list = GetTrainingFile(Era, True)
       for iin in Training_list:
         if not iin == 'TTTo2L.root': continue
-        command = "python %s --era %s --train %d -d-iin %s"%(python_file, Era, 1, iin)
+        command = "python %s --era %s --train %d --iin %s"%(python_file, Era, 1, iin)
         shell_file = 'slim_mc_%s_%s.sh'%(iin, Era)
         prepare_shell(shell_file, command, condor, FarmDir)
 

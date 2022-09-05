@@ -44,7 +44,8 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
      fileOut = "sample/" + era + "/" + fileOut
 
      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
-     df_filein_tree_temp2 = df_filein_tree_temp.Filter(mass_flag)
+     print(mass_flag)
+     df_filein_tree_temp2 = df_filein_tree_temp.Filter(str(mass_flag))
      df_filein_tree = df_filein_tree_temp2.Range(int(nevent),0)
   elif 'TTTo1L' in filein:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
@@ -53,7 +54,6 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
     print(df_filein_tree_temp,path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
-#    df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
   else:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent))
@@ -192,7 +192,10 @@ if __name__ == "__main__":
   print('Processing ',iin)
   ftemp=ROOT.TFile.Open(path+iin)   
   ttemp=ftemp.Get('Events')
-  ntemp=ttemp.GetEntriesFast()
+  if flag=='dummy':
+    ntemp=ttemp.GetEntriesFast()
+  else:
+    ntemp=ttemp.GetEntries(flag)
   # Samples used for BDT training only leaves half of the events in the application while others use full events
   ntrain = ntemp*0.5 if istrain else ntemp
   Slim_module(iin,ntrain,flag,istrain,era)

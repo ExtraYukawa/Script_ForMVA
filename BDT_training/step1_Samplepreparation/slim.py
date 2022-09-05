@@ -124,7 +124,10 @@ if __name__ == "__main__":
   print('Processing ',path+iin)
   ftemp=ROOT.TFile.Open(path+iin)
   ttemp=ftemp.Get('Events')
-  ntemp=ttemp.GetEntriesFast()
+  if flag=='dummy':
+    ntemp=ttemp.GetEntriesFast()
+  else:
+    ntemp=ttemp.GetEntries(flag)
   # Samples used for BDT training only leaves half of the events in the application while others use full events
   ntrain = ntemp*0.5 if istrain else ntemp
   Slim_module(iin,ntrain,flag,era)

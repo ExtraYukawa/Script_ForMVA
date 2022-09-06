@@ -119,13 +119,13 @@ if __name__=='__main__':
         for iin in Training_list:
           if "TTTo1L" in  iin: continue
           command = "python %s --era %s --train %d --iin %s --channel %s"%(python_file, Era, 1, iin, channel)
-          shell_file = 'slim_fakelep_mc_%s_%s.sh'%(iin, Era)
+          shell_file = 'slim_fakelep_mc_%s_%s_%s.sh'%(iin, Era, channel)
           prepare_shell(shell_file, command, condor, FarmDir)
 
         nonTraining_list = GetTrainingFile(Era, False)
         for iin in nonTraining_list:
           command = "python %s --era %s --train %d --iin %s --channel %s"%(python_file, Era, 0, iin, channel)
-        shell_file = 'slim_fakelep_%s_%s_%s.sh'%(iin,Era,channel)
+        shell_file = 'slim_fakelep_mc_%s_%s_%s.sh'%(iin,Era,channel)
         prepare_shell(shell_file, command, condor, FarmDir)
 
     if args.method == 'slim_fakelep_data' or args.method=='all':

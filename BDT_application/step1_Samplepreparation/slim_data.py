@@ -25,12 +25,12 @@ def Slim_module(filein,nin,mass_flag, channel,era):
   elif channel == 'DoubleElectron':
 
     filters="ttc_jets && ttc_region==3 && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && ttc_2P0F && (ttc_mll<60 || ttc_mll>120)"
-    channel_name = 'em'
+    channel_name = 'ee'
 
   elif channel == 'ElectronMuon':
 
     filters="ttc_jets && ttc_region==2 && (ttc_l1_pt>30 || ttc_l2_pt>30) && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && ttc_2P0F"
-    channel_name = 'mm'
+    channel_name = 'em'
 
   else:
     filters = ''

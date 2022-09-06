@@ -66,11 +66,14 @@ if __name__=='__main__':
  
     path = inputFile_path[Era]
     if args.method == 'slim_mc' or args.method == 'all':
-
+      print ("Creating configuration for slim_mc")
       python_file = "%s/slim_mc.py"%cwd
 
       # Training sample
       Training_list = GetTrainingFile(Era, True)
+      print ("=="*50)
+      print ("Training_list: ", Training_list)
+      
       for iin in Training_list:
         if not iin == 'TTTo2L.root': continue
         command = "python %s --era %s --train %d --iin %s"%(python_file, Era, 1, iin)
@@ -79,6 +82,9 @@ if __name__=='__main__':
 
       # nonTraining sample
       nonTraining_list = GetTrainingFile(Era, False)
+      print ("=="*50)
+      print ("nonTraining_list: ", nonTraining_list)
+      
       for iin in nonTraining_list:
         command = "python %s --era %s --train %d --iin %s"%(python_file, Era, 0, iin)
         shell_file = 'slim_mc_%s_%s.sh'%(iin,Era)
@@ -99,23 +105,31 @@ if __name__=='__main__':
             prepare_shell(shell_file, command, condor, FarmDir)
 
     if args.method == 'slim_data' or args.method == 'all':
-
+      print ("Creating configuration for slim_data")
+      
       python_file = "%s/slim_data.py"%cwd
 
       for channel in ['DoubleElectron','DoubleMuon','ElectronMuon']:
         FileList = GetDataFile(Era,channel)
+        print ("=="*50)
+        print ("FileList: ", FileList)
+        
         for iin in FileList:
           shell_file = 'slim_data_%s_%s_%s.sh'%(iin,Era,channel)
           command = "python %s --era %s --channel %s --iin %s"%(python_file, Era, channel, iin)
           prepare_shell(shell_file, command, condor, FarmDir)
   
     if args.method == 'slim_fakelep_mc' or args.method == 'all':
+      print ("Creating configuration for slim_falelep_mc")
       
       python_file = "%s/slim_fakelep_mc.py"%cwd
 
       for channel in ['DoubleElectron','DoubleMuon','ElectronMuon']:
 
         Training_list = GetTrainingFile(Era, True)
+        print ("=="*50)
+        print ("Training_list: ", Training_list)
+
         for iin in Training_list:
           if "TTTo1L" in  iin: continue
           command = "python %s --era %s --train %d --iin %s --channel %s"%(python_file, Era, 1, iin, channel)
@@ -123,15 +137,23 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
 
         nonTraining_list = GetTrainingFile(Era, False)
+        print ("=="*50)
+        print ("nonTraining_list: ", nonTraining_list)
+
         for iin in nonTraining_list:
           command = "python %s --era %s --train %d --iin %s --channel %s"%(python_file, Era, 0, iin, channel)
-        shell_file = 'slim_fakelep_mc_%s_%s_%s.sh'%(iin,Era,channel)
-        prepare_shell(shell_file, command, condor, FarmDir)
+          shell_file = 'slim_fakelep_mc_%s_%s_%s.sh'%(iin,Era,channel)
+          prepare_shell(shell_file, command, condor, FarmDir)
 
     if args.method == 'slim_fakelep_data' or args.method=='all':
+      print ("Creating configuration for slim_fakelep_data")
+      
       python_file = "%s/slim_fakelep_data.py"%cwd
       for channel in ['DoubleElectron','DoubleMuon','ElectronMuon']:
         DataList = GetDataFile(Era, channel)
+        print ("=="*50)
+        print ("DataList: ", DataList)
+        
         for iin in DataList: 
           command  = "python %s --era %s --train %d --iin %s --channel %s"%(python_file, Era, 0, iin, channel)
           shell_file = 'slim_fakelep_data_%s_%s_%s.sh'%(iin, Era, channel)

@@ -75,7 +75,7 @@ if __name__=='__main__':
       print ("Training_list: ", Training_list)
       
       for iin in Training_list:
-        if not iin == 'TTTo2L.root': continue
+        # if not iin == 'TTTo2L.root': continue #Meng confirmed on 7Sep2022
         command = "python %s --era %s --train %d --iin %s"%(python_file, Era, 1, iin)
         shell_file = 'slim_mc_%s_%s.sh'%(iin, Era)
         prepare_shell(shell_file, command, condor, FarmDir)
@@ -160,6 +160,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-#  os.system('condor_submit %s/condor.sub'%FarmDir)
+  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

@@ -41,7 +41,7 @@ def Slim_module(filein,nin,mass_flag,channel, era):
     channel_name = 'em'
 
 
-  fileOut = filein.split('.')[0]+"_" + channel_name + ".root"
+  fileOut = filein.split('.')[0]+"_fake_" + channel_name + ".root"
   fileOut = "sample/" + era + "/" + fileOut
   treeOut = "SlimTree"
 

@@ -261,6 +261,26 @@
                 "Flag_BadPFMuonDzFilter",
                 "Flag_eeBadScFilter"
             ],
+	    "ttWH": [
+		"Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+            "ttZH": [
+		"Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
             "ttZZ": [
                 "Flag_goodVertices",
                 "Flag_globalSuperTightHalo2016Filter",

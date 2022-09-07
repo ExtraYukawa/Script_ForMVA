@@ -554,13 +554,13 @@ float muid(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int cha
   float sf=1.;
   if(channel==1)
   { 
-    sf*=muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)));
-    sf*=muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta)));
+    sf*=muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt));
+    sf*=muSF->GetBinContent(muSF->FindBin(abs(lep2_eta), lep2_pt));
     return sf;
   }
   if(channel==2)
   {
-    return muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta)));
+    return muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt));
   }
   if(channel==3) return 1.;
 }
@@ -573,13 +573,13 @@ float muid_sysup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
   float sf=1.;
   if(channel==1)
   {
-    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(lep2_pt, abs(lep2_eta)))+muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))));
+    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep1_eta), lep1_pt))+muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)));
+    sf*=(muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep2_eta), lep2_pt))+muSF->GetBinContent(muSF->FindBin(abs(lep2_eta), lep2_pt)));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta)))+muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep1_eta), lep1_pt))+muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)));
   }
   if(channel==3) return 1.;
 }
@@ -592,13 +592,13 @@ float muid_sysdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, i
   float sf=1.;
   if(channel==1)
   { 
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep2_pt, abs(lep2_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) - muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep1_eta), lep1_pt)));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep2_eta), lep2_pt)) - muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep2_eta), lep2_pt)));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_sys->GetBinError(muSF_sys->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) - muSF_sys->GetBinError(muSF_sys->FindBin(abs(lep1_eta), lep1_pt)));
   }
   if(channel==3) return 1.;
 }
@@ -611,13 +611,13 @@ float muid_statup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
   float sf=1.;
   if(channel==1)
   {
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep2_pt, abs(lep2_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) + muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep1_eta), lep1_pt)));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep2_eta), lep2_pt)) + muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep2_eta), lep2_pt)));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) + muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) + muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep1_eta), lep1_pt)));
   }
   if(channel==3) return 1.;
 
@@ -631,13 +631,13 @@ float muid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
   float sf=1.;
   if(channel==1)
   {
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
-    sf*=(muSF->GetBinContent(muSF->FindBin(lep2_pt, abs(lep2_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep2_pt, abs(lep2_eta))));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) - muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep1_eta), lep1_pt)));
+    sf*=(muSF->GetBinContent(muSF->FindBin(abs(lep2_eta), lep2_pt)) - muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep2_eta), lep2_pt)));
     return sf;
   }
   if(channel==2)
   {
-    return (muSF->GetBinContent(muSF->FindBin(lep1_pt, abs(lep1_eta))) - muSF_stat->GetBinError(muSF_stat->FindBin(lep1_pt, abs(lep1_eta))));
+    return (muSF->GetBinContent(muSF->FindBin(abs(lep1_eta), lep1_pt)) - muSF_stat->GetBinError(muSF_stat->FindBin(abs(lep1_eta), lep1_pt)));
   }
   if(channel==3) return 1.;
 
@@ -674,25 +674,25 @@ float eleid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta,
   if(channel==3) return (eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))-0.001)*(eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))-0.001);
 }
 
-float lep_trigger(float eta1, float eta2, int channel)
+float lep_trigger(float pt1, float pt2, int channel)
 {
-  if(channel==3) return diele_trigger->GetBinContent(diele_trigger->FindBin(abs(eta1),abs(eta2)));
-  if(channel==1) return dimu_trigger->GetBinContent(dimu_trigger->FindBin(abs(eta1),abs(eta2)));
-  if(channel==2) return muele_trigger->GetBinContent(muele_trigger->FindBin(abs(eta1),abs(eta2)));
+  if(channel==3) return diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2));
+  if(channel==1) return dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2));
+  if(channel==2) return muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2));
 }
 
-float lep_triggerup(float eta1, float eta2, int channel)
+float lep_triggerup(float pt1, float pt2, int channel)
 {
-  if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(abs(eta1),abs(eta2)))+diele_trigger->GetBinError(diele_trigger->FindBin(abs(eta1),abs(eta2))));
-  if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(abs(eta1),abs(eta2)))+dimu_trigger->GetBinError(dimu_trigger->FindBin(abs(eta1),abs(eta2))));
-  if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(abs(eta1),abs(eta2)))+muele_trigger->GetBinError(muele_trigger->FindBin(abs(eta1),abs(eta2))));
+  if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))+diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
+  if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))+dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));
+  if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2))+muele_trigger->GetBinError(muele_trigger->FindBin(pt1,pt2)));
 }
 
-float lep_triggerdown(float eta1, float eta2, int channel)
+float lep_triggerdown(float pt1, float pt2, int channel)
 {
-  if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(abs(eta1),abs(eta2)))-diele_trigger->GetBinError(diele_trigger->FindBin(abs(eta1),abs(eta2))));
-  if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(abs(eta1),abs(eta2)))-dimu_trigger->GetBinError(dimu_trigger->FindBin(abs(eta1),abs(eta2))));
-  if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(abs(eta1),abs(eta2)))-muele_trigger->GetBinError(muele_trigger->FindBin(abs(eta1),abs(eta2))));
+  if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))-diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
+  if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))-dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));
+  if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2))-muele_trigger->GetBinError(muele_trigger->FindBin(pt1,pt2)));
 }
 
 float HT_jesr(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<float> jetpt_jesUp, ROOT::VecOps::RVec<float> jetpt_jesDo, ROOT::VecOps::RVec<float> jetpt_jerUp, ROOT::VecOps::RVec<float> jetpt_jerDo, int op, int njet)

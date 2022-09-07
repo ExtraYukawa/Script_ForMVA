@@ -111,9 +111,9 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
              .Define("ele_id_sysdo","eleid_sysdo(ttc_l1_pt,ttc_l1_eta,ttc_l2_pt,ttc_l2_eta,ttc_region)")\
              .Define("ele_id_statup","eleid_statup(ttc_l1_pt,ttc_l1_eta,ttc_l2_pt,ttc_l2_eta,ttc_region)")\
              .Define("ele_id_statdo","eleid_statdo(ttc_l1_pt,ttc_l1_eta,ttc_l2_pt,ttc_l2_eta,ttc_region)")\
-             .Define("trig_SF","lep_trigger(ttc_l1_eta,ttc_l2_eta,ttc_region)")\
-             .Define("trig_SFup","lep_triggerup(ttc_l1_eta,ttc_l2_eta,ttc_region)")\
-             .Define("trig_SFdo","lep_triggerdown(ttc_l1_eta,ttc_l2_eta,ttc_region)")\
+             .Define("trig_SF","lep_trigger(ttc_l1_pt,ttc_l2_pt,ttc_region)")\
+             .Define("trig_SFup","lep_triggerup(ttc_l1_pt,ttc_l2_pt,ttc_region)")\
+             .Define("trig_SFdo","lep_triggerdown(ttc_l1_pt,ttc_l2_pt,ttc_region)")\
              .Define("ctag_SF","ctagSF(tightJets_id_in24,Jet_puId,Jet_pt_nom,Jet_hadronFlavour,Jet_btagDeepFlavCvB,Jet_btagDeepFlavCvL,0)")\
              .Define("ctag_SF_statup","ctagSF(tightJets_id_in24,Jet_puId,Jet_pt_nom,Jet_hadronFlavour,Jet_btagDeepFlavCvB,Jet_btagDeepFlavCvL,1)")\
              .Define("ctag_SF_statdo","ctagSF(tightJets_id_in24,Jet_puId,Jet_pt_nom,Jet_hadronFlavour,Jet_btagDeepFlavCvB,Jet_btagDeepFlavCvL,2)")\

@@ -2976,7 +2976,7 @@ int TMVAClassificationApplication()
    xss.push_back(0.9738);//zz2l
    
    vector<float> eff_N;
-   for(int i=0;i<26;i++){
+   for(int i=0;i<samples.size();i++){
      string ntemp=sample_path+samples[i]+".root";
      if(i==11)ntemp=sample_path+"DYnlo.root";
      TFile*ftemp=TFile::Open(ntemp.c_str());
@@ -2985,11 +2985,11 @@ int TMVAClassificationApplication()
      else eff_N.push_back(ttemp->GetBinContent(1));
      ftemp->Close();
    }
-//   eff_N.push_back(3.4087701e+08);
-//   eff_N.push_back(349000.);
-//   eff_N.push_back(175000.);
-//   eff_N.push_back(1935527);
-//   eff_N.push_back(3455733.0);
+   //   eff_N.push_back(3.4087701e+08);
+   //   eff_N.push_back(349000.);
+   //   eff_N.push_back(175000.);
+   //   eff_N.push_back(1935527);
+   //   eff_N.push_back(3455733.0);
    
   string weights[52]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_EleIDup","ctag_EleIDdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_MuIDup","ctag_MuIDdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_DYJetsup","ctag_XSec_DYJetsdo","ctag_XSec_STup","ctag_XSec_STdo","ctag_XSec_VVup","ctag_XSec_VVdo","ctag_XSec_WJetsup","ctag_XSec_WJetsdo","ctag_XSec_ttbarup","ctag_XSec_ttbardo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFup","charFlip_SFdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo"};
 
@@ -3022,7 +3022,7 @@ int TMVAClassificationApplication()
       }
       //for bkgs, no need of signal theoretic uncertainty
       if(weights[iw].find("sig")!= string::npos)continue;
-      for(int is=0;is<26;is++){
+      for(int is=0;is<samples.size();is++){
         cout<<"start loop process:"<<samples[is]<<endl;
         htemp=Getoutput("",samples[is],xss[is],eff_N[is],weights[iw],mass,channels[ic],type_,cp);
         if(iw==0)ctagnorms.push_back(htemp->Integral());
@@ -3037,7 +3037,7 @@ int TMVAClassificationApplication()
       htemp=Getoutput_sys("",signal_input,1.0,eff_N_signal,system_unc[isys],mass,channels[ic],type_,cp);
       target->cd();
       htemp->Write();
-      for(int is=0;is<26;is++){
+      for(int is=0;is<samples.size();is++){
         htemp=Getoutput_sys("",samples[is],xss[is],eff_N[is],system_unc[isys],mass,channels[ic],type_,cp);
         target->cd();
         htemp->Write();
@@ -3058,7 +3058,7 @@ int TMVAClassificationApplication()
    hfake=(TH1F*)hfake_no_mcsubtraction->Clone();
 
    std::cout<<"start looping fake mc"<<std::endl;
-   for(int is=0;is<26;is++){
+   for(int is=0;is<samples.size();is++){
      htemp=Getoutput_fake_mc("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"central",mass,channels[ic],type_,cp);
      hfake->Add(htemp);
    }

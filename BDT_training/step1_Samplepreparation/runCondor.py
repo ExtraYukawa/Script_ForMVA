@@ -27,6 +27,7 @@ if __name__=='__main__':
   parser = optparse.OptionParser(usage)
   parser.add_option('-m', '--method', dest='method', help='[slim]',default='all', type='string')
   parser.add_option('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type='string')
+  parser.add_option('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type='string')
   (args,opt) = parser.parse_args()
 
   Eras_List = ['2016postapv','2016apv','2017','2018']
@@ -65,7 +66,8 @@ if __name__=='__main__':
     os.system('mkdir -p sample/%s'%Era)
  
     path = inputFile_path[Era]
-    if args.method == 'slim' or args.method == 'all':
+
+    if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'normal':
 
       python_file = "%s/slim.py"%cwd
 
@@ -89,8 +91,29 @@ if __name__=='__main__':
             shell_file = 'slim_%s_%s.sh'%(flag,Era)
             prepare_shell(shell_file, command, condor, FarmDir)
 
+    # For interference samples
+    if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'interference':
+
+      python_file = "%s/slim.py"%cwd
+
+      #Signal sample
+      print ("=="*50)
+      print ("Preparing traing configuration for interference samples")
+      coups=['rtc04','rtu04']
+      cps=['A','S0']
+
+      A_masses = ['250','300','350','400','550','700']
+      S_masses = ['200','250','300','350','500','650']
+      for coup in coups:
+          for index, mass in enumerate(A_masses):
+            iin = 'ttc_a_%s_s_%s_%s.root'%(A_masses[index], S_masses[index], coup)
+            # flag='GenModel_T%sToTTQ_M%s_%s_TuneCP5_13TeV_G2HDM_%s_madgraphMLM_pythia8'%(cp,cp,mass,coup)
+            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 1, iin)
+            shell_file = 'slim_%s_%s.sh'%(iin,Era)
+            prepare_shell(shell_file, command, condor, FarmDir)
+
   
   condor.close()
-  os.system('condor_submit %s/condor.sub'%FarmDir)
+  # os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

@@ -112,8 +112,29 @@ if __name__=='__main__':
             shell_file = 'slim_%s_%s.sh'%(iin,Era)
             prepare_shell(shell_file, command, condor, FarmDir)
 
-  
+    # For highmass samples
+    if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'highmass':
+
+      python_file = "%s/slim.py"%cwd
+
+      #Signal sample
+      print ("=="*50)
+      print ("Preparing traing configuration for highmass samples")
+      
+      cps=['A']
+      coups=['rtc04','rtu04']
+      masses=['800','900','1000']
+      
+      for cp in cps:
+        for coup in coups:
+          for mass in masses:
+            iin = 'ttc_%s_%s_%s_highmass.root'%(cp.lower(), mass, coup)
+            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 1, iin)
+            shell_file = 'slim_%s_%s.sh'%(iin,Era)
+            print ("shell_file: ", shell_file)
+            prepare_shell(shell_file, command, condor, FarmDir)
+
   condor.close()
-  # os.system('condor_submit %s/condor.sub'%FarmDir)
+  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

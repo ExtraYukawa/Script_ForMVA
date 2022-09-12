@@ -40,13 +40,20 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
     nevent=2*nin
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
-     fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
-     fileOut = "sample/" + era + "/" + fileOut
-
-     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
-     print(mass_flag)
-     df_filein_tree_temp2 = df_filein_tree_temp.Filter(str(mass_flag))
-     df_filein_tree = df_filein_tree_temp2.Range(int(nevent),0)
+    if "a" in filein.split('_') and "s" in filein.split('_'):
+      print ("Interference samples all events for evaluation")
+      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+      df_filein_tree = df_filein_tree_temp.Range(int(nevent))
+    else:
+      print ("normal samples")
+      
+      fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
+      fileOut = "sample/" + era + "/" + fileOut
+    
+      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+      print(mass_flag)
+      df_filein_tree_temp2 = df_filein_tree_temp.Filter(str(mass_flag))
+      df_filein_tree = df_filein_tree_temp2.Range(int(nevent),0)
   elif 'TTTo1L' in filein:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent))

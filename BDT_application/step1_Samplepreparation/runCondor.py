@@ -27,6 +27,7 @@ if __name__=='__main__':
   parser = optparse.OptionParser(usage)
   parser.add_option('-m', '--method', dest='method', help='[data/slim_mc/slim_data/...]',default='all', type='string')
   parser.add_option('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type='string')
+  parser.add_option('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type='string')
   (args,opt) = parser.parse_args()
 
   Eras_List = ['2016postapv','2016apv','2017','2018']
@@ -65,7 +66,7 @@ if __name__=='__main__':
     os.system('mkdir -p sample/%s'%Era)
  
     path = inputFile_path[Era]
-    if args.method == 'slim_mc' or args.method == 'all':
+    if (args.method == 'slim_mc' or args.method == 'all') and args.sampletype == 'normal':
       print ("Creating configuration for slim_mc")
       python_file = "%s/slim_mc.py"%cwd
 
@@ -104,7 +105,31 @@ if __name__=='__main__':
             shell_file = 'slim_mc_%s_%s.sh'%(flag,Era)
             prepare_shell(shell_file, command, condor, FarmDir)
 
-    if args.method == 'slim_data' or args.method == 'all':
+    #====================
+    #Interference samples
+    #====================
+    if (args.method == 'slim_mc' or args.method == 'all') and args.sampletype == 'interference' :
+      print ("=="*50)
+      print ("Creating configuration for interference samples using slim_mc")
+      python_file = "%s/slim_mc.py"%cwd
+
+      print ("=="*50)
+      
+      coups=['rtc04','rtu04']
+      
+      A_masses = ['250','300','350','400','550','700']
+      S_masses = ['200','250','300','350','500','650']
+      for coup in coups:
+          for index, mass in enumerate(A_masses):
+            iin = 'ttc_a_%s_s_%s_%s.root'%(A_masses[index], S_masses[index], coup)
+            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 0, iin)
+            shell_file = 'slim_%s_%s.sh'%(iin,Era)
+            prepare_shell(shell_file, command, condor, FarmDir)
+      
+    #====================
+    # Data run
+    #====================
+    if (args.method == 'slim_data' or args.method == 'all') and args.sampletype == 'normal':
       print ("Creating configuration for slim_data")
       
       python_file = "%s/slim_data.py"%cwd
@@ -119,7 +144,7 @@ if __name__=='__main__':
           command = "python %s --era %s --channel %s --iin %s"%(python_file, Era, channel, iin)
           prepare_shell(shell_file, command, condor, FarmDir)
   
-    if args.method == 'slim_fakelep_mc' or args.method == 'all':
+    if (args.method == 'slim_fakelep_mc' or args.method == 'all') and args.sampletype == 'normal':
       print ("Creating configuration for slim_falelep_mc")
       
       python_file = "%s/slim_fakelep_mc.py"%cwd
@@ -145,7 +170,7 @@ if __name__=='__main__':
           shell_file = 'slim_fakelep_mc_%s_%s_%s.sh'%(iin,Era,channel)
           prepare_shell(shell_file, command, condor, FarmDir)
 
-    if args.method == 'slim_fakelep_data' or args.method=='all':
+    if (args.method == 'slim_fakelep_data' or args.method=='all') and args.sampletype == 'normal':
       print ("Creating configuration for slim_fakelep_data")
       
       python_file = "%s/slim_fakelep_data.py"%cwd
@@ -160,6 +185,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-  os.system('condor_submit %s/condor.sub'%FarmDir)
+  # os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

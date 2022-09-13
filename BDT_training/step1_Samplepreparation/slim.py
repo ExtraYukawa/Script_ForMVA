@@ -41,8 +41,16 @@ def Slim_module(filein,nin,mass_flag,era):
     nevent=2*nin
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
+    
     if "a" in filein.split('_') and "s" in filein.split('_'):
       print ("Interference samples")
+      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+      df_filein_tree = df_filein_tree_temp.Range(int(nevent))
+    elif "highmass.root" in filein.split('_'):
+      print ("highmass samples")
+      outF = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
+      print ("outF: ", outF)
+      sys.exit()
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent))
     else:

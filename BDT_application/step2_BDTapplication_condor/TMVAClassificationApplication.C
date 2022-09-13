@@ -1496,6 +1496,11 @@ TH1F* Getoutput_sys( TString myMethodList = "", std::string input_name="",float 
       if(channel=="em" || channel=="mm"){
 	charFlip_SF=1.0;
       }
+
+      if (input_name.find("ttc_a")!= string::npos || input_name.find("ttc_s0")!= string::npos){
+        charFlip_SF=1.0;
+      }
+
       // Return the MVA outputs and fill into histograms
 
       if (Use["CutsGA"]) {

@@ -31,6 +31,153 @@
 using namespace TMVA;
 using namespace std;
 
+float Get_signalXS(std::string signal_name=""){
+   if (signal_name.find("s0")!= string::npos || signal_name.find("MS0")!= string::npos){
+      if (signal_name.find("200")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.338e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 4.040e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 2.043e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 3.413e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 2.250e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 4.334e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 2.659e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 3.904e-01;
+      }
+      if (signal_name.find("300")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.848e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 4.421e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 2.022e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 4.135e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 3.337e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 4.025e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 2.308e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 4.656e-01;
+      }
+      if (signal_name.find("350")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.695e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 3.468e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 1.379e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 2.354e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 1.970e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 3.287e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 1.890e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 2.823e-01;
+      }
+      if (signal_name.find("400")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 1.602e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 2.288e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 9.202e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 1.299e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 1.315e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 2.609e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 1.018e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 2.706e-01;
+      }
+      if (signal_name.find("500")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 6.756e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 1.297e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 4.955e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 1.059e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 9.176e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 1.740e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 6.560e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 1.227e-01;
+      }
+      if (signal_name.find("600")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 3.676e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 7.525e-04;
+        if (signal_name.find("rtc08")!= string::npos) return 3.227e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 5.353e-03;
+        if (signal_name.find("rtu01")!= string::npos) return 4.966e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 8.251e-03;
+        if (signal_name.find("rtu08")!= string::npos) return 5.711e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 8.863e-02;
+      }
+      if (signal_name.find("700")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.703e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 4.038e-04;
+        if (signal_name.find("rtc08")!= string::npos) return 1.783e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 2.823e-03;
+        if (signal_name.find("rtu01")!= string::npos) return 2.770e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 5.630e-03;
+        if (signal_name.find("rtu08")!= string::npos) return 3.088e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 5.702e-02;
+      }
+   }
+   else{
+      if (signal_name.find("200")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.712e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 4.790e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 1.896e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 3.186e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 2.043e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 3.625e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 1.904e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 3.698e-01;
+      }
+      if (signal_name.find("300")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.633e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 4.866e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 2.319e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 3.105e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 2.795e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 3.991e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 2.283e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 3.484e-01;
+      }
+      if (signal_name.find("350")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.101e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 3.674e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 1.341e-02;
+        if (signal_name.find("rtc10")!= string::npos) return 2.447e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 2.742e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 3.649e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 1.845e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 2.592e-01;
+      }
+      if (signal_name.find("400")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 1.568e-04;
+        if (signal_name.find("rtc04")!= string::npos) return 2.441e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 9.325e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 1.591e-02;
+        if (signal_name.find("rtu01")!= string::npos) return 1.663e-03;
+        if (signal_name.find("rtu04")!= string::npos) return 2.743e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 1.687e-01;
+        if (signal_name.find("rtu10")!= string::npos) return 2.907e-01;
+      }
+      if (signal_name.find("500")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 7.746e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 1.453e-03;
+        if (signal_name.find("rtc08")!= string::npos) return 6.101e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 7.720e-03;
+        if (signal_name.find("rtu01")!= string::npos) return 9.412e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 1.201e-02;
+        if (signal_name.find("rtu08")!= string::npos) return 6.306e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 1.199e-01;
+      }
+      if (signal_name.find("600")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 4.475e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 6.698e-04;
+        if (signal_name.find("rtc08")!= string::npos) return 2.750e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 4.480e-03;
+        if (signal_name.find("rtu01")!= string::npos) return 6.026e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 7.906e-03;
+        if (signal_name.find("rtu08")!= string::npos) return 4.101e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 7.277e-02;
+      }
+      if (signal_name.find("700")!= string::npos){
+        if (signal_name.find("rtc01")!= string::npos) return 2.230e-05;
+        if (signal_name.find("rtc04")!= string::npos) return 4.640e-04;
+        if (signal_name.find("rtc08")!= string::npos) return 1.610e-03;
+        if (signal_name.find("rtc10")!= string::npos) return 3.237e-03;
+        if (signal_name.find("rtu01")!= string::npos) return 4.158e-04;
+        if (signal_name.find("rtu04")!= string::npos) return 6.228e-03;
+        if (signal_name.find("rtu08")!= string::npos) return 3.282e-02;
+        if (signal_name.find("rtu10")!= string::npos) return 6.658e-02;
+      }
+   }
+}
+
 TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1.0, float eff_N=1.0, std::string weight_name="", string mass_scan="", string channel="", string type_="", string cp="")
 {
    cout<<"start Getoutput!!"<<endl;
@@ -3008,13 +3155,15 @@ int TMVAClassificationApplication()
     TH1F*hfake_up;
     TH1F*hfake_down;
 
+    float signal_xs=Get_signalXS(signal_input);
+
     std::vector<float> ctagnorms;
     std::cout<<"start looping weights"<<std::endl;
     for(int iw=0;iw<52;iw++){
       // signal don't need charge flip SF
       if(!(weights[iw].find("charFlip")!= string::npos))
       {
-        htemp=Getoutput("",signal_input,1.0,eff_N_signal,weights[iw],mass,channels[ic],type_,cp);
+        htemp=Getoutput("",signal_input,signal_xs,eff_N_signal,weights[iw],mass,channels[ic],type_,cp);
         if(iw==0)ctagnorms.push_back(htemp->Integral());
         if(iw>0 && weights[iw].find("ctag")!= string::npos)htemp->Scale(ctagnorms[0]/htemp->Integral());
         target->cd();
@@ -3034,7 +3183,7 @@ int TMVAClassificationApplication()
 
    std::cout<<"start looping systematics"<<std::endl;
    for(int isys=0;isys<6;isys++){
-      htemp=Getoutput_sys("",signal_input,1.0,eff_N_signal,system_unc[isys],mass,channels[ic],type_,cp);
+      htemp=Getoutput_sys("",signal_input,signal_xs,eff_N_signal,system_unc[isys],mass,channels[ic],type_,cp);
       target->cd();
       htemp->Write();
       for(int is=0;is<26;is++){

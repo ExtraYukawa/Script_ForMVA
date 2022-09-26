@@ -181,14 +181,38 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    string signal_name="ttc_a_rtu10_MA"+mass;
    string signal_filename="ttc_a_rtu10_MA"+mass+".root";
    if (type_=="a"){
-	signal_name="ttc_a_"+cp+"_MA"+mass;
-	signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
-	}
+     signal_name="ttc_a_"+cp+"_MA"+mass;
+     signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
+   }
    if (type_=="s0"){
-	signal_name="ttc_s0_"+cp+"_MS0"+mass;
-	signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
-	}
-
+     signal_name="ttc_s0_"+cp+"_MS0"+mass;
+     signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
+   }
+   // This is a bit dirty code :(
+   if (type_=="a_s"){
+     if (mass=="250_200"){
+       signal_name="ttc_a_250_s_200_"+cp;
+       signal_filename="ttc_a_250_s_200_"+cp+".root";
+     }
+     else if (mass=="300_250"){
+       signal_name="ttc_a_300_s_250_"+cp;
+       signal_filename="ttc_a_300_s_250_"+cp+".root";
+     }
+     else if (mass=="400_350"){
+       signal_name="ttc_a_400_s_350_"+cp;
+       signal_filename="ttc_a_250_s_200_"+cp+".root";
+     }
+     else if (mass=="550_500"){
+       signal_name="ttc_a_550_s_500_"+cp;
+       signal_filename="ttc_a_550_s_500_"+cp+".root";
+     }
+     else{
+       signal_name="ttc_a_700_s_650_"+cp;
+       signal_filename="ttc_a_700_s_650_"+cp+".root";
+     }
+   }
+   
+   
    input_S=TFile::Open(signal_filename.c_str());
    BACKGROUNDFILE_INPUT
 

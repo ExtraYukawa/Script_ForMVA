@@ -122,10 +122,34 @@ if __name__=='__main__':
       for coup in coups:
           for index, mass in enumerate(A_masses):
             iin = 'ttc_a_%s_s_%s_%s.root'%(A_masses[index], S_masses[index], coup)
-            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 0, iin)
+            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 1, iin)
             shell_file = 'slim_%s_%s.sh'%(iin,Era)
             prepare_shell(shell_file, command, condor, FarmDir)
+
+    #====================
+    #Highmass samples
+    #====================
+    
+    if (args.method == 'slim_mc' or args.method == 'all') and args.sampletype == 'highmass':
+      print ("Creating configuration for highmass samples using slim_mc")
+      python_file = "%s/slim_mc.py"%cwd
+
+      print ("=="*50)
       
+      coups=['rtc04','rtu04']
+      cps=['A']
+      masses=['800','900','1000']
+      
+      for cp in cps:
+        for coup in coups:
+          for mass in masses:
+            iin = 'ttc_%s_%s_%s_highmass.root'%(cp.lower(), mass, coup)
+            command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 1, iin)
+            shell_file = 'slim_mc_%s_%s.sh'%(iin,Era)
+            print ("shell_file: ", shell_file)
+            prepare_shell(shell_file, command, condor, FarmDir)
+
+  
     #====================
     # Data run
     #====================
@@ -185,6 +209,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-  # os.system('condor_submit %s/condor.sub'%FarmDir)
+  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

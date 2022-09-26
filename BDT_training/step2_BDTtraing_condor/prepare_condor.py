@@ -78,8 +78,8 @@ if __name__ == "__main__":
       #S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
       signals=['a','s']
-      couplings=['rtc04','rtu04']
-      masses=['200','300','350','400','500','600','700'] 
+      couplings=['rtc01','rtu01'] #keep in mind (rtc01, vs rtc04)
+      masses=['200','300','350','400','500','600','700']
       
     system_unc=["central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo"]
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             os.system(r'sed -i "s/SIGNALROOT/%s/g" wrapper_%s.sh' %(samples_temp, Era))
             os.system(r'sed -i "s/YEAR/%s/g" wrapper_%s.sh' %(Era, Era))
             os.system(r'sed -i "s/TMVAClassification.C/TMVAClassification_%s.C/g" wrapper_%s.sh' %(Era, Era))
-            os.system(r'cp ../../../../../script/TMVAClassification.C TMVAClassification_%s.C' %(Era))
+            os.system(r'cp ../../../TMVAClassification.C TMVAClassification_%s.C' %(Era))
             os.system(r'sed -i "s/INIT_INPUT/%s/g" TMVAClassification_%s.C' %(init_input,Era))
             os.system(r'sed -i "s/BACKGROUNDFILE_INPUT/%s/g" TMVAClassification_%s.C'%(backgroundfile_input,Era))
             os.system(r'sed -i "s/BACKGROUNDFILE_READTREE/%s/g" TMVAClassification_%s.C'%(backgroundfile_readtree,Era))

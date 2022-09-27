@@ -3,6 +3,9 @@ import sys
 from os import walk
 import optparse
 import subprocess
+from collections import OrderedDict
+
+cmsswBase = os.environ['CMSSW_BASE']
 
 def prepare_condor(signal,coupling,mass):
   WHICH_SAMPLE=signal
@@ -15,6 +18,28 @@ def prepare_condor(signal,coupling,mass):
 
   sample=SIGNAL
   return sample
+
+def GetSampleList(era):
+  jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
+  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  jsonfile.close()
+  SampleFile_List = []
+  for process, desc in samples:
+    if not (desc[4] == -1):
+      SampleFile_List.append((str(process),desc[0]))
+  return SampleFile_List
+
+def prepare_SampleCommand(era):
+
+  Sample_List = GetSampleList(era)
+  readsample = "\\n"
+  readxsec   = "\\n"
+  for f in Sample_List:
+    readsample += '   samples.push_back(\\"%s\\");\\n'%(f[0])
+    readxsec   += '   xss.push_back(%f);\\n'%(f[1])
+  return readsample, readxsec
+
+
 
 if __name__ == "__main__":
   PWD=os.getcwd()
@@ -35,6 +60,7 @@ if __name__ == "__main__":
     os.system('mkdir -p %s'%Era)
     signals=['a','s']
     couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
+    massswBase = os.environ['CMSSW_BASE']
     masses=['200','300','350','400','500','600','700']
 
     for isig in range(0,len(signals)):
@@ -51,13 +77,15 @@ if __name__ == "__main__":
           os.system(r'sed -i "s/SIGNALROOT/%s/g" wrapper_%s.sh' %(samples_temp, Era))
           os.system(r'sed -i "s/YEAR/%s/g" wrapper_%s.sh' %(Era, Era))
           os.system(r'sed -i "s/TMVAClassificationApplication.C/TMVAClassificationApplication_%s.C/g" wrapper_%s.sh' %(Era, Era))
-          if Era == "2016apv" or Era == "2016postapv":
-            os.system(r'cp ../../TMVAClassificationApplication_%s.C .' %(Era) )
-          else:
-            os.system(r'cp ../../TMVAClassificationApplication.C TMVAClassificationApplication_%s.C' %(Era) )
+          os.system(r'cp ../../TMVAClassificationApplication.C TMVAClassificationApplication_%s.C' %(Era) )
           os.system(r'sed -i "s/MASS/%s/g" TMVAClassificationApplication_%s.C' %(masses[im], Era)) 
           os.system(r'sed -i "s/YEAR/%s/g" TMVAClassificationApplication_%s.C' %(Era, Era))
           os.system(r'sed -i "s/TMVAClassificationApplication()/TMVAClassificationApplication_%s()/g" TMVAClassificationApplication_%s.C' %(Era, Era))
+ 
+          readsample, readxsec = prepare_SampleCommand(Era)
+          os.system(r'sed -i "s/LOADSAMPLE/%s/g" TMVAClassificationApplication_%s.C' %(readsample, Era))
+          os.system(r'sed -i "s/LOADXSEC/%s/g"   TMVAClassificationApplication_%s.C'%(readxsec, Era))
+          os.system(r'sed -i "s/REPLACEINDEX/%s/g" TMVAClassificationApplication_%s.C'%(str(len(Era) + 4),Era)) 
 
           # Luminosity need to change accordingly
           if Era == "2016apv":

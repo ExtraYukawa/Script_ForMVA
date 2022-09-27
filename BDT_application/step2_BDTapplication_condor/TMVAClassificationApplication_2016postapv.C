@@ -2913,11 +2913,22 @@ int TMVAClassificationApplication()
    string ntemp_signal=sample_path;
    if(type_=="A") ntemp_signal=ntemp_signal+"ttc_a_"+cp+".root";
    if(type_=="S0") ntemp_signal=ntemp_signal+"ttc_s0_"+cp+".root";
+   if (type_=="a_s"){
+     if (mass=="250_200"){
+       ntemp_signal=ntemp_signal+"ttc_a_250_s_200_"+cp+".root";
+     }else{
+       ntemp_signal=ntemp_signal+"ttc_a_250_s_200_"+cp+".root";
+     }
+   }
    TFile*ftemp_signal=TFile::Open(ntemp_signal.c_str());
    TH1D*htemp_signal=(TH1D*)ftemp_signal->Get("nEventsGenWeighted");
    TTree*ttemp_signal=(TTree*)ftemp_signal->Get("Events");
    int nsignal_total=ttemp_signal->GetEntriesFast();
-   eff_N_signal=(0.5*ttemp_signal->GetEntries(flags.c_str())*(htemp_signal->GetBinContent(1))/nsignal_total);
+   if (type_=="a_s"){ // think about for highmass
+     eff_N_signal=(0.5*ttemp_signal->GetEntries()*(htemp_signal->GetBinContent(1))/nsignal_total);
+   }else{
+     eff_N_signal=(0.5*ttemp_signal->GetEntries(flags.c_str())*(htemp_signal->GetBinContent(1))/nsignal_total);
+   }
    ftemp_signal->Close();
 
    vector<std::string> samples;
@@ -3003,6 +3014,14 @@ int TMVAClassificationApplication()
     string signal_input="";
     if(type_=="A")signal_input=signal_input+"ttc_a_"+cp+"_M"+type_+mass;
     if(type_=="S0")signal_input=signal_input+"ttc_s0_"+cp+"_M"+type_+mass;
+    
+    if (type_=="a_s"){
+     if (mass=="250_200"){
+       signal_input=signal_input+"ttc_a_250_s_200_"+cp;
+     }else{
+       signal_input=signal_input+"ttc_a_250_s_200_"+cp;
+     }
+    }
     TH1F*htemp;
     TH1F*hfake_no_mcsubtraction;
     TH1F*hfake;
@@ -3011,7 +3030,7 @@ int TMVAClassificationApplication()
 
     std::vector<float> ctagnorms;
     std::cout<<"start looping weights"<<std::endl;
-    for(int iw=0;iw<52;iw++){
+    for(int iw=0;iw<52;iw++){ 
       // signal don't need charge flip SF
       if(!(weights[iw].find("charFlip")!= string::npos))
 	{

@@ -47,10 +47,10 @@ def Slim_module(filein,nin,mass_flag,era):
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent))
     elif "highmass.root" in filein.split('_'):
-      print ("highmass samples")
-      outF = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
-      print ("outF: ", outF)
-      sys.exit()
+      print ("===> highmass samples <===")
+      fileOut = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
+      fileOut = "sample/" + era + "/" + fileOut
+      print ("Output filename changed to: ", fileOut)
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent))
     else:

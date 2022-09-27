@@ -5,8 +5,6 @@ import subprocess
 import json
 import ROOT
 from collections import OrderedDict
-from common import inputFile_path
-from common import GetTrainingFile, GetDataFile
 
 def prepare_shell(shell_file, command, condor, FarmDir):
 
@@ -41,6 +39,9 @@ if __name__=='__main__':
   cwd       = os.getcwd()
   os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
+
+  from common import inputFile_path
+  from common import GetTrainingFile, GetDataFile
 
   condor = open('%s/condor.sub'%FarmDir,'w')
   condor.write('output = %s/job_common.out\n'%FarmDir)

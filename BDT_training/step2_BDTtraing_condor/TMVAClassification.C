@@ -174,61 +174,50 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    // Read training and test data
    // (it is also possible to use ASCII format as input -> see TMVA Users Guide)
    TFile *input_S(0);
-   TFile *input_B1(0);
-   TFile *input_B2(0);
-   TFile *input_B3(0);
-   TFile *input_B4(0);
-   TFile *input_B5(0);
-   TFile *input_B6(0);
-   TFile *input_B7(0);
-   TFile *input_B8(0);
-   TFile *input_B9(0);
-   TFile *input_B10(0);
-   TFile *input_B11(0);
-   TFile *input_B12(0);
-   TFile *input_B13(0);
+   
+   INIT_INPUT
 
    // Register the training and test trees
    string signal_name="ttc_a_rtu10_MA"+mass;
    string signal_filename="ttc_a_rtu10_MA"+mass+".root";
    if (type_=="a"){
-	signal_name="ttc_a_"+cp+"_MA"+mass;
-	signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
-	}
+     signal_name="ttc_a_"+cp+"_MA"+mass;
+     signal_filename="ttc_a_"+cp+"_MA"+mass+".root";
+   }
    if (type_=="s0"){
-	signal_name="ttc_s0_"+cp+"_MS0"+mass;
-	signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
-	}
-
+     signal_name="ttc_s0_"+cp+"_MS0"+mass;
+     signal_filename="ttc_s0_"+cp+"_MS0"+mass+".root";
+   }
+   // This is a bit dirty code :(
+   if (type_=="a_s"){
+     if (mass=="250_200"){
+       signal_name="ttc_a_250_s_200_"+cp;
+       signal_filename="ttc_a_250_s_200_"+cp+".root";
+     }
+     else if (mass=="300_250"){
+       signal_name="ttc_a_300_s_250_"+cp;
+       signal_filename="ttc_a_300_s_250_"+cp+".root";
+     }
+     else if (mass=="400_350"){
+       signal_name="ttc_a_400_s_350_"+cp;
+       signal_filename="ttc_a_250_s_200_"+cp+".root";
+     }
+     else if (mass=="550_500"){
+       signal_name="ttc_a_550_s_500_"+cp;
+       signal_filename="ttc_a_550_s_500_"+cp+".root";
+     }
+     else{
+       signal_name="ttc_a_700_s_650_"+cp;
+       signal_filename="ttc_a_700_s_650_"+cp+".root";
+     }
+   }
+   
+   
    input_S=TFile::Open(signal_filename.c_str());
-   input_B1=TFile::Open("TTTo1L.root");
-   input_B2=TFile::Open("ttWW.root");
-   input_B3=TFile::Open("ttWZ.root");
-   input_B4=TFile::Open("ttWtoLNu.root");
-   input_B5=TFile::Open("ttZ.root");
-   input_B6=TFile::Open("TTTo2L.root");
-   input_B7=TFile::Open("WWW.root");
-   input_B8=TFile::Open("ttZtoQQ.root");
-   input_B9=TFile::Open("tttJ.root");
-   input_B10=TFile::Open("tttW.root");
-   input_B11=TFile::Open("tttt.root");
-   input_B12=TFile::Open("tzq.root");
-   input_B13=TFile::Open("ttZZ.root");
+   BACKGROUNDFILE_INPUT
 
    TTree *signalTree     = (TTree*)input_S->Get("SlimTree");
-   TTree *background1     = (TTree*)input_B1->Get("SlimTree");
-   TTree *background2     = (TTree*)input_B2->Get("SlimTree");
-   TTree *background3     = (TTree*)input_B3->Get("SlimTree");
-   TTree *background4     = (TTree*)input_B4->Get("SlimTree");
-   TTree *background5     = (TTree*)input_B5->Get("SlimTree");
-   TTree *background6     = (TTree*)input_B6->Get("SlimTree");
-   TTree *background7     = (TTree*)input_B7->Get("SlimTree");
-   TTree *background8     = (TTree*)input_B8->Get("SlimTree");
-   TTree *background9     = (TTree*)input_B9->Get("SlimTree");
-   TTree *background10     = (TTree*)input_B10->Get("SlimTree");
-   TTree *background11     = (TTree*)input_B11->Get("SlimTree");
-   TTree *background12     = (TTree*)input_B12->Get("SlimTree");
-   TTree *background13     = (TTree*)input_B13->Get("SlimTree");
+   BACKGROUNDFILE_READTREE
 
    // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
    string output_name="TMVA_"+signal_name+"_"+system_unc+".root";
@@ -414,19 +403,8 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
 
    // You can add an arbitrary number of signal or background trees
    dataloader->AddSignalTree    ( signalTree);
-   dataloader->AddBackgroundTree( background1,365./background1->GetEntries());//TTto1L weight=xs/number_of_events
-   dataloader->AddBackgroundTree( background2,0.007/background2->GetEntries());//ttWW
-   dataloader->AddBackgroundTree( background3,0.002/background3->GetEntries());//ttWZ
-   dataloader->AddBackgroundTree( background4,0.18/background4->GetEntries());//ttW
-   dataloader->AddBackgroundTree( background5,0.26/background5->GetEntries());//ttZ
-   dataloader->AddBackgroundTree( background6,88.34/background6->GetEntries());//TTto2L
-   dataloader->AddBackgroundTree( background7,0.2086/background7->GetEntries());//WWW
-   dataloader->AddBackgroundTree( background8,0.6012/background8->GetEntries());//ttZtoQQ
-   dataloader->AddBackgroundTree( background9,0.0004/background9->GetEntries());//tttJ
-   dataloader->AddBackgroundTree( background10,0.00073/background10->GetEntries());//tttW
-   dataloader->AddBackgroundTree( background11,0.0082/background11->GetEntries());//tttt
-   dataloader->AddBackgroundTree( background12,0.0756/background12->GetEntries());//tzq
-   dataloader->AddBackgroundTree( background13,0.0014/background13->GetEntries());//ttZZ
+
+   ADDBACKGROUNDTREE
    
    dataloader->SetSignalWeightExpression("puWeight");
    dataloader->SetBackgroundWeightExpression("puWeight");

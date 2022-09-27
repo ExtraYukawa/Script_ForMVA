@@ -5,8 +5,6 @@ import subprocess
 import json
 import ROOT
 from collections import OrderedDict
-from common import inputFile_path
-from common import GetTrainingFile, GetDataFile
 
 def prepare_shell(shell_file, command, condor, FarmDir):
 
@@ -41,6 +39,8 @@ if __name__=='__main__':
   cwd       = os.getcwd()
   os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
+  from common import inputFile_path
+  from common import GetTrainingFile, GetDataFile
 
   condor = open('%s/condor.sub'%FarmDir,'w')
   condor.write('output = %s/job_common.out\n'%FarmDir)
@@ -70,7 +70,7 @@ if __name__=='__main__':
     if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'normal':
 
       python_file = "%s/slim.py"%cwd
-
+      
       # Training sample
       Training_list = GetTrainingFile(Era, True)
       for iin in Training_list:
@@ -79,7 +79,7 @@ if __name__=='__main__':
         prepare_shell(shell_file, command, condor, FarmDir)
 
       # Signal sample
-      coups=['rtc01','rtu01']
+      coups=['rtc04','rtu04'] #gkole (21Sep2022) (as the training for highmass is done with rtc/u-04)
       cps=['A','S0']
       masses=['200','300','350','400','500','600','700']
       for cp in cps:

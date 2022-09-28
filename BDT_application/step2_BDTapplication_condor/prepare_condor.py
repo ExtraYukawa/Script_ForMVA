@@ -41,7 +41,7 @@ def GetSampleList(era):
   jsonfile.close()
   SampleFile_List = []
   for process, desc in samples:
-    if not (desc[4] == -1):
+    if not (desc[4] == -1) and not (process=='TTTo1L'):
       SampleFile_List.append((str(process),desc[0]))
   return SampleFile_List
 
@@ -66,6 +66,10 @@ if __name__ == "__main__":
   parser.add_option('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type='string')
   (args,opt) = parser.parse_args()
 
+  os.system('cp ../../python/common.py .')
+  from common import inputFile_path
+
+
   Eras_List = ['2016postapv','2016apv','2017','2018']
   Eras = []
   for Era in Eras_List:
@@ -83,13 +87,13 @@ if __name__ == "__main__":
     elif args.sampletype == 'interference':
       signals=['interference']
       couplings=['rtc04','rtu04']
-      # masses = ['250','300','350','400','550','700'] # asume this A mass
-      masses = ['250'] # asume this A mass
+      masses = ['250','300','350','400','550','700'] # asume this A mass
+     # masses = ['250'] # asume this A mass
       # S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
       signals=['a'] #,'s']
-      # couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-      couplings=['rtc04']
+       couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
+      #couplings=['rtc04']
       masses=['200','300','350','400','500','600','700']
 
     for isig in range(0,len(signals)):
@@ -103,6 +107,7 @@ if __name__ == "__main__":
           print ("cwd: ", os. getcwd())
           PWDSEC=os.getcwd()
           os.system(r'cp ../../wrapper.sh wrapper_%s.sh' %(Era))
+
           os.system(r'sed -i "s/SIGNALROOT/%s/g" wrapper_%s.sh' %(samples_temp, Era))
           os.system(r'sed -i "s/YEAR/%s/g" wrapper_%s.sh' %(Era, Era))
           os.system(r'sed -i "s/TMVAClassificationApplication.C/TMVAClassificationApplication_%s.C/g" wrapper_%s.sh' %(Era, Era))
@@ -118,7 +123,7 @@ if __name__ == "__main__":
           os.system(r'sed -i "s/REPLACEINDEX/%s/g" TMVAClassificationApplication_%s.C'%(str(len(Era) + 4),Era)) 
           os.system(r'sed -i "s/SIGNAL_EOS_INPUT/%s/g" TMVAClassificationApplication_%s.C'%(signal_eos_input,Era))
           os.system(r'sed -i "s/SIGNAL_EFF_COMMAND/%s/g" TMVAClassificationApplication_%s.C'%(signal_eff_command, Era))
-      
+          os.system(r'sed -i "s/SAMPLE_PATH/%s/g" TMVAClassificationApplication_%s.C'%(inputFile_path[Era].replace('/','\/'),Era))
 
           # Luminosity need to change accordingly
           if Era == "2016apv":
@@ -140,12 +145,12 @@ if __name__ == "__main__":
               if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
                 os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era))
               else:
-                os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+                os.system(r'sed -i "s/COUPLING/rtc01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             if 'rtu' in couplings[ic]:
               if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
                 os.system(r'sed -i "s/COUPLING/rtu04/g" wrapper_%s.sh' %(Era))
               else:
-                os.system(r'sed -i "s/COUPLING/rtu04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+                os.system(r'sed -i "s/COUPLING/rtu01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             os.system(r'sed -i "s/COUPLING/%s/g" TMVAClassificationApplication_%s.C' %(couplings[ic], Era))
             os.system(r'sed -i "s/MASS/%s/g" wrapper_%s.sh' %(masses[im], Era))
           elif signals[isig]=='interference':
@@ -168,9 +173,15 @@ if __name__ == "__main__":
             os.system(r'sed -i "s/SIGTYPE/s0/g" wrapper_%s.sh' %(Era))
             os.system(r'sed -i "s/SIGTYPE/s0/g" TMVAClassificationApplication_%s.C' %(Era))
             if 'rtc' in couplings[ic]:
-              os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+              if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
+                os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era))
+              else:
+                os.system(r'sed -i "s/COUPLING/rtc01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             if 'rtu' in couplings[ic]:
-              os.system(r'sed -i "s/COUPLING/rtu04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+              if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
+                os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era))
+              else:
+                os.system(r'sed -i "s/COUPLING/rtc01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             os.system(r'sed -i "s/COUPLING/%s/g" TMVAClassificationApplication_%s.C' %(couplings[ic], Era))
             os.system(r'sed -i "s/MASS/%s/g" wrapper_%s.sh' %(masses[im], Era))
           # Copy the sub.jdl file

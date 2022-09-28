@@ -186,6 +186,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-  # os.system('condor_submit %s/condor.sub'%FarmDir)
+  os.system('condor_submit %s/condor.sub'%FarmDir)
 
     

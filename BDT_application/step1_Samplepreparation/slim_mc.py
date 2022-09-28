@@ -1,6 +1,6 @@
 import ROOT
 import time
-import os, sys
+import os,sys
 import math
 import json
 import optparse
@@ -43,7 +43,7 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
     if "a" in filein.split('_') and "s" in filein.split('_'):
       print ("Interference samples all events for evaluation")
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
-      df_filein_tree = df_filein_tree_temp.Range(int(nevent), 0)
+      df_filein_tree = df_filein_tree_temp.Range(int(nevent))
     elif "highmass.root" in filein.split('_'):
       print ("===> highmass samples <===")
       fileOut = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
@@ -53,8 +53,10 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
       df_filein_tree = df_filein_tree_temp.Range(int(nevent), 0)
     else:
       print ("normal samples")
+      
       fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
       fileOut = "sample/" + era + "/" + fileOut
+    
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       print(mass_flag)
       df_filein_tree_temp2 = df_filein_tree_temp.Filter(str(mass_flag))
@@ -210,7 +212,6 @@ if __name__ == "__main__":
     ntemp=ttemp.GetEntries(flag)
   # Samples used for BDT training only leaves half of the events in the application while others use full events
   ntrain = ntemp*0.5 if istrain else ntemp
-  
   Slim_module(iin,ntrain,flag,istrain,era)
   ftemp.Close()
 

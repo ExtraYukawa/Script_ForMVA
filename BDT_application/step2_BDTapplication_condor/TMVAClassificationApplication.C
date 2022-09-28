@@ -942,7 +942,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 int TMVAClassificationApplication()
 {
    std::cout<<"START!"<<std::endl;
-   string sample_path="/eos/cms/store/group/phys_top/ExtraYukawa/YEAR/";
+   string sample_path = "SAMPLE_PATH";
 
    string type_="CSIGTYPE"; 
    string cp="COUPLING";

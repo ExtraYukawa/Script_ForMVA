@@ -88,12 +88,12 @@ if __name__ == "__main__":
       signals=['interference']
       couplings=['rtc04','rtu04']
       masses = ['250','300','350','400','550','700'] # asume this A mass
-     # masses = ['250'] # asume this A mass
+      # masses = ['250'] # asume this A mass
       # S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
       signals=['a'] #,'s']
-       couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-      #couplings=['rtc04']
+      couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
+      # couplings=['rtc04']
       masses=['200','300','350','400','500','600','700']
 
     for isig in range(0,len(signals)):
@@ -102,6 +102,7 @@ if __name__ == "__main__":
           samples_temp,signal_eos_input,signal_eff_command=prepare_condor(signals[isig],couplings[ic],masses[im])
           dir_temp=samples_temp.split('.')[0].split('/')[-1]
           print ("dir_temp: ", dir_temp)
+          os.system('rm -rf %s/%s'%(Era,dir_temp))
           os.mkdir(Era+'/'+dir_temp)
           os.chdir(Era+'/'+dir_temp)
           print ("cwd: ", os. getcwd())

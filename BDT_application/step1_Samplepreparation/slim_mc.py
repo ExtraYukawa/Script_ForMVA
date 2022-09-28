@@ -1,6 +1,6 @@
 import ROOT
 import time
-import os
+import os,sys
 import math
 import json
 import optparse
@@ -44,6 +44,13 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
       print ("Interference samples all events for evaluation")
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent))
+    elif "highmass.root" in filein.split('_'):
+      print ("===> highmass samples <===")
+      fileOut = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
+      fileOut = "sample/" + era + "/" + fileOut
+      print ("Output filename changed to: ", fileOut)
+      df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
+      df_filein_tree = df_filein_tree_temp.Range(int(nevent), 0)
     else:
       print ("normal samples")
       
@@ -196,7 +203,7 @@ if __name__ == "__main__":
 
   path = str(inputFile_path[era])
 
-  print('Processing ',iin)
+  print('Processing ',path+iin)
   ftemp=ROOT.TFile.Open(path+iin)   
   ttemp=ftemp.Get('Events')
   if flag=='dummy':

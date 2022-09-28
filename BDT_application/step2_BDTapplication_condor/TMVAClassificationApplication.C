@@ -966,14 +966,17 @@ int TMVAClassificationApplication()
 
    vector<float> xss;
    LOADXSEC
-   
+  
+   vector<bool> is_train;
+   LOAD_ISTRAIN
+ 
    vector<float> eff_N;
    for(int i=0;i<samples.size();i++){
      string ntemp=sample_path+samples[i]+".root";
-     if(i==11)ntemp=sample_path+"DYnlo.root";
+//     if(i==11)ntemp=sample_path+"DYnlo.root";
      TFile*ftemp=TFile::Open(ntemp.c_str());
      TH1D*ttemp=(TH1D*)ftemp->Get("nEventsGenWeighted");
-     if (i<11)eff_N.push_back(0.5*ttemp->GetBinContent(1));//half of the events are used for BDT training
+     if (is_train[i]) eff_N.push_back(0.5*ttemp->GetBinContent(1));//half of the events are used for BDT training
      else eff_N.push_back(ttemp->GetBinContent(1));
      ftemp->Close();
    }

@@ -42,7 +42,8 @@ def GetSampleList(era):
   SampleFile_List = []
   for process, desc in samples:
     if not (desc[4] == -1) and not (process=='TTTo1L'):
-      SampleFile_List.append((str(process),desc[0]))
+      is_train = "true" if (desc[4] == 1) else "false"
+      SampleFile_List.append((str(process),desc[0],is_train))
   return SampleFile_List
 
 def prepare_SampleCommand(era):
@@ -50,10 +51,12 @@ def prepare_SampleCommand(era):
   Sample_List = GetSampleList(era)
   readsample = "\\n"
   readxsec   = "\\n"
+  is_train   = "\\n"
   for f in Sample_List:
     readsample += '   samples.push_back(\\"%s\\");\\n'%(f[0])
     readxsec   += '   xss.push_back(%f);\\n'%(f[1])
-  return readsample, readxsec
+    is_train   += '   is_train.push_back(%s);\\n'%(f[2])
+  return readsample, readxsec, is_train
 
 
 
@@ -118,9 +121,10 @@ if __name__ == "__main__":
           os.system(r'sed -i "s/YEAR/%s/g" TMVAClassificationApplication_%s.C' %(Era, Era))
           os.system(r'sed -i "s/TMVAClassificationApplication()/TMVAClassificationApplication_%s()/g" TMVAClassificationApplication_%s.C' %(Era, Era))
  
-          readsample, readxsec = prepare_SampleCommand(Era)
+          readsample, readxsec, is_train = prepare_SampleCommand(Era)
           os.system(r'sed -i "s/LOADSAMPLE/%s/g" TMVAClassificationApplication_%s.C' %(readsample, Era))
           os.system(r'sed -i "s/LOADXSEC/%s/g"   TMVAClassificationApplication_%s.C'%(readxsec, Era))
+          os.system(r'sed -i "s/LOAD_ISTRAIN/%s/g" TMVAClassificationApplication_%s.C'%(is_train, Era))
           os.system(r'sed -i "s/REPLACEINDEX/%s/g" TMVAClassificationApplication_%s.C'%(str(len(Era) + 4),Era)) 
           os.system(r'sed -i "s/SIGNAL_EOS_INPUT/%s/g" TMVAClassificationApplication_%s.C'%(signal_eos_input,Era))
           os.system(r'sed -i "s/SIGNAL_EFF_COMMAND/%s/g" TMVAClassificationApplication_%s.C'%(signal_eff_command, Era))

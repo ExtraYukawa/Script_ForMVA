@@ -1,3 +1,19 @@
+Get the config files:
+- For low mass
+```
+python runCondor.py --era 2016apv
+```
+
+- For highmass
+```
+python runCondor.py --era 2016postapv -s highmass
+```
+
+- For interference samples:
+```
+python runCondor.py --era 2016postapv -s interference
+```
+
 simply by using "python slim.py" to get the inputs for the BDT training, several things to be stressed:
 
 1. for each coupilng typy, e.g., rtc, only one coupling strength will be used, since we already checked that the BDT score of rtc 01/04/08/10 are almost the same

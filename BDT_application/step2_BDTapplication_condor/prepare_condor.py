@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 cmsswBase = os.environ['CMSSW_BASE']
 
-def prepare_condor(signal,coupling,mass):
+def prepare_condor(signal,coupling,mass, era):
   WHICH_SAMPLE=signal
   WHICH_COUPLING=coupling
   MASS=mass
@@ -30,10 +30,15 @@ def prepare_condor(signal,coupling,mass):
   if((int(mass) > 750) or (WHICH_SAMPLE=="interference")):
     SIGNAL_EFF_COMMAND = "eff_N_signal=(0.5*ttemp_signal->GetEntries()*(htemp_signal->GetBinContent(1))\/nsignal_total);"
   else:
-    SIGNAL_EFF_COMMAND = "eff_N_signal=(0.5*ttemp_signal->GetEntries(flags.c_str())*(htemp_signal->GetBinContent(1))\/nsignal_total);"
+    EventFile_List = GetEventList(era)
+    nevent = GetExactEvent(SIGNAL.split('.')[0].split('/')[-1], EventFile_List)
+    # SIGNAL_EFF_COMMAND = "eff_N_signal=(0.5*ttemp_signal->GetEntries(flags.c_str())*(htemp_signal->GetBinContent(1))\/nsignal_total);"
+    SIGNAL_EFF_COMMAND = "eff_N_signal=(0.5*%s);"%nevent
 
   sample=SIGNAL
   return sample, SIGNAL_EOS_INPUT, SIGNAL_EFF_COMMAND
+
+
 
 def GetSampleList(era):
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
@@ -58,6 +63,19 @@ def prepare_SampleCommand(era):
     is_train   += '   is_train.push_back(%s);\\n'%(f[2])
   return readsample, readxsec, is_train
 
+def GetEventList(era):
+  jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/input_das_events_' + str(era) + 'UL.json'))
+  events  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  jsonfile.close()
+  EventFile_List = []
+  for process, desc in events:
+    EventFile_List.append((str(process),desc[0]))
+  return EventFile_List
+
+def GetExactEvent(key, EventFile):
+  for f in EventFile:
+    if key == f[0]:
+      return f[1]
 
 
 if __name__ == "__main__":
@@ -95,14 +113,15 @@ if __name__ == "__main__":
       # S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
       signals=['a'] #,'s']
-      couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-      # couplings=['rtc04']
+      # couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
+      couplings=['rtc04']
       masses=['200','300','350','400','500','600','700']
+      # masses=['200']
 
     for isig in range(0,len(signals)):
       for ic in range(0,len(couplings)):
         for im in range(0,len(masses)):
-          samples_temp,signal_eos_input,signal_eff_command=prepare_condor(signals[isig],couplings[ic],masses[im])
+          samples_temp,signal_eos_input,signal_eff_command=prepare_condor(signals[isig],couplings[ic],masses[im], Era)
           dir_temp=samples_temp.split('.')[0].split('/')[-1]
           print ("dir_temp: ", dir_temp)
           os.system('rm -rf %s/%s'%(Era,dir_temp))

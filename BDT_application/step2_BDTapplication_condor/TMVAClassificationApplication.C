@@ -1228,8 +1228,6 @@ int TMVAClassificationApplication()
     float signal_xs=Get_signalXS(signal_input);
     cout << "Signal cross-section -->" << signal_xs << endl;
 
-    float signal_xs=Get_signalXS(signal_input);
-
     std::vector<float> ctagnorms;
     std::cout<<"start looping weights"<<std::endl;
     for(int iw=0;iw<52;iw++){

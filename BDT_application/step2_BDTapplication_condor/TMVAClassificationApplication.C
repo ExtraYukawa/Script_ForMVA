@@ -1072,7 +1072,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    if (weight_name=="fakelep")        name_wgt = "";
    if (weight_name=="data")           name_wgt = "";
    if (weight_name=="fakelep_mc")     name_wgt = "_fake";
-   if (weight_name=="pileup_up")      name_wgt = "_pileupUP";
+   if (weight_name=="pileup_up")      name_wgt = "_pileupUp";
    if (weight_name=="pileup_down")    name_wgt = "_pileupDown";
    if (weight_name=="prefire_up")     name_wgt = "_prefireUp";
    if (weight_name=="prefire_down")   name_wgt = "_prefireDown";

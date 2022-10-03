@@ -4,12 +4,19 @@
 # chmod a+x test2.txt 
 # ./test2.txt 
 # cd /tmp/gkole/TAToTTQ_MA-200to700GeV_rtc04
+#***************
 # hadd -f TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8.root *.root 
-
 # crashed**********
 # hadd Target path: TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8.root:/
 # *** Error in `hadd': corrupted size vs. prev_size: 0x000000000518aae0 ***
 #***************
+# wget https://raw.githubusercontent.com/ExtraYukawa/ttc_bar/lep_mvaID/scripts/haddnano.py
+# python haddnano.py output.root *.root 
+# root -l output.root
+# Events->GetEntries("GenModel_TAToTTQ_MA_200_TuneCP5_13TeV_G2HDM_rtc04_madgraphMLM_pythia8")
+# (long long) 521871
+
+
 
 ############
 
@@ -17,6 +24,7 @@ import argparse
 import json
 import subprocess
 import os, sys
+import getpass
 
 xootd_prefix = "root://cms-xrd-global.cern.ch/"
 parser = argparse.ArgumentParser(
@@ -72,15 +80,15 @@ def read_filelist_from_das(nick, query, outputfile, phys03, xootd_prefix):
     #    )
     
     # requested format for next step to copy root files to my lxplus tmp area
-    path = "/tmp/gkole/%s"%nick
+    path = "/tmp/%s/%s"%(getpass.getuser(), nick)
     if not os.path.isdir(path):
         os.mkdir(path)
     count = 1
     for file in filedict.keys():
 
         outfile.write(
-            "xrdcp -f {prefix}/{path} /tmp/gkole/{name}/{count}.root \n".format(
-                prefix=xootd_prefix, path=file, name=nick, count=int(count)
+            "xrdcp -f {prefix}/{path} /tmp/{username}/{name}/{count}.root \n".format(
+                prefix=xootd_prefix, path=file, username=getpass.getuser(), name=nick, count=int(count)
             )
         )
         count = count+1

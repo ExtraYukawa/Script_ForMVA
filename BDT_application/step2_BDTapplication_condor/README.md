@@ -1,11 +1,13 @@
-- normal
+- Normal samples
 ```
 python prepare_condor.py --era 2016postapv
+```
 
 - highmass:
 ```
 python prepare_condor.py --era 2016postapv -s highmass
 ```
+
 - inteference:
 ```
 python prepare_condor.py --era 2016postapv -s interference

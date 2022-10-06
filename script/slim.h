@@ -160,12 +160,18 @@ TH2F *SFc_hist_StatUp=(TH2F*)f_ctag->Get("SFc_hist_StatUp");
 TH2F *SFc_hist_StatDo=(TH2F*)f_ctag->Get("SFc_hist_StatDown");
 TH2F *SFl_hist_StatUp=(TH2F*)f_ctag->Get("SFl_hist_StatUp");
 TH2F *SFl_hist_StatDo=(TH2F*)f_ctag->Get("SFl_hist_StatDown");
-TH2F *SFb_hist_EleIDSFUp=(TH2F*)f_ctag->Get("SFb_hist_EleIDSFUp");
-TH2F *SFb_hist_EleIDSFDo=(TH2F*)f_ctag->Get("SFb_hist_EleIDSFDown");
-TH2F *SFc_hist_EleIDSFUp=(TH2F*)f_ctag->Get("SFc_hist_EleIDSFUp");
-TH2F *SFc_hist_EleIDSFDo=(TH2F*)f_ctag->Get("SFc_hist_EleIDSFDown");
-TH2F *SFl_hist_EleIDSFUp=(TH2F*)f_ctag->Get("SFl_hist_EleIDSFUp");
-TH2F *SFl_hist_EleIDSFDo=(TH2F*)f_ctag->Get("SFl_hist_EleIDSFDown");
+TH2F *SFb_hist_ExtrapUp=(TH2F*)f_ctag->Get("SFb_hist_ExtrapUp");
+TH2F *SFb_hist_ExtrapDo=(TH2F*)f_ctag->Get("SFb_hist_ExtrapDown");
+TH2F *SFc_hist_ExtrapUp=(TH2F*)f_ctag->Get("SFc_hist_ExtrapUp");
+TH2F *SFc_hist_ExtrapDo=(TH2F*)f_ctag->Get("SFc_hist_ExtrapDown");
+TH2F *SFl_hist_ExtrapUp=(TH2F*)f_ctag->Get("SFl_hist_ExtrapUp");
+TH2F *SFl_hist_ExtrapDo=(TH2F*)f_ctag->Get("SFl_hist_ExtrapDown");
+TH2F *SFb_hist_InterpUp=(TH2F*)f_ctag->Get("SFb_hist_InterpUp");
+TH2F *SFb_hist_InterpDo=(TH2F*)f_ctag->Get("SFb_hist_InterpDown");
+TH2F *SFc_hist_InterpUp=(TH2F*)f_ctag->Get("SFc_hist_InterpUp");
+TH2F *SFc_hist_InterpDo=(TH2F*)f_ctag->Get("SFc_hist_InterpDown");
+TH2F *SFl_hist_InterpUp=(TH2F*)f_ctag->Get("SFl_hist_InterpUp");
+TH2F *SFl_hist_InterpDo=(TH2F*)f_ctag->Get("SFl_hist_InterpDown");
 TH2F *SFb_hist_LHEScaleWeight_muFUp=(TH2F*)f_ctag->Get("SFb_hist_LHEScaleWeight_muFUp");
 TH2F *SFb_hist_LHEScaleWeight_muFDo=(TH2F*)f_ctag->Get("SFb_hist_LHEScaleWeight_muFDown");
 TH2F *SFc_hist_LHEScaleWeight_muFUp=(TH2F*)f_ctag->Get("SFc_hist_LHEScaleWeight_muFUp");
@@ -178,12 +184,6 @@ TH2F *SFc_hist_LHEScaleWeight_muRUp=(TH2F*)f_ctag->Get("SFc_hist_LHEScaleWeight_
 TH2F *SFc_hist_LHEScaleWeight_muRDo=(TH2F*)f_ctag->Get("SFc_hist_LHEScaleWeight_muRDown");
 TH2F *SFl_hist_LHEScaleWeight_muRUp=(TH2F*)f_ctag->Get("SFl_hist_LHEScaleWeight_muRUp");
 TH2F *SFl_hist_LHEScaleWeight_muRDo=(TH2F*)f_ctag->Get("SFl_hist_LHEScaleWeight_muRDown");
-TH2F *SFb_hist_MuIDSFUp=(TH2F*)f_ctag->Get("SFb_hist_MuIDSFUp");
-TH2F *SFb_hist_MuIDSFDo=(TH2F*)f_ctag->Get("SFb_hist_MuIDSFDown");
-TH2F *SFc_hist_MuIDSFUp=(TH2F*)f_ctag->Get("SFc_hist_MuIDSFUp");
-TH2F *SFc_hist_MuIDSFDo=(TH2F*)f_ctag->Get("SFc_hist_MuIDSFDown");
-TH2F *SFl_hist_MuIDSFUp=(TH2F*)f_ctag->Get("SFl_hist_MuIDSFUp");
-TH2F *SFl_hist_MuIDSFDo=(TH2F*)f_ctag->Get("SFl_hist_MuIDSFDown");
 TH2F *SFb_hist_PSWeightFSRUp=(TH2F*)f_ctag->Get("SFb_hist_PSWeightFSRUp");
 TH2F *SFb_hist_PSWeightFSRDo=(TH2F*)f_ctag->Get("SFb_hist_PSWeightFSRDown");
 TH2F *SFc_hist_PSWeightFSRUp=(TH2F*)f_ctag->Get("SFc_hist_PSWeightFSRUp");
@@ -202,36 +202,24 @@ TH2F *SFc_hist_PUWeightUp=(TH2F*)f_ctag->Get("SFc_hist_PUWeightUp");
 TH2F *SFc_hist_PUWeightDo=(TH2F*)f_ctag->Get("SFc_hist_PUWeightDown");
 TH2F *SFl_hist_PUWeightUp=(TH2F*)f_ctag->Get("SFl_hist_PUWeightUp");
 TH2F *SFl_hist_PUWeightDo=(TH2F*)f_ctag->Get("SFl_hist_PUWeightDown");
-TH2F *SFb_hist_XSec_DYJetsUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_DYJetsUp");
-TH2F *SFb_hist_XSec_DYJetsDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_DYJetsDown");
-TH2F *SFc_hist_XSec_DYJetsUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_DYJetsUp");
-TH2F *SFc_hist_XSec_DYJetsDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_DYJetsDown");
-TH2F *SFl_hist_XSec_DYJetsUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_DYJetsUp");
-TH2F *SFl_hist_XSec_DYJetsDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_DYJetsDown");
-TH2F *SFb_hist_XSec_STUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_STUp");
-TH2F *SFb_hist_XSec_STDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_STDown");
-TH2F *SFc_hist_XSec_STUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_STUp");
-TH2F *SFc_hist_XSec_STDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_STDown");
-TH2F *SFl_hist_XSec_STUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_STUp");
-TH2F *SFl_hist_XSec_STDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_STDown");
-TH2F *SFb_hist_XSec_VVUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_VVUp");
-TH2F *SFb_hist_XSec_VVDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_VVDown");
-TH2F *SFc_hist_XSec_VVUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_VVUp");
-TH2F *SFc_hist_XSec_VVDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_VVDown");
-TH2F *SFl_hist_XSec_VVUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_VVUp");
-TH2F *SFl_hist_XSec_VVDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_VVDown");
-TH2F *SFb_hist_XSec_WJetsUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_WJetsUp");
-TH2F *SFb_hist_XSec_WJetsDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_WJetsDown");
-TH2F *SFc_hist_XSec_WJetsUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_WJetsUp");
-TH2F *SFc_hist_XSec_WJetsDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_WJetsDown");
-TH2F *SFl_hist_XSec_WJetsUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_WJetsUp");
-TH2F *SFl_hist_XSec_WJetsDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_WJetsDown");
-TH2F *SFb_hist_XSec_ttbarUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_ttbarUp");
-TH2F *SFb_hist_XSec_ttbarDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_ttbarDown");
-TH2F *SFc_hist_XSec_ttbarUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_ttbarUp");
-TH2F *SFc_hist_XSec_ttbarDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_ttbarDown");
-TH2F *SFl_hist_XSec_ttbarUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_ttbarUp");
-TH2F *SFl_hist_XSec_ttbarDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_ttbarDown");
+TH2F *SFb_hist_XSec_BRUnc_DYJets_bUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_DYJets_bUp");
+TH2F *SFb_hist_XSec_BRUnc_DYJets_bDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_DYJets_bDown");
+TH2F *SFc_hist_XSec_BRUnc_DYJets_bUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_DYJets_bUp");
+TH2F *SFc_hist_XSec_BRUnc_DYJets_bDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_DYJets_bDown");
+TH2F *SFl_hist_XSec_BRUnc_DYJets_bUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_DYJets_bUp");
+TH2F *SFl_hist_XSec_BRUnc_DYJets_bDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_DYJets_bDown");
+TH2F *SFb_hist_XSec_BRUnc_DYJets_cUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_DYJets_cUp");
+TH2F *SFb_hist_XSec_BRUnc_DYJets_cDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_DYJets_cDown");
+TH2F *SFc_hist_XSec_BRUnc_DYJets_cUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_DYJets_cUp");
+TH2F *SFc_hist_XSec_BRUnc_DYJets_cDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_DYJets_cDown");
+TH2F *SFl_hist_XSec_BRUnc_DYJets_cUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_DYJets_cUp");
+TH2F *SFl_hist_XSec_BRUnc_DYJets_cDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_DYJets_cDown");
+TH2F *SFb_hist_XSec_BRUnc_WJets_cUp=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_WJets_cUp");
+TH2F *SFb_hist_XSec_BRUnc_WJets_cDo=(TH2F*)f_ctag->Get("SFb_hist_XSec_BRUnc_WJets_cDown");
+TH2F *SFc_hist_XSec_BRUnc_WJets_cUp=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_WJets_cUp");
+TH2F *SFc_hist_XSec_BRUnc_WJets_cDo=(TH2F*)f_ctag->Get("SFc_hist_XSec_BRUnc_WJets_cDown");
+TH2F *SFl_hist_XSec_BRUnc_WJets_cUp=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_WJets_cUp");
+TH2F *SFl_hist_XSec_BRUnc_WJets_cDo=(TH2F*)f_ctag->Get("SFl_hist_XSec_BRUnc_WJets_cDown");
 TH2F *SFb_hist_jerUp=(TH2F*)f_ctag->Get("SFb_hist_jerUp");
 TH2F *SFb_hist_jerDo=(TH2F*)f_ctag->Get("SFb_hist_jerDown");
 TH2F *SFc_hist_jerUp=(TH2F*)f_ctag->Get("SFc_hist_jerUp");
@@ -281,18 +269,18 @@ float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID,
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_EleIDSFUp->GetBinContent(SFc_hist_EleIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_EleIDSFUp->GetBinContent(SFb_hist_EleIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_EleIDSFUp->GetBinContent(SFl_hist_EleIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_ExtrapUp->GetBinContent(SFc_hist_ExtrapUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_ExtrapUp->GetBinContent(SFb_hist_ExtrapUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_ExtrapUp->GetBinContent(SFl_hist_ExtrapUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==4){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_EleIDSFDo->GetBinContent(SFc_hist_EleIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_EleIDSFDo->GetBinContent(SFb_hist_EleIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_EleIDSFDo->GetBinContent(SFl_hist_EleIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_ExtrapDo->GetBinContent(SFc_hist_ExtrapDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_ExtrapDo->GetBinContent(SFb_hist_ExtrapDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_ExtrapDo->GetBinContent(SFl_hist_ExtrapDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==5){
@@ -335,18 +323,18 @@ float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID,
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_MuIDSFUp->GetBinContent(SFc_hist_MuIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_MuIDSFUp->GetBinContent(SFb_hist_MuIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_MuIDSFUp->GetBinContent(SFl_hist_MuIDSFUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_InterpUp->GetBinContent(SFc_hist_InterpUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_InterpUp->GetBinContent(SFb_hist_InterpUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_InterpUp->GetBinContent(SFl_hist_InterpUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==10){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_MuIDSFDo->GetBinContent(SFc_hist_MuIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_MuIDSFDo->GetBinContent(SFb_hist_MuIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_MuIDSFDo->GetBinContent(SFl_hist_MuIDSFDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_InterpDo->GetBinContent(SFc_hist_InterpDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_InterpDo->GetBinContent(SFb_hist_InterpDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_InterpDo->GetBinContent(SFl_hist_InterpDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==11){
@@ -407,93 +395,57 @@ float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID,
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_DYJetsUp->GetBinContent(SFc_hist_XSec_DYJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_DYJetsUp->GetBinContent(SFb_hist_XSec_DYJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_DYJetsUp->GetBinContent(SFl_hist_XSec_DYJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_DYJets_bUp->GetBinContent(SFc_hist_XSec_BRUnc_DYJets_bUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_DYJets_bUp->GetBinContent(SFb_hist_XSec_BRUnc_DYJets_bUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_DYJets_bUp->GetBinContent(SFl_hist_XSec_BRUnc_DYJets_bUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==18){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_DYJetsDo->GetBinContent(SFc_hist_XSec_DYJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_DYJetsDo->GetBinContent(SFb_hist_XSec_DYJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_DYJetsDo->GetBinContent(SFl_hist_XSec_DYJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_DYJets_bDo->GetBinContent(SFc_hist_XSec_BRUnc_DYJets_bDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_DYJets_bDo->GetBinContent(SFb_hist_XSec_BRUnc_DYJets_bDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_DYJets_bDo->GetBinContent(SFl_hist_XSec_BRUnc_DYJets_bDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==19){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_STUp->GetBinContent(SFc_hist_XSec_STUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_STUp->GetBinContent(SFb_hist_XSec_STUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_STUp->GetBinContent(SFl_hist_XSec_STUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_DYJets_cUp->GetBinContent(SFc_hist_XSec_BRUnc_DYJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_DYJets_cUp->GetBinContent(SFb_hist_XSec_BRUnc_DYJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_DYJets_cUp->GetBinContent(SFl_hist_XSec_BRUnc_DYJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==20){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_STDo->GetBinContent(SFc_hist_XSec_STDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_STDo->GetBinContent(SFb_hist_XSec_STDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_STDo->GetBinContent(SFl_hist_XSec_STDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_DYJets_cDo->GetBinContent(SFc_hist_XSec_BRUnc_DYJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_DYJets_cDo->GetBinContent(SFb_hist_XSec_BRUnc_DYJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_DYJets_cDo->GetBinContent(SFl_hist_XSec_BRUnc_DYJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==21){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_VVUp->GetBinContent(SFc_hist_XSec_VVUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_VVUp->GetBinContent(SFb_hist_XSec_VVUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_VVUp->GetBinContent(SFl_hist_XSec_VVUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_WJets_cUp->GetBinContent(SFc_hist_XSec_BRUnc_WJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_WJets_cUp->GetBinContent(SFb_hist_XSec_BRUnc_WJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_WJets_cUp->GetBinContent(SFl_hist_XSec_BRUnc_WJets_cUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==22){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_VVDo->GetBinContent(SFc_hist_XSec_VVDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_VVDo->GetBinContent(SFb_hist_XSec_VVDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_VVDo->GetBinContent(SFl_hist_XSec_VVDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_BRUnc_WJets_cDo->GetBinContent(SFc_hist_XSec_BRUnc_WJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_BRUnc_WJets_cDo->GetBinContent(SFb_hist_XSec_BRUnc_WJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
+      else sf*=SFl_hist_XSec_BRUnc_WJets_cDo->GetBinContent(SFl_hist_XSec_BRUnc_WJets_cDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
   else if(iw==23){
-  for (int i=0; i<njet;i++)
-    { int id_temp=jetid[i];
-      if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_WJetsUp->GetBinContent(SFc_hist_XSec_WJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_WJetsUp->GetBinContent(SFb_hist_XSec_WJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_WJetsUp->GetBinContent(SFl_hist_XSec_WJetsUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-    }
-  }
-  else if(iw==24){
-  for (int i=0; i<njet;i++)
-    { int id_temp=jetid[i];
-      if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_WJetsDo->GetBinContent(SFc_hist_XSec_WJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_WJetsDo->GetBinContent(SFb_hist_XSec_WJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_WJetsDo->GetBinContent(SFl_hist_XSec_WJetsDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-    }
-  }
-  else if(iw==25){
-  for (int i=0; i<njet;i++)
-    { int id_temp=jetid[i];
-      if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_ttbarUp->GetBinContent(SFc_hist_XSec_ttbarUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_ttbarUp->GetBinContent(SFb_hist_XSec_ttbarUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_ttbarUp->GetBinContent(SFl_hist_XSec_ttbarUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
-    }
-  }
-  else if(iw==26){
-  for (int i=0; i<njet;i++)
-    { int id_temp=jetid[i];
-      if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
-      if (jethadflav[id_temp]==4) sf*=SFc_hist_XSec_ttbarDo->GetBinContent(SFc_hist_XSec_ttbarDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else if (jethadflav[id_temp]==5) sf*=SFb_hist_XSec_ttbarDo->GetBinContent(SFb_hist_XSec_ttbarDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-      else sf*=SFl_hist_XSec_ttbarDo->GetBinContent(SFl_hist_XSec_ttbarDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
-    }
-  }
-  else if(iw==27){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
@@ -502,7 +454,7 @@ float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID,
       else sf*=SFl_hist_jerUp->GetBinContent(SFl_hist_jerUp->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
-  else if(iw==28){
+  else if(iw==24){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;
@@ -511,7 +463,7 @@ float ctagSF(ROOT::VecOps::RVec<Int_t> jetid, ROOT::VecOps::RVec<Int_t> jetpuID,
       else sf*=SFl_hist_jerDo->GetBinContent(SFl_hist_jerDo->FindBin(cvfl[id_temp],cvfb[id_temp]));
     }
   }
-  else if(iw==29){
+  else if(iw==25){
   for (int i=0; i<njet;i++)
     { int id_temp=jetid[i];
       if (jetpt[id_temp]<50 && jetpuID[id_temp]==0)continue;

@@ -1024,7 +1024,8 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 
    //normalize histo to value without ctag
    if ((!(weight_name.find("ctag")!= string::npos)) && (sample_type==0 || sample_type==1)){
-     if (histBdtG->Integral() > 0.0) histBdtG->Scale(ctag_norm/histBdtG->Integral());
+     cout << "weight_name in normalized: " << weight_name << endl;
+     if (fabs(histBdtG->Integral()) > 0.0) histBdtG->Scale(ctag_norm/histBdtG->Integral());
    }
    cout << "Final histBdtG->Integral(): " << histBdtG->Integral() << endl;
 
@@ -1236,7 +1237,9 @@ int TMVAClassificationApplication()
       {
         htemp=Getoutput("",signal_input,signal_xs,eff_N_signal,weights[iw],"central",mass,channels[ic],type_, cp, 0);
         if(iw==0)ctagnorms.push_back(htemp->Integral());
-        if(iw>0 && weights[iw].find("ctag")!= string::npos)htemp->Scale(ctagnorms[0]/htemp->Integral());
+        if(iw>0 && weights[iw].find("ctag")!= string::npos){
+	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[0]/htemp->Integral());
+	}
         target->cd();
         htemp->Write();
       }
@@ -1246,7 +1249,9 @@ int TMVAClassificationApplication()
         cout<<"start loop process:"<<samples[is]<<endl;
         htemp=Getoutput("",samples[is],xss[is],eff_N[is],weights[iw],"central",mass,channels[ic],type_, cp, 0);
         if(iw==0)ctagnorms.push_back(htemp->Integral());
-        if(iw>0 && weights[iw].find("ctag")!= string::npos)htemp->Scale(ctagnorms[is+1]/htemp->Integral());
+        if(iw>0 && weights[iw].find("ctag")!= string::npos){ // after BTV meeting we should fix this as well
+	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[is+1]/htemp->Integral());
+	}
         target->cd();
         htemp->Write();
      }

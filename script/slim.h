@@ -71,6 +71,8 @@ float fake_weight(int ttc_region, bool ttc_1P1F, bool ttc_0P2F, bool ttc_lep1_fa
 TFile*f_chargeflip=TFile::Open("../../data/ChargeFlipProbability_"+era+"_MLE.root");
 TH2D*Prob_data=(TH2D*)f_chargeflip->Get("data_CFRate");
 TH2D*Prob_mc=(TH2D*)f_chargeflip->Get("MC_CFRate");
+TH2D*Cov_data=(TH2D*)f_chargeflip->Get("data_CovMatrix");
+TH2D*Cov_MC=(TH2D*)f_chargeflip->Get("MC_CovMatrix");
 TH1D*Chaflip_unc=(TH1D*)f_chargeflip->Get("overall_sys");
 float Chaflip_unc_num=Chaflip_unc->GetBinContent(1);
 
@@ -130,10 +132,36 @@ float chargeflip_SF(int OS_flag, float lep1_pt, float lep1_eta, float lep1_phi, 
     float prob2_data=Prob_data->GetBinContent(Prob_data->FindBin(lep2_pt,abs(lep2_eta)));
     float prob1_mc=Prob_mc->GetBinContent(Prob_mc->FindBin(lep1_pt,abs(lep1_eta)));
     float prob2_mc=Prob_mc->GetBinContent(Prob_mc->FindBin(lep2_pt,abs(lep2_eta)));
-    sf=(prob1_data+prob2_data-2*prob1_data*prob2_data)/(prob1_mc+prob2_mc-2*prob1_mc*prob2_mc);
+
+    int pt1_index  = ((Prob_data->FindBin(lep1_pt,abs(lep1_eta)))%(Prob_data->GetNbinsX()+2))-1;
+    int pt2_index  = ((Prob_data->FindBin(lep2_pt,abs(lep2_eta)))%(Prob_data->GetNbinsX()+2))-1;
+    int eta1_index = ((Prob_data->FindBin(lep1_pt,abs(lep1_eta)))/(Prob_data->GetNbinsX()+2))-1;
+    int eta2_index = ((Prob_data->FindBin(lep2_pt,abs(lep2_eta)))/(Prob_data->GetNbinsX()+2))-1;
+    int index1     = pt1_index*Prob_data->GetNbinsY() + eta1_index + 1;
+    int index2     = pt2_index*Prob_data->GetNbinsY() + eta2_index + 1;
+    float data_error2_p1   = Cov_data->GetBinContent(index1,index1);
+    float data_error2_p2   = Cov_data->GetBinContent(index2,index2);
+    float data_error2_p1p2 = Cov_data->GetBinContent(index1,index2);
+    float data_error2      = ((1.-2.*prob2_data)*(1.-2.*prob2_data))*data_error2_p1 + ((1.-2.*prob1_data)*(1.-2.*prob1_data))*data_error2_p2 + 2.*(1.-2.*prob1_data)*(1.-2.*prob2_data)*data_error2_p1p2;
+    float MC_error2_p1     = Cov_MC->GetBinContent(index1,index1);
+    float MC_error2_p2     = Cov_MC->GetBinContent(index2,index2);
+    float MC_error2_p1p2   = Cov_MC->GetBinContent(index1,index2);
+    float MC_error2        = ((1.-2.*prob2_mc)*(1.-2.*prob2_mc))*MC_error2_p1 + ((1.-2.*prob1_mc)*(1.-2.*prob1_mc))*MC_error2_p2 + 2.*(1.-2.*prob1_mc)*(1.-2.*prob2_mc)*MC_error2_p1p2;
+    
+    float prob_data = prob1_data + prob2_data - 2*prob1_data*prob2_data;
+    float prob_MC   = prob1_mc   + prob2_mc   - 2*prob1_mc*prob2_mc;
+
+    sf=prob_data/prob_MC;
+
+    float sf_stat_error    = sqrt((data_error2/(prob_data*prob_data)) + (MC_error2/(prob_MC*prob_MC)))*sf
     if(iw==0) return sf;
-    if(iw==1) return (sf*(1.+Chaflip_unc_num));
-    if(iw==2) return (sf*(1.-Chaflip_unc_num));
+    if(iw==1) return (sf*(1.+Chaflip_unc_num)); //SystUp
+    if(iw==2) return (sf*(1.-Chaflip_unc_num)); //SystDown
+    if(iw==3) return (sf+sf_stat_error);        //StatUp
+    if(iw==4){                                  //StatDown
+      if((sf-sf_stat_error) > 0) return sf-sf_stat_error;
+      else                       return 0.;
+    }
   }
   else {return 1.;}
 }

@@ -137,8 +137,8 @@ float chargeflip_SF(int OS_flag, float lep1_pt, float lep1_eta, float lep1_phi, 
     int pt2_index  = ((Prob_data->FindBin(lep2_pt,abs(lep2_eta)))%(Prob_data->GetNbinsX()+2))-1;
     int eta1_index = ((Prob_data->FindBin(lep1_pt,abs(lep1_eta)))/(Prob_data->GetNbinsX()+2))-1;
     int eta2_index = ((Prob_data->FindBin(lep2_pt,abs(lep2_eta)))/(Prob_data->GetNbinsX()+2))-1;
-    int index1     = pt1_index*Prob_data->GetNbinsY() + eta1_index + 1;
-    int index2     = pt2_index*Prob_data->GetNbinsY() + eta2_index + 1;
+    int index1     = pt1_index*(Prob_data->GetNbinsY()) + eta1_index + 1;
+    int index2     = pt2_index*(Prob_data->GetNbinsY()) + eta2_index + 1;
     float data_error2_p1   = Cov_data->GetBinContent(index1,index1);
     float data_error2_p2   = Cov_data->GetBinContent(index2,index2);
     float data_error2_p1p2 = Cov_data->GetBinContent(index1,index2);
@@ -153,7 +153,7 @@ float chargeflip_SF(int OS_flag, float lep1_pt, float lep1_eta, float lep1_phi, 
 
     sf=prob_data/prob_MC;
 
-    float sf_stat_error    = sqrt((data_error2/(prob_data*prob_data)) + (MC_error2/(prob_MC*prob_MC)))*sf
+    float sf_stat_error    = sqrt((data_error2/(prob_data*prob_data)) + (MC_error2/(prob_MC*prob_MC)))*sf;
     if(iw==0) return sf;
     if(iw==1) return (sf*(1.+Chaflip_unc_num)); //SystUp
     if(iw==2) return (sf*(1.-Chaflip_unc_num)); //SystDown
@@ -178,7 +178,7 @@ TH2D *diele_trigger=(TH2D*)f_trigger->Get("h2D_SF_ee_SF_l1l2pt");
 TH2D *dimu_trigger=(TH2D*)f_trigger->Get("h2D_SF_mumu_SF_l1l2pt");
 TH2D *muele_trigger=(TH2D*)f_trigger->Get("h2D_SF_emu_SF_l1l2pt");
 
-TFile*f_ctag=TFile::Open("../../data/DeepJet_ctagSF.root");
+TFile*f_ctag=TFile::Open("../../data/DeepJet_ctagSF_Summer"+era+"UL.root");
 TH2F *SFb_hist=(TH2F*)f_ctag->Get("SFb_hist");
 TH2F *SFc_hist=(TH2F*)f_ctag->Get("SFc_hist");
 TH2F *SFl_hist=(TH2F*)f_ctag->Get("SFl_hist");

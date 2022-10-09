@@ -971,7 +971,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	 else if(weight_name=="sig_psdo"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo;
-WeightFSRup","ctag_PSWeightFSRdo"
+         }
 	 // ctag uncertainty
 	 else if(weight_name=="ctag_statup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_statup);
 	 else if(weight_name=="ctag_statdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_statdo);

@@ -649,7 +649,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    TTree* theTree = (TTree*)input_f->Get("SlimTree");
 
    Float_t genweight, puWeight, puWeightUp, puWeightDown, trig_SF, trig_SFup, trig_SFdo, mu_id, mu_id_sysup, mu_id_sysdo, mu_id_statup, mu_id_statdo, ele_id, ele_id_sysup, ele_id_sysdo, ele_id_statup, ele_id_statdo;
-   Float_t ctag_SF, ctag_SF_statup, ctag_SF_statdo, ctag_SF_EleIDup, ctag_SF_EleIDdo, ctag_SF_LHEScaleWeightmuFup, ctag_SF_LHEScaleWeightmuFdo, ctag_SF_LHEScaleWeightmuRup, ctag_SF_LHEScaleWeightmuRdo, ctag_SF_MuIDup, ctag_SF_MuIDdo, ctag_SF_PSWeightFSRup, ctag_SF_PSWeightFSRdo, ctag_SF_PUWeightup, ctag_SF_PUWeightdo, ctag_SF_XSec_DYJetsup, ctag_SF_XSec_DYJetsdo, ctag_SF_XSec_STup, ctag_SF_XSec_STdo, ctag_SF_XSec_VVup, ctag_SF_XSec_VVdo, ctag_SF_XSec_WJetsup, ctag_SF_XSec_WJetsdo, ctag_SF_XSec_ttbarup, ctag_SF_XSec_ttbardo, ctag_SF_jerup, ctag_SF_jerdo, ctag_SF_jesTotalup, ctag_SF_jesTotaldo, charFlip_SF, charFlip_SFup, charFlip_SFdo, sig_pdfup, sig_pdfdo, sig_scaleup, sig_scaledo, sig_psup, sig_psdo;
+   Float_t ctag_SF, ctag_SF_statup, ctag_SF_statdo, ctag_SF_Extrapup, ctag_SF_Extrapdo, ctag_SF_LHEScaleWeightmuFup, ctag_SF_LHEScaleWeightmuFdo, ctag_SF_LHEScaleWeightmuRup, ctag_SF_LHEScaleWeightmuRdo, ctag_SF_Interpup, ctag_SF_Interpdo, ctag_SF_PSWeightFSRup, ctag_SF_PSWeightFSRdo, ctag_SF_PUWeightup, ctag_SF_PUWeightdo, ctag_SF_XSec_BRUnc_DYJets_bup, ctag_SF_XSec_BRUnc_DYJets_bdo, ctag_SF_XSec_BRUnc_DYJets_cup, ctag_SF_XSec_BRUnc_DYJets_cdo, ctag_SF_XSec_BRUnc_WJets_cup, ctag_SF_XSec_BRUnc_WJets_cdo, ctag_SF_jerup, ctag_SF_jerdo, ctag_SF_jesTotalup, ctag_SF_jesTotaldo, charFlip_SF, charFlip_SFstatup, charFlip_SFstatdo, charFlip_SFsystup, charFlip_SFsystdo, sig_pdfup, sig_pdfdo, sig_scaleup, sig_scaledo, sig_psup, sig_psdo;
    Float_t fakeweight;
 
    theTree->SetBranchAddress( "ttc_region", &ttc_region );
@@ -687,35 +687,35 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ele_id_statdo", &ele_id_statdo);
      theTree->SetBranchAddress( "ctag_SF", &ctag_SF);
      theTree->SetBranchAddress( "ctag_SF_statup", &ctag_SF_statup);    theTree->SetBranchAddress( "ctag_SF_statdo", &ctag_SF_statdo);
-     theTree->SetBranchAddress( "ctag_SF_EleIDup", &ctag_SF_EleIDup);
-     theTree->SetBranchAddress( "ctag_SF_EleIDdo", &ctag_SF_EleIDdo);
+     theTree->SetBranchAddress( "ctag_SF_Extrapup", &ctag_SF_Extrapup);
+     theTree->SetBranchAddress( "ctag_SF_Extrapdo", &ctag_SF_Extrapdo);
      theTree->SetBranchAddress( "ctag_SF_LHEScaleWeightmuFup", &ctag_SF_LHEScaleWeightmuFup);
      theTree->SetBranchAddress( "ctag_SF_LHEScaleWeightmuFdo", &ctag_SF_LHEScaleWeightmuFdo);
      theTree->SetBranchAddress( "ctag_SF_LHEScaleWeightmuRup", &ctag_SF_LHEScaleWeightmuRup);
      theTree->SetBranchAddress( "ctag_SF_LHEScaleWeightmuRdo", &ctag_SF_LHEScaleWeightmuRdo);
-     theTree->SetBranchAddress( "ctag_SF_MuIDup", &ctag_SF_MuIDup);
-     theTree->SetBranchAddress( "ctag_SF_MuIDdo", &ctag_SF_MuIDdo);
+     theTree->SetBranchAddress( "ctag_SF_Interpup", &ctag_SF_Interpup);
+     theTree->SetBranchAddress( "ctag_SF_Interpdo", &ctag_SF_Interpdo);
      theTree->SetBranchAddress( "ctag_SF_PSWeightFSRup", &ctag_SF_PSWeightFSRup);
      theTree->SetBranchAddress( "ctag_SF_PSWeightFSRdo", &ctag_SF_PSWeightFSRdo);
+     theTree->SetBranchAddress( "ctag_SF_PSWeightISRup", &ctag_SF_PSWeightISRup);
+     theTree->SetBranchAddress( "ctag_SF_PSWeightISRdo", &ctag_SF_PSWeightISRdo);
      theTree->SetBranchAddress( "ctag_SF_PUWeightup", &ctag_SF_PUWeightup);
      theTree->SetBranchAddress( "ctag_SF_PUWeightdo", &ctag_SF_PUWeightdo);
-     theTree->SetBranchAddress( "ctag_SF_XSec_DYJetsup", &ctag_SF_XSec_DYJetsup);
-     theTree->SetBranchAddress( "ctag_SF_XSec_DYJetsdo", &ctag_SF_XSec_DYJetsdo);
-     theTree->SetBranchAddress( "ctag_SF_XSec_STup", &ctag_SF_XSec_STup);
-     theTree->SetBranchAddress( "ctag_SF_XSec_STdo", &ctag_SF_XSec_STdo);
-     theTree->SetBranchAddress( "ctag_SF_XSec_VVup", &ctag_SF_XSec_VVup);
-     theTree->SetBranchAddress( "ctag_SF_XSec_VVdo", &ctag_SF_XSec_VVdo);
-     theTree->SetBranchAddress( "ctag_SF_XSec_WJetsup", &ctag_SF_XSec_WJetsup);
-     theTree->SetBranchAddress( "ctag_SF_XSec_WJetsdo", &ctag_SF_XSec_WJetsdo);
-     theTree->SetBranchAddress( "ctag_SF_XSec_ttbarup", &ctag_SF_XSec_ttbarup);
-     theTree->SetBranchAddress( "ctag_SF_XSec_ttbardo", &ctag_SF_XSec_ttbardo);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_DYJets_bup", &ctag_SF_XSec_BRUnc_DYJets_bup);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_DYJets_bdo", &ctag_SF_XSec_BRUnc_DYJets_bdo);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_DYJets_cup", &ctag_SF_XSec_BRUnc_DYJets_cup);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_DYJets_cdo", &ctag_SF_XSec_BRUnc_DYJets_cdo);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_WJets_cup", &ctag_SF_XSec_BRUnc_WJets_cup);
+     theTree->SetBranchAddress( "ctag_SF_XSec_BRUnc_WJets_cdo", &ctag_SF_XSec_BRUnc_WJets_cdo);
      theTree->SetBranchAddress( "ctag_SF_jerup", &ctag_SF_jerup);
      theTree->SetBranchAddress( "ctag_SF_jerdo", &ctag_SF_jerdo);
      theTree->SetBranchAddress( "ctag_SF_jesTotalup", &ctag_SF_jesTotalup);
      theTree->SetBranchAddress( "ctag_SF_jesTotaldo", &ctag_SF_jesTotaldo);
      theTree->SetBranchAddress( "charFlip_SF", &charFlip_SF);
-     theTree->SetBranchAddress( "charFlip_SFup", &charFlip_SFup);
-     theTree->SetBranchAddress( "charFlip_SFdo", &charFlip_SFdo);
+     theTree->SetBranchAddress( "charFlip_SFstatup", &charFlip_SFstatup);
+     theTree->SetBranchAddress( "charFlip_SFstatdo", &charFlip_SFstatdo);
+     theTree->SetBranchAddress( "charFlip_SFsystup", &charFlip_SFsystup);
+     theTree->SetBranchAddress( "charFlip_SFsystdo", &charFlip_SFsystdo);
      theTree->SetBranchAddress( "sig_pdfup", &sig_pdfup);
      theTree->SetBranchAddress( "sig_pdfdo", &sig_pdfdo);
      theTree->SetBranchAddress( "sig_scaleup", &sig_scaleup);
@@ -932,14 +932,22 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*0.975*charFlip_SF*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*0.975*charFlip_SF;
 	 }
-	 else if(weight_name=="charFlip_SFup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFup*ctag_SF);
-	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFup;
+	 else if(weight_name=="charFlip_SFstatup"){
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFstatup*ctag_SF);
+	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFstatup;
 	 }
-	 else if(weight_name=="charFlip_SFdo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFdo*ctag_SF);
-	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFdo;
+	 else if(weight_name=="charFlip_SFstatdo"){
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFstatdo*ctag_SF);
+	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFstatdo;
 	 }
+         else if(weight_name=="charFlip_SFsystup"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFsystup*ctag_SF);
+           ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFsystup;
+         }
+         else if(weight_name=="charFlip_SFsystdo"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFsystdo*ctag_SF);
+           ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SFsystdo;
+         }
 	 else if(weight_name=="sig_pdfup"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_pdfup*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_pdfup;
@@ -963,32 +971,30 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	 else if(weight_name=="sig_psdo"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo;
-	 }
+         }
 	 // ctag uncertainty
 	 else if(weight_name=="ctag_statup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_statup);
 	 else if(weight_name=="ctag_statdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_statdo);
-	 else if(weight_name=="ctag_EleIDup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_EleIDup);
-	 else if(weight_name=="ctag_EleIDdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_EleIDdo);
+	 else if(weight_name=="ctag_Extrapup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_Extrapup);
+	 else if(weight_name=="ctag_Extrapdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_Extrapdo);
 	 else if(weight_name=="ctag_LHEScaleWeightmuFup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_LHEScaleWeightmuFup);
 	 else if(weight_name=="ctag_LHEScaleWeightmuFdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_LHEScaleWeightmuFdo);
 	 else if(weight_name=="ctag_LHEScaleWeightmuRup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_LHEScaleWeightmuRup);
 	 else if(weight_name=="ctag_LHEScaleWeightmuRdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_LHEScaleWeightmuRdo);
-	 else if(weight_name=="ctag_MuIDup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_MuIDup);
-	 else if(weight_name=="ctag_MuIDdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_MuIDdo);
+	 else if(weight_name=="ctag_Interpup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_Interpup);
+	 else if(weight_name=="ctag_Interpdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_Interpdo);
 	 else if(weight_name=="ctag_PSWeightFSRup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PSWeightFSRup);
 	 else if(weight_name=="ctag_PSWeightFSRdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PSWeightFSRdo);
+         else if(weight_name=="ctag_PSWeightISRup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PSWeightISRup);
+         else if(weight_name=="ctag_PSWeightISRdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PSWeightISRdo);
 	 else if(weight_name=="ctag_PUWeightup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PUWeightup);
 	 else if(weight_name=="ctag_PUWeightdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PUWeightdo);
-	 else if(weight_name=="ctag_XSec_DYJetsup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_DYJetsup);
-	 else if(weight_name=="ctag_XSec_DYJetsdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_DYJetsdo);
-	 else if(weight_name=="ctag_XSec_STup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_STup);
-	 else if(weight_name=="ctag_XSec_STdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_STdo);
-	 else if(weight_name=="ctag_XSec_VVup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_VVup);
-	 else if(weight_name=="ctag_XSec_VVdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_VVdo);
-	 else if(weight_name=="ctag_XSec_WJetsup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_WJetsup);
-	 else if(weight_name=="ctag_XSec_WJetsdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_WJetsdo);
-	 else if(weight_name=="ctag_XSec_ttbarup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_ttbarup);
-	 else if(weight_name=="ctag_XSec_ttbardo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_ttbardo);
+	 else if(weight_name=="ctag_XSec_BRUnc_DYJets_bup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_DYJets_bup);
+	 else if(weight_name=="ctag_XSec_BRUnc_DYJets_bdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_DYJets_bdo);
+	 else if(weight_name=="ctag_XSec_BRUnc_DYJets_cup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_DYJets_cup);
+	 else if(weight_name=="ctag_XSec_BRUnc_DYJets_cdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_DYJets_cdo);
+	 else if(weight_name=="ctag_XSec_BRUnc_WJets_cup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_WJets_cup);
+	 else if(weight_name=="ctag_XSec_BRUnc_WJets_cdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_XSec_BRUnc_WJets_cdo);
 	 else if(weight_name=="ctag_jerup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jerup);
 	 else if(weight_name=="ctag_jerdo")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jerdo);
 	 else if(weight_name=="ctag_jesTotalup")histBdtG   ->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jesTotalup);
@@ -1099,8 +1105,10 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
     if(channel=="em"){                name_wgt = "_elemuTriggerYEARDown";}
     if(channel=="mm"){                name_wgt = "_dimuTriggerYEARDown";}
    }
-   if (weight_name=="charFlip_SFup")  name_wgt = "_chargeflipYEARUp";
-   if (weight_name=="charFlip_SFdo")  name_wgt = "_chargeflipYEARDown";
+   if (weight_name=="charFlip_SFstatup")  name_wgt = "_chargeflipYEARstatUp";
+   if (weight_name=="charFlip_SFstatdo")  name_wgt = "_chargeflipYEARstatDown";
+   if (weight_name=="charFlip_SFsystup")  name_wgt = "_chargeflipYEARsystUp";
+   if (weight_name=="charFlip_SFsystdo")  name_wgt = "_chargeflipYEARsystDown";
    if (weight_name=="sig_pdfup")      name_wgt = "_sigYEARpdfUp";
    if (weight_name=="sig_pdfdo")      name_wgt = "_sigYEARpdfDown";
    if (weight_name=="sig_scaleup")    name_wgt = "_sigYEARscaleUp";
@@ -1110,28 +1118,26 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    //ctag
    if (weight_name=="ctag_statup")    name_wgt = "_ctagYEARstatUp";
    if (weight_name=="ctag_statdo")    name_wgt = "_ctagYEARstatDown";
-   if (weight_name=="ctag_EleIDup")   name_wgt = "_ctagYEAREleIDUp";
-   if (weight_name=="ctag_EleIDdo")   name_wgt = "_ctagYEAREleIDDown";
+   if (weight_name=="ctag_Extrapup")   name_wgt = "_ctagYEARExtrapUp";
+   if (weight_name=="ctag_Extrapdo")   name_wgt = "_ctagYEARExtrapDown";
    if (weight_name=="ctag_LHEScaleWeightmuFup") name_wgt = "_ctagYEARLHEmuFUp";
    if (weight_name=="ctag_LHEScaleWeightmuFdo") name_wgt = "_ctagYEARLHEmuFDown";
    if (weight_name=="ctag_LHEScaleWeightmuRup") name_wgt = "_ctagYEARLHEmuRUp";
    if (weight_name=="ctag_LHEScaleWeightmuRdo") name_wgt = "_ctagYEARLHEmuRDown";
-   if (weight_name=="ctag_MuIDup")              name_wgt = "_ctagYEARmuIDUp";
-   if (weight_name=="ctag_MuIDdo")              name_wgt = "_ctagYEARmuIDDown";
+   if (weight_name=="ctag_Interpup")              name_wgt = "_ctagYEARInterpUp";
+   if (weight_name=="ctag_Interpdo")              name_wgt = "_ctagYEARInterpDown";
    if (weight_name=="ctag_PSWeightFSRup")       name_wgt = "_ctagYEARPSFSRUp";
    if (weight_name=="ctag_PSWeightFSRdo")       name_wgt = "_ctagYEARPSFSRDown";
+   if (weight_name=="ctag_PSWeightISRup")       name_wgt = "_ctagYEARPSISRUp";
+   if (weight_name=="ctag_PSWeightISRdo")       name_wgt = "_ctagYEARPSISRDown";
    if (weight_name=="ctag_PUWeightup")          name_wgt = "_ctagYEARPUUp";
    if (weight_name=="ctag_PUWeightdo")          name_wgt = "_ctagYEARPUDown";
-   if (weight_name=="ctag_XSec_DYJetsup")       name_wgt = "_ctagDYXSUp";
-   if (weight_name=="ctag_XSec_DYJetsdo")       name_wgt = "_ctagDYXSDown";
-   if (weight_name=="ctag_XSec_STup")           name_wgt = "_ctagSTXSUp";
-   if (weight_name=="ctag_XSec_STdo")           name_wgt = "_ctagSTXSDown";
-   if (weight_name=="ctag_XSec_VVup")           name_wgt = "_ctagVVXSUp";
-   if (weight_name=="ctag_XSec_VVdo")           name_wgt = "_ctagVVXSDown";
-   if (weight_name=="ctag_XSec_WJetsup")        name_wgt = "_ctagWJetXSUp";
-   if (weight_name=="ctag_XSec_WJetsdo")        name_wgt = "_ctagWJetXSDown";
-   if (weight_name=="ctag_XSec_ttbarup")        name_wgt = "_ctagTTXSUp";
-   if (weight_name=="ctag_XSec_ttbardo")        name_wgt = "_ctagTTXSDown";
+   if (weight_name=="ctag_XSec_BRUnc_DYJets_bup")       name_wgt = "_ctagDYXSbUp";
+   if (weight_name=="ctag_XSec_BRUnc_DYJets_bdo")       name_wgt = "_ctagDYXSbDown";
+   if (weight_name=="ctag_XSec_BRUnc_DYJets_cup")           name_wgt = "_ctagDYXScUp";
+   if (weight_name=="ctag_XSec_BRUnc_DYJets_cdo")           name_wgt = "_ctagDYXScDown";
+   if (weight_name=="ctag_XSec_BRUnc_WJets_cup")           name_wgt = "_ctagWJetsXScUp";
+   if (weight_name=="ctag_XSec_BRUnc_WJets_cdo")           name_wgt = "_ctagWJetsXScDown";
    if (weight_name=="ctag_jerup")               name_wgt = "_ctagJERUp";
    if (weight_name=="ctag_jerdo")               name_wgt = "_ctagJERDown";
    if (weight_name=="ctag_jesTotalup")          name_wgt = "_ctagJESUp";
@@ -1201,7 +1207,7 @@ int TMVAClassificationApplication()
    //   eff_N.push_back(1935527);
    //   eff_N.push_back(3455733.0);
    
-  string weights[52]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_EleIDup","ctag_EleIDdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_MuIDup","ctag_MuIDdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_DYJetsup","ctag_XSec_DYJetsdo","ctag_XSec_STup","ctag_XSec_STdo","ctag_XSec_VVup","ctag_XSec_VVdo","ctag_XSec_WJetsup","ctag_XSec_WJetsdo","ctag_XSec_ttbarup","ctag_XSec_ttbardo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFup","charFlip_SFdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo"};
+  string weights[52]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo"};
 
   string system_unc[6]={"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo"};
   string channels[3]={"ee","em","mm"};

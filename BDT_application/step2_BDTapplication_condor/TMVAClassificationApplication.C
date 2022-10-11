@@ -537,7 +537,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
          TString methodName = TString(it->first) + TString(" method");
          TString weightfile = dir + prefix + TString("_") + TString(it->first) + TString(".weights.xml");
          reader->BookMVA( methodName, weightfile );
-      }
+      } 
    }
 
    // Book output histograms
@@ -649,7 +649,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    TTree* theTree = (TTree*)input_f->Get("SlimTree");
 
    Float_t genweight, puWeight, puWeightUp, puWeightDown, trig_SF, trig_SFup, trig_SFdo, mu_id, mu_id_sysup, mu_id_sysdo, mu_id_statup, mu_id_statdo, ele_id, ele_id_sysup, ele_id_sysdo, ele_id_statup, ele_id_statdo;
-   Float_t ctag_SF, ctag_SF_statup, ctag_SF_statdo, ctag_SF_Extrapup, ctag_SF_Extrapdo, ctag_SF_LHEScaleWeightmuFup, ctag_SF_LHEScaleWeightmuFdo, ctag_SF_LHEScaleWeightmuRup, ctag_SF_LHEScaleWeightmuRdo, ctag_SF_Interpup, ctag_SF_Interpdo, ctag_SF_PSWeightISRup, ctag_SF_PSWeightISRdo, ctag_SF_PSWeightFSRup, ctag_SF_PSWeightFSRdo, ctag_SF_PUWeightup, ctag_SF_PUWeightdo, ctag_SF_XSec_BRUnc_DYJets_bup, ctag_SF_XSec_BRUnc_DYJets_bdo, ctag_SF_XSec_BRUnc_DYJets_cup, ctag_SF_XSec_BRUnc_DYJets_cdo, ctag_SF_XSec_BRUnc_WJets_cup, ctag_SF_XSec_BRUnc_WJets_cdo, ctag_SF_jerup, ctag_SF_jerdo, ctag_SF_jesTotalup, ctag_SF_jesTotaldo, charFlip_SF, charFlip_SFstatup, charFlip_SFstatdo, charFlip_SFsystup, charFlip_SFsystdo, sig_pdfup, sig_pdfdo, sig_scaleup, sig_scaledo, sig_psup, sig_psdo;
+   Float_t ctag_SF, ctag_SF_statup, ctag_SF_statdo, ctag_SF_Extrapup, ctag_SF_Extrapdo, ctag_SF_LHEScaleWeightmuFup, ctag_SF_LHEScaleWeightmuFdo, ctag_SF_LHEScaleWeightmuRup, ctag_SF_LHEScaleWeightmuRdo, ctag_SF_Interpup, ctag_SF_Interpdo, ctag_SF_PSWeightISRup, ctag_SF_PSWeightISRdo, ctag_SF_PSWeightFSRup, ctag_SF_PSWeightFSRdo, ctag_SF_PUWeightup, ctag_SF_PUWeightdo, ctag_SF_XSec_BRUnc_DYJets_bup, ctag_SF_XSec_BRUnc_DYJets_bdo, ctag_SF_XSec_BRUnc_DYJets_cup, ctag_SF_XSec_BRUnc_DYJets_cdo, ctag_SF_XSec_BRUnc_WJets_cup, ctag_SF_XSec_BRUnc_WJets_cdo, ctag_SF_jerup, ctag_SF_jerdo, ctag_SF_jesTotalup, ctag_SF_jesTotaldo, charFlip_SF, charFlip_SFstatup, charFlip_SFstatdo, charFlip_SFsystup, charFlip_SFsystdo, sig_pdfup, sig_pdfdo, sig_scaleup, sig_scaledo, sig_psup, sig_psdo, prefireWeight, prefireWeightup, prefireWeightdo;
    Float_t fakeweight;
 
    theTree->SetBranchAddress( "ttc_region", &ttc_region );
@@ -722,6 +722,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "sig_scaledo", &sig_scaledo);
      theTree->SetBranchAddress( "sig_psup", &sig_psup);
      theTree->SetBranchAddress( "sig_psdo", &sig_psdo);
+     theTree->SetBranchAddress( "PrefireWeight", &prefireWeight);
+     theTree->SetBranchAddress( "PrefireWeight_Up", &prefireWeightup);
+     theTree->SetBranchAddress( "PrefireWeight_Down", &prefireWeightdo);
    }
    else if(sample_type==2){ //fakelep
      theTree->SetBranchAddress( "fakeweight", &fakeweight);
@@ -730,6 +733,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    else if(sample_type==3){ //fakelep_mc
      theTree->SetBranchAddress( "genweight", &genweight);
      theTree->SetBranchAddress( "puWeight", &puWeight);
+     theTree->SetBranchAddress( "PrefireWeight", &prefireWeight); // Not sure if needed (Terry).
      theTree->SetBranchAddress( "trig_SF", &trig_SF);
      theTree->SetBranchAddress( "mu_id", &mu_id);
      theTree->SetBranchAddress( "ele_id", &ele_id);
@@ -876,6 +880,14 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
+         else if(weight_name=="prefire_up"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+           ctag_norm+=genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+         }
+         else if(weight_name=="prefire_down"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+           ctag_norm+=genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+         }
 	 else if(weight_name=="muID_sysup"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id_sysup*ele_id*trig_SF*charFlip_SF*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id_sysup*ele_id*trig_SF*charFlip_SF;
@@ -1207,7 +1219,7 @@ int TMVAClassificationApplication()
    //   eff_N.push_back(1935527);
    //   eff_N.push_back(3455733.0);
    
-  string weights[52]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo"};
+  string weights[54]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
 
   string system_unc[6]={"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo"};
   string channels[3]={"ee","em","mm"};
@@ -1238,13 +1250,13 @@ int TMVAClassificationApplication()
     std::vector<float> ctagnorms;
     std::cout<<"start looping weights"<<std::endl;
     for(int iw=0;iw<52;iw++){
-      // signal don't need charge flip SF
+      // signal don't need charge flip SF (Should be dropped since we take care of it in step1)
       if(!(weights[iw].find("charFlip")!= string::npos))
       {
         htemp=Getoutput("",signal_input,signal_xs,eff_N_signal,weights[iw],"central",mass,channels[ic],type_, cp, 0);
         if(iw==0)ctagnorms.push_back(htemp->Integral());
         if(iw>0 && weights[iw].find("ctag")!= string::npos){
-	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[0]/htemp->Integral());
+	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[0]/htemp->Integral()); 
 	}
         target->cd();
         htemp->Write();

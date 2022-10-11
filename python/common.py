@@ -185,3 +185,13 @@ def GetMETFilter_Data(era):
   MET_filter = " && ".join(MET_filters)
 
   return MET_filter
+
+def DefinePrefireWeight(df_MC_tree, era):
+
+  if era == '2018':
+    df_MC_tree = df_MC_tree.Define("PrefireWeight", "1.");
+    df_MC_tree = df_MC_tree.Define("PrefireWeight_Up", "1.");
+    df_MC_tree = df_MC_tree.Define("PrefireWeight_Down", "1.");
+
+  return df_MC_tree
+

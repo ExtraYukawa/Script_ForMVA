@@ -1219,7 +1219,7 @@ int TMVAClassificationApplication()
    //   eff_N.push_back(1935527);
    //   eff_N.push_back(3455733.0);
    
-  string weights[54]={"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
+  std::vector<string> weights{"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
 
   string system_unc[6]={"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo"};
   string channels[3]={"ee","em","mm"};
@@ -1249,7 +1249,7 @@ int TMVAClassificationApplication()
 
     std::vector<float> ctagnorms;
     std::cout<<"start looping weights"<<std::endl;
-    for(int iw=0;iw<52;iw++){
+    for(int iw=0;iw<weights.size();iw++){
       // signal don't need charge flip SF (Should be dropped since we take care of it in step1)
       if(!(weights[iw].find("charFlip")!= string::npos))
       {

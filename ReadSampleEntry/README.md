@@ -1,4 +1,4 @@
-To run parallel production, use\\
+To run parallel production, use\
 ```
 python run_parallel_production.py [--era=ERA]
 ```

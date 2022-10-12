@@ -40,6 +40,7 @@ def GetNEvent(fin,nick):
   print(json_string)
   with open('nevents.json', 'w') as outfile:
     outfile.write(json_string)
+  filein.Close()
 
 if __name__ == "__main__":
   

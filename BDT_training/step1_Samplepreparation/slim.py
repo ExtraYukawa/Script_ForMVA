@@ -120,7 +120,7 @@ def Slim_module(filein,nin,mass_flag,era):
              .Define("ttc_mllj2_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,tightJets_id_in24,2)")\
              .Define("ttc_mllj3_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,tightJets_id_in24,3)")\
              .Define("ttc_mll_muPtup","mll(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
-             .Define("ttc_mll_muPtdo","mll(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
+             .Define("ttc_mll_muPtdo","mll(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")
 
 
 

@@ -733,7 +733,6 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    else if(sample_type==3){ //fakelep_mc
      theTree->SetBranchAddress( "genweight", &genweight);
      theTree->SetBranchAddress( "puWeight", &puWeight);
-     theTree->SetBranchAddress( "PrefireWeight", &prefireWeight); // Not sure if needed (Terry).
      theTree->SetBranchAddress( "trig_SF", &trig_SF);
      theTree->SetBranchAddress( "mu_id", &mu_id);
      theTree->SetBranchAddress( "ele_id", &ele_id);

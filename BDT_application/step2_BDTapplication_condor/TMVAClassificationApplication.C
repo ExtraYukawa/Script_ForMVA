@@ -1247,16 +1247,18 @@ int TMVAClassificationApplication()
     float signal_xs=Get_signalXS(signal_input);
     cout << "Signal cross-section -->" << signal_xs << endl;
 
-    std::vector<float> ctagnorms;
+    std::vector<float> ctagnorms_beforecalibrated;
+    std::vector<float> ctagnorms_aftercalibrated;
     std::cout<<"start looping weights"<<std::endl;
     for(int iw=0;iw<weights.size();iw++){
       // signal don't need charge flip SF (Should be dropped since we take care of it in step1)
       if(!(weights[iw].find("charFlip")!= string::npos))
       {
         htemp=Getoutput("",signal_input,signal_xs,eff_N_signal,weights[iw],"central",mass,channels[ic],type_, cp, 0);
-        if(iw==0)ctagnorms.push_back(htemp->Integral());
+        if(iw == 0)ctagnorms_beforecalibrated.push_back(htemp->Integral());
+        if(iw == 1)ctagnorms_aftercalibrated.push_back(htemp->Integral());
         if(iw>0 && weights[iw].find("ctag")!= string::npos){
-	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[0]/htemp->Integral()); 
+	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms_beforecalibrated[0]/ctagnorms_aftercalibrated[0]); // Use nominal normalization factor
 	}
         target->cd();
         htemp->Write();
@@ -1266,9 +1268,10 @@ int TMVAClassificationApplication()
       for(int is=0;is<samples.size();is++){
         cout<<"start loop process:"<<samples[is]<<endl;
         htemp=Getoutput("",samples[is],xss[is],eff_N[is],weights[iw],"central",mass,channels[ic],type_, cp, 0);
-        if(iw==0)ctagnorms.push_back(htemp->Integral());
+        if(iw == 0)ctagnorms_beforecalibrated.push_back(htemp->Integral());
+        if(iw == 1)ctagnorms_aftercalibrated.push_back(htemp->Integral());
         if(iw>0 && weights[iw].find("ctag")!= string::npos){ // after BTV meeting we should fix this as well
-	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms[is+1]/htemp->Integral());
+	  if (fabs(htemp->Integral()) > 0.0) htemp->Scale(ctagnorms_beforecalibrated[is+1]/ctagnorms_aftercalibrated[is+1]);
 	}
         target->cd();
         htemp->Write();

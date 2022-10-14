@@ -504,6 +504,47 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
      reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
    }
+   if(system_unc=="muPtup"){
+     reader->AddVariable( "HT", &HT );
+     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
+     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
+     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
+     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
+     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
+     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
+     reader->AddVariable( "dr_j1j2", &dr_j1j2);
+     reader->AddVariable( "dr_j1j3", &dr_j1j3);
+     reader->AddVariable( "dr_j2j3", &dr_j2j3);
+     reader->AddVariable( "ttc_l1_pt_muPtup", &ttc_l1_pt );
+     reader->AddVariable( "ttc_l2_pt_muPtup", &ttc_l2_pt);
+     reader->AddVariable( "ttc_met", &ttc_met);
+     reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
+     reader->AddVariable( "ttc_mll_muPtup", &ttc_mll);
+     reader->AddVariable( "ttc_mllj1_muPtup", &ttc_mllj1);
+     reader->AddVariable( "ttc_mllj2_muPtup", &ttc_mllj2);
+     reader->AddVariable( "ttc_mllj3_muPtup", &ttc_mllj3);
+   }
+   if(system_unc=="muPtdo"){
+     reader->AddVariable( "HT", &HT );
+     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
+     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
+     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
+     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
+     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
+     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
+     reader->AddVariable( "dr_j1j2", &dr_j1j2);
+     reader->AddVariable( "dr_j1j3", &dr_j1j3);
+     reader->AddVariable( "dr_j2j3", &dr_j2j3);
+     reader->AddVariable( "ttc_l1_pt_muPtdo", &ttc_l1_pt );
+     reader->AddVariable( "ttc_l2_pt_muPtdo", &ttc_l2_pt);
+     reader->AddVariable( "ttc_met", &ttc_met);
+     reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
+     reader->AddVariable( "ttc_mll_muPtdo", &ttc_mll);
+     reader->AddVariable( "ttc_mllj1_muPtdo", &ttc_mllj1);
+     reader->AddVariable( "ttc_mllj2_muPtdo", &ttc_mllj2);
+     reader->AddVariable( "ttc_mllj3_muPtdo", &ttc_mllj3);
+   }
+
    // Book the MVA methods
 
    TString dir    = "";
@@ -527,6 +568,12 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    }
    if(system_unc=="unclusterEdo"){
      dir    = "./BDT_weights_6/";
+   }
+   if(system_unc=="muPtup"){
+     dir    = "./BDT_weights_7/";
+   }
+   if(system_unc=="muPtdo"){
+     dir    = "./BDT_weights_8/";
    }
 
    TString prefix = "TMVAClassification";
@@ -662,11 +709,8 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    theTree->SetBranchAddress( "dr_j1j2", &dr_j1j2);
    theTree->SetBranchAddress( "dr_j1j3", &dr_j1j3);
    theTree->SetBranchAddress( "dr_j2j3", &dr_j2j3);
-   theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
-   theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
    theTree->SetBranchAddress( "ttc_l1_eta", &ttc_l1_eta );
    theTree->SetBranchAddress( "ttc_l2_eta", &ttc_l2_eta);
-   theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    if((sample_type==0) || (sample_type==1)){ // MC
      theTree->SetBranchAddress( "genweight", &genweight);
      theTree->SetBranchAddress( "puWeight", &puWeight);
@@ -747,6 +791,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="jesup"){
      theTree->SetBranchAddress( "HT_jesup", &HT );
@@ -755,6 +802,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1_jesup", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2_jesup", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3_jesup", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="jesdo"){
      theTree->SetBranchAddress( "HT_jesdo", &HT );
@@ -763,6 +813,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1_jesdo", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2_jesdo", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3_jesdo", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="jerup"){
      theTree->SetBranchAddress( "HT_jerup", &HT );
@@ -771,6 +824,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1_jerup", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2_jerup", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3_jerup", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="jerdo"){
      theTree->SetBranchAddress( "HT_jerdo", &HT );
@@ -779,6 +835,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1_jerdo", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2_jerdo", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3_jerdo", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="unclusterEup"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -787,6 +846,9 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
    if(system_unc=="unclusterEdo"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -795,7 +857,33 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_mllj1", &ttc_mllj1);
      theTree->SetBranchAddress( "ttc_mllj2", &ttc_mllj2);
      theTree->SetBranchAddress( "ttc_mllj3", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
    }
+   if(system_unc=="muPtup"){
+     theTree->SetBranchAddress( "HT", &HT );
+     theTree->SetBranchAddress( "ttc_met", &ttc_met);
+     theTree->SetBranchAddress( "ttc_met_phi", &ttc_met_phi);
+     theTree->SetBranchAddress( "ttc_mllj1_muPtup", &ttc_mllj1);
+     theTree->SetBranchAddress( "ttc_mllj2_muPtup", &ttc_mllj2);
+     theTree->SetBranchAddress( "ttc_mllj3_muPtup", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt_muPtup", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt_muPtup", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll_muPtup", &ttc_mll);
+   }
+   if(system_unc=="muPtdo"){
+     theTree->SetBranchAddress( "HT", &HT );
+     theTree->SetBranchAddress( "ttc_met", &ttc_met);
+     theTree->SetBranchAddress( "ttc_met_phi", &ttc_met_phi);
+     theTree->SetBranchAddress( "ttc_mllj1_muPtdo", &ttc_mllj1);
+     theTree->SetBranchAddress( "ttc_mllj2_muPtdo", &ttc_mllj2);
+     theTree->SetBranchAddress( "ttc_mllj3_muPtdo", &ttc_mllj3);
+     theTree->SetBranchAddress( "ttc_l1_pt_muPtdo", &ttc_l1_pt );
+     theTree->SetBranchAddress( "ttc_l2_pt_muPtdo", &ttc_l2_pt);
+     theTree->SetBranchAddress( "ttc_mll_muPtdo", &ttc_mll);
+   }
+
 
    // Efficiency calculator for cut method
    Int_t    nSelCutsGA = 0;
@@ -1161,6 +1249,8 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    if (system_unc=="jerdo")                     name_sys = "_jerYEARDown";
    if (system_unc=="unclusterEup")              name_sys = "_metYEARunclusterEUp";
    if (system_unc=="unclusterEdo")              name_sys = "_metYEARunclusterEDown";
+   if (system_unc=="muPtup")                    name_sys = "_muonYEARptCorrectionUp";
+   if (system_unc=="muPtdo")                    name_sys = "_muonYEARptCorrectionDown";
 
    name_temp = "ttcYEAR_" + input_name + name_wgt + name_sys;
    if (input_name.find("ttc_a")!= string::npos) name_temp.replace(REPLACEINDEX,5,"TAToTTQ");
@@ -1220,10 +1310,10 @@ int TMVAClassificationApplication()
    
   std::vector<string> weights{"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
 
-  string system_unc[6]={"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo"};
-  string channels[3]={"ee","em","mm"};
+  std::vector<string> system_unc{"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo","muPtup","muPtdo"};
+  std::vector<string> channels{"ee","em","mm"};
 
-  for (int ic=0;ic<3;ic++){
+  for (int ic=0;ic<channels.size();ic++){
     string output_name="TMVApp_"+mass+"_"+channels[ic]+".root";
     TFile *target  = new TFile( output_name.c_str(),"RECREATE" );
     string signal_input="";
@@ -1278,7 +1368,7 @@ int TMVAClassificationApplication()
    }
 
    std::cout<<"start looping systematics"<<std::endl;
-   for(int isys=0;isys<6;isys++){
+   for(int isys=0;isys<system_unc.size();isys++){
       htemp = Getoutput("", signal_input,signal_xs, eff_N_signal,"central",system_unc[isys], mass, channels[ic], type_, cp, 1);
       target->cd();
       htemp->Write();

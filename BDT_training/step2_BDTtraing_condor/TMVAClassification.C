@@ -389,6 +389,47 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
      dataloader->AddVariable( "ttc_mllj2", 'F' );
      dataloader->AddVariable( "ttc_mllj3", 'F' );
    }
+   if(system_unc=="muPtup"){
+     dataloader->AddVariable( "HT", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt_muPtup", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt_muPtup", 'F' );
+     dataloader->AddVariable( "ttc_met", 'F' );
+     dataloader->AddVariable( "ttc_met_phi", 'F' );
+     dataloader->AddVariable( "ttc_mll_muPtup", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_muPtup", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_muPtup", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_muPtup", 'F' );
+   }
+   if(system_unc=="muPtdo"){
+     dataloader->AddVariable( "HT", 'F' );
+     dataloader->AddVariable( "j1_FlavCvB", 'F' );
+     dataloader->AddVariable( "j1_FlavCvL", 'F' );
+     dataloader->AddVariable( "j2_FlavCvB", 'F' );
+     dataloader->AddVariable( "j2_FlavCvL", 'F' );
+     dataloader->AddVariable( "j3_FlavCvB", 'F' );
+     dataloader->AddVariable( "j3_FlavCvL", 'F' );
+     dataloader->AddVariable( "dr_j1j2", 'F' );
+     dataloader->AddVariable( "dr_j1j3", 'F' );
+     dataloader->AddVariable( "dr_j2j3", 'F' );
+     dataloader->AddVariable( "ttc_l1_pt_muPtdo", 'F' );
+     dataloader->AddVariable( "ttc_l2_pt_muPtdo", 'F' );
+     dataloader->AddVariable( "ttc_met", 'F' );
+     dataloader->AddVariable( "ttc_met_phi", 'F' );
+     dataloader->AddVariable( "ttc_mll_muPtdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj1_muPtdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj2_muPtdo", 'F' );
+     dataloader->AddVariable( "ttc_mllj3_muPtdo", 'F' );
+   }
+
    // You can add so-called "Spectator variables", which are not used in the MVA training,
    // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
    // input variables, the response values of all trained MVAs, and the spectator variables

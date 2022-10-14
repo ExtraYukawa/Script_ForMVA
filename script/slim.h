@@ -718,3 +718,17 @@ float mllj_jesr(float l1_pt, float l1_eta, float l1_phi, float l1_mass, float l2
   if(id==3) mllj= (l1+l2+j3).M();
   return mllj;
 }
+
+float mll(float l1_pt, float l1_eta, float l1_phi, float l1_mass, float l2_pt, float l2_eta, float l2_phi, float l2_mass){
+  float inv_mass = 0.;
+  ROOT::Math::PtEtaPhiMVector l1(l1_pt, l1_eta, l1_phi, l1_mass);
+  ROOT::Math::PtEtaPhiMVector l2(l2_pt, l2_eta, l2_phi, l2_mass);
+  inv_mass = (l1+l2).M();
+  return inv_mass;
+}
+
+float muPtcorr(float lep_pt, int lep_id, int lep_pdgid, ROOT::VecOps::RVec<float> mu_corrPt_variated){
+  float pt = lep_pt;
+  if(abs(lep_pdgid)==13) pt = mu_corrPt_variated[lep_id];
+  return pt;
+}

@@ -70,7 +70,7 @@ if __name__=='__main__':
     if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'normal':
 
       python_file = "%s/slim.py"%cwd
-      
+
       # Training sample
       Training_list = GetTrainingFile(Era, True)
       for iin in Training_list:
@@ -80,7 +80,7 @@ if __name__=='__main__':
 
       # Signal sample
       coups=['rtc04','rtu04'] #gkole (21Sep2022) (as the training for highmass is done with rtc/u-04)
-      cps=['A','S0']
+      cps=['A'] # No need for S0 as Efe shows the BDT shapes are same
       masses=['200','300','350','400','500','600','700']
       for cp in cps:
         for coup in coups:

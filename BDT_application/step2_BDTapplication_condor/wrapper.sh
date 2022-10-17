@@ -1,8 +1,8 @@
 #!/bin/bash -e 
 echo "TEST FIRST" 
 echo "copy input root file"
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/2018_CTag_VBS_muPt/SIGNALROOT .
-eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/2018_CTag_VBS_muPt/aa.tar.gz .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/YEAR/SIGNALROOT .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/YEAR/aa.tar.gz .
 tar zxf aa.tar.gz
 rm aa.tar.gz
 PWD=`pwd`

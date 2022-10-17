@@ -157,6 +157,52 @@
                 "Flag_BadPFMuonFilter"
             ]
         },
+	"VBS": {
+            "WLLJJ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_eeBadScFilter",
+                "Flag_ecalBadCalibFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_BadPFMuonFilter"
+            ],
+	    "WpWpJJ_EWK": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_eeBadScFilter",
+                "Flag_ecalBadCalibFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_BadPFMuonFilter"
+            ],
+	    "ZZJJTo4L": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_eeBadScFilter",
+                "Flag_ecalBadCalibFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_BadPFMuonFilter"
+            ],
+	    "WpWpJJ_QCD": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_eeBadScFilter",
+                "Flag_ecalBadCalibFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_BadPFMuonFilter"
+            ]
+	},
         "SingleTop": {
             "t_tch": [
                 "Flag_goodVertices",

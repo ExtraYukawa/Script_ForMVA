@@ -44,6 +44,17 @@ cd BDT_weights_6
 cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_weights/YEAR/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_6/dataset_ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_metUnslusEndo/weights/TMVAClassification_BDTG.weights.xml .
 cd $HOME
 
+mkdir BDT_weights_7
+cd BDT_weights_7
+cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_weights/YEAR/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_7/dataset_ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_muPtup/weights/TMVAClassification_BDTG.weights.xml .
+cd $HOME
+
+mkdir BDT_weights_8
+cd BDT_weights_8
+cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_weights/YEAR/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_8/dataset_ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_muPtdo/weights/TMVAClassification_BDTG.weights.xml .
+cd $HOME
+
+
 echo $HOME 
 export SCRAM_ARCH=slc7_amd64_gcc700
 source /cvmfs/cms.cern.ch/cmsset_default.sh

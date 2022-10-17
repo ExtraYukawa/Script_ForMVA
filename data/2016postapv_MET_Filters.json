@@ -108,6 +108,48 @@
                 "Flag_eeBadScFilter"
             ]
         },
+	"VBS": {
+            "WLLJJ": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+	    "WpWpJJ_EWK": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+	    "ZZJJTo4L": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ],
+	    "WpWpJJ_QCD": [
+                "Flag_goodVertices",
+                "Flag_globalSuperTightHalo2016Filter",
+                "Flag_HBHENoiseFilter",
+                "Flag_HBHENoiseIsoFilter",
+                "Flag_EcalDeadCellTriggerPrimitiveFilter",
+                "Flag_BadPFMuonFilter",
+                "Flag_BadPFMuonDzFilter",
+                "Flag_eeBadScFilter"
+            ]
+	},
         "SingleTop": {
             "tW": [
                 "Flag_goodVertices",

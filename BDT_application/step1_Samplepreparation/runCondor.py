@@ -93,8 +93,9 @@ if __name__=='__main__':
         prepare_shell(shell_file, command, condor, FarmDir)
 
       # Signal sample
-      coups=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-      cps=['A','S0']
+      # coups=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
+      coups=['rtc04','rtu04']
+      cps=['A']
       masses=['200','300','350','400','500','600','700']
 
       for cp in cps:

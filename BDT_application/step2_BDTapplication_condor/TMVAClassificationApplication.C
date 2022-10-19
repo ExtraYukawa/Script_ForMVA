@@ -105,35 +105,36 @@ float Get_signalXS(std::string signal_name=""){
       if (signal_name.find("rtu08")!= string::npos) return 3.088e-02;
       if (signal_name.find("rtu10")!= string::npos) return 5.702e-02;
     }
+    // highmass is fixed from: https://gist.github.com/efeyazgan/b5926ba4e2f60ef198592872e79c622c
     if (signal_name.find("800")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 8.899e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 2.360e-04;
-      if (signal_name.find("rtc08")!= string::npos) return 3.731e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 1.000e-02;
+      if (signal_name.find("rtc01")!= string::npos) return 1.820e-05;
+      if (signal_name.find("rtc04")!= string::npos) return 1.805e-04;
+      if (signal_name.find("rtc08")!= string::npos) return 1.117e-03;
+      if (signal_name.find("rtc10")!= string::npos) return 1.609e-03;
       if (signal_name.find("rtu01")!= string::npos) return 2.497e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 5.328e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 8.240e-01;
-      if (signal_name.find("rtu10")!= string::npos) return 1.995e+00;
+      if (signal_name.find("rtu04")!= string::npos) return 3.949e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 2.275e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 3.304e-02;
     }
     if (signal_name.find("900")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 5.376e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 1.416e-04;
-      if (signal_name.find("rtc08")!= string::npos) return 2.457e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 6.227e-03;
-      if (signal_name.find("rtu01")!= string::npos) return 1.694e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 3.188e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 4.489e-01;
-      if (signal_name.find("rtu10")!= string::npos) return 1.510e+00;
+      if (signal_name.find("rtc01")!= string::npos) return 8.230e-06;
+      if (signal_name.find("rtc04")!= string::npos) return 1.680e-04;
+      if (signal_name.find("rtc08")!= string::npos) return 5.672e-04;
+      if (signal_name.find("rtc10")!= string::npos) return 7.191e-04;
+      if (signal_name.find("rtu01")!= string::npos) return 1.508e-04;
+      if (signal_name.find("rtu04")!= string::npos) return 2.385e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 1.561e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 2.664e-02;
     }
     if (signal_name.find("1000")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 3.682e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 1.182e-04 ;
-      if (signal_name.find("rtc08")!= string::npos) return 1.538e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 3.420e-03;
-      if (signal_name.find("rtu01")!= string::npos) return 1.173e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 3.220e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 3.270e-01;
-      if (signal_name.find("rtu10")!= string::npos) return 9.636e-01;
+      if (signal_name.find("rtc01")!= string::npos) return 5.651e-06;
+      if (signal_name.find("rtc04")!= string::npos) return 9.849e-05;
+      if (signal_name.find("rtc08")!= string::npos) return 3.860e-04;
+      if (signal_name.find("rtc10")!= string::npos) return 5.961e-04;
+      if (signal_name.find("rtu01")!= string::npos) return 7.415e-05;
+      if (signal_name.find("rtu04")!= string::npos) return 1.626e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 1.186e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 1.624e-02;
     }
   }
   else{
@@ -207,35 +208,36 @@ float Get_signalXS(std::string signal_name=""){
       if (signal_name.find("rtu08")!= string::npos) return 3.282e-02;
       if (signal_name.find("rtu10")!= string::npos) return 6.658e-02;
     }
+    // highmass is fixed from: https://gist.github.com/efeyazgan/b5926ba4e2f60ef198592872e79c622c
     if (signal_name.find("800")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 9.492e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 2.268e-04;
-      if (signal_name.find("rtc08")!= string::npos) return 4.213e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 9.412e-03;
-      if (signal_name.find("rtu01")!= string::npos) return 1.802e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 4.967e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 1.079e+00;
-      if (signal_name.find("rtu10")!= string::npos) return 2.259e+00;
+      if (signal_name.find("rtc01")!= string::npos) return 1.102e-05;
+      if (signal_name.find("rtc04")!= string::npos) return 2.332e-04;
+      if (signal_name.find("rtc08")!= string::npos) return 9.572e-04;
+      if (signal_name.find("rtc10")!= string::npos) return 1.661e-03;
+      if (signal_name.find("rtu01")!= string::npos) return 1.921e-04;
+      if (signal_name.find("rtu04")!= string::npos) return 4.547e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 1.983e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 3.965e-02;
     }
     if (signal_name.find("900")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 5.747e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 1.880e-04;
-      if (signal_name.find("rtc08")!= string::npos) return 1.689e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 4.029e-03;
-      if (signal_name.find("rtu01")!= string::npos) return 1.806e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 3.852e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 8.218e-01;
-      if (signal_name.find("rtu10")!= string::npos) return 1.572e+00;
+      if (signal_name.find("rtc01")!= string::npos) return 9.145e-06;
+      if (signal_name.find("rtc04")!= string::npos) return 1.344e-04;
+      if (signal_name.find("rtc08")!= string::npos) return 7.142e-04;
+      if (signal_name.find("rtc10")!= string::npos) return 1.335e-03;
+      if (signal_name.find("rtu01")!= string::npos) return 1.411e-04;
+      if (signal_name.find("rtu04")!= string::npos) return 2.915e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 1.519e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 2.588e-02;
     }
     if (signal_name.find("1000")!= string::npos){
-      if (signal_name.find("rtc01")!= string::npos) return 4.063e-07;
-      if (signal_name.find("rtc04")!= string::npos) return 1.247e-04;
-      if (signal_name.find("rtc08")!= string::npos) return 1.750e-03;
-      if (signal_name.find("rtc10")!= string::npos) return 3.420e-03;
-      if (signal_name.find("rtu01")!= string::npos) return 1.049e-04;
-      if (signal_name.find("rtu04")!= string::npos) return 2.410e-02;
-      if (signal_name.find("rtu08")!= string::npos) return 4.255e-01;
-      if (signal_name.find("rtu10")!= string::npos) return 1.158e+00;
+      if (signal_name.find("rtc01")!= string::npos) return 4.872e-06;
+      if (signal_name.find("rtc04")!= string::npos) return 9.192e-05;
+      if (signal_name.find("rtc08")!= string::npos) return 3.727e-04;
+      if (signal_name.find("rtc10")!= string::npos) return 6.182e-04;
+      if (signal_name.find("rtu01")!= string::npos) return 1.112e-04;
+      if (signal_name.find("rtu04")!= string::npos) return 1.452e-03;
+      if (signal_name.find("rtu08")!= string::npos) return 1.026e-02;
+      if (signal_name.find("rtu10")!= string::npos) return 1.733e-02;
     }
   } 
   return 1.0;

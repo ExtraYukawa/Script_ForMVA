@@ -77,8 +77,8 @@ if __name__ == "__main__":
       masses = ['250'] # asume this A mass
       #S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
-      signals=['a','s']
-      couplings=['rtc01','rtu01'] #keep in mind (rtc01, vs rtc04)
+      signals=['a']
+      couplings=['rtc04','rtu04'] #keep in mind (rtc01, vs rtc04)
       masses=['200','300','350','400','500','600','700']
       
     system_unc=["central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo","muPtup","muPtdo"]

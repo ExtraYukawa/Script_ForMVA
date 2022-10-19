@@ -102,8 +102,8 @@ if __name__ == "__main__":
     os.system('mkdir -p %s'%Era)
 
     if args.sampletype == 'highmass':
-      signals=['a']
-      couplings=['rtc04'] #,'rtu04']
+      signals=['a'] #No need to process for s0 (Efe proved that shapes are same)
+      couplings=['rtc04','rtu04']
       masses=['800','900','1000']
     elif args.sampletype == 'interference':
       signals=['interference']
@@ -112,9 +112,9 @@ if __name__ == "__main__":
       # masses = ['250'] # asume this A mass
       # S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
     else:
-      signals=['a'] #,'s']
+      signals=['a'] #No need to process for s0 (Efe proved that shapes are same)
       # couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']
-      couplings=['rtc04']
+      couplings=['rtc04','rtu04']
       masses=['200','300','350','400','500','600','700']
       # masses=['200']
 
@@ -169,12 +169,12 @@ if __name__ == "__main__":
               if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
                 os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era))
               else:
-                os.system(r'sed -i "s/COUPLING/rtc01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+                os.system(r'sed -i "s/COUPLING/rtc04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             if 'rtu' in couplings[ic]:
               if masses[im] == "800" or masses[im] == "900" or masses[im] == "1000":
                 os.system(r'sed -i "s/COUPLING/rtu04/g" wrapper_%s.sh' %(Era))
               else:
-                os.system(r'sed -i "s/COUPLING/rtu01/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
+                os.system(r'sed -i "s/COUPLING/rtu04/g" wrapper_%s.sh' %(Era)) #gkole (21Sep)
             os.system(r'sed -i "s/COUPLING/%s/g" TMVAClassificationApplication_%s.C' %(couplings[ic], Era))
             os.system(r'sed -i "s/MASS/%s/g" wrapper_%s.sh' %(masses[im], Era))
           elif signals[isig]=='interference':

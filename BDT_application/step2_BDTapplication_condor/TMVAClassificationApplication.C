@@ -962,20 +962,30 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
 	 else if(weight_name=="pileup_up"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF); //fixme gkole (with ctag_SF_puup)
 	   ctag_norm+=genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
 	 else if(weight_name=="pileup_down"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF); // fixme gkole (with ctag_SF_pudown
 	   ctag_norm+=genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
          else if(weight_name=="prefire_up"){
-           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
-           ctag_norm+=genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+	   if (prefireWeight == 0.0){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	     ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
+	   }else{
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	     ctag_norm+=genweight*norm_scale*lumi*(prefireWeightup/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+	   }
          }
          else if(weight_name=="prefire_down"){
-           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
-           ctag_norm+=genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+	   if (prefireWeight == 0.0){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	     ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
+	   }else{
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	     ctag_norm+=genweight*norm_scale*lumi*(prefireWeightdo/prefireWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
+	   }
          }
 	 else if(weight_name=="muID_sysup"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id_sysup*ele_id*trig_SF*charFlip_SF*ctag_SF);
@@ -1008,14 +1018,6 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	 else if(weight_name=="eleID_statdown"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id_statdo*trig_SF*charFlip_SF*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id_statdo*trig_SF*charFlip_SF;
-	 }
-	 else if(weight_name=="prefire_up"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
-	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
-	 }
-	 else if(weight_name=="prefire_down"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
-	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
 	 else if(weight_name=="trigger_up"){
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SFup*charFlip_SF*ctag_SF);
@@ -1297,24 +1299,18 @@ int TMVAClassificationApplication()
    vector<float> eff_N;
    for(int i=0;i<samples.size();i++){
      string ntemp=sample_path+samples[i]+".root";
-//     if(i==11)ntemp=sample_path+"DYnlo.root";
      TFile*ftemp=TFile::Open(ntemp.c_str());
      TH1D*ttemp=(TH1D*)ftemp->Get("nEventsGenWeighted");
      if (is_train[i]) eff_N.push_back(0.5*ttemp->GetBinContent(1));//half of the events are used for BDT training
      else eff_N.push_back(ttemp->GetBinContent(1));
      ftemp->Close();
    }
-   //   eff_N.push_back(3.4087701e+08);
-   //   eff_N.push_back(349000.);
-   //   eff_N.push_back(175000.);
-   //   eff_N.push_back(1935527);
-   //   eff_N.push_back(3455733.0);
    
-  std::vector<string> weights{"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
+   std::vector<string> weights{"nominal_noctag","central","pileup_up","pileup_down","muID_sysup","muID_sysdown","muID_statup","muID_statdown","eleID_sysup","eleID_sysdown","eleID_statup","eleID_statdown","trigger_up","trigger_down","lumi_up","lumi_down","ctag_statup","ctag_statdo","ctag_Extrapup","ctag_Extrapdo","ctag_LHEScaleWeightmuFup","ctag_LHEScaleWeightmuFdo","ctag_LHEScaleWeightmuRup","ctag_LHEScaleWeightmuRdo","ctag_Interpup","ctag_Interpdo","ctag_PSWeightFSRup","ctag_PSWeightFSRdo","ctag_PSWeightISRup","ctag_PSWeightISRdo","ctag_PUWeightup","ctag_PUWeightdo","ctag_XSec_BRUnc_DYJets_bup","ctag_XSec_BRUnc_DYJets_bdo","ctag_XSec_BRUnc_DYJets_cup","ctag_XSec_BRUnc_DYJets_cdo","ctag_XSec_BRUnc_WJets_cup","ctag_XSec_BRUnc_WJets_cdo","ctag_jerup","ctag_jerdo","ctag_jesTotalup","ctag_jesTotaldo","charFlip_SFstatup","charFlip_SFstatdo","charFlip_SFsystup","charFlip_SFsystdo","sig_pdfup","sig_pdfdo","sig_scaleup","sig_scaledo","sig_psup","sig_psdo","prefire_up","prefire_down"};
 
   std::vector<string> system_unc{"jesup","jesdo","jerup","jerdo","unclusterEup","unclusterEdo","muPtup","muPtdo"};
   std::vector<string> channels{"ee","em","mm"};
-
+  
   for (int ic=0;ic<channels.size();ic++){
     string output_name="TMVApp_"+mass+"_"+channels[ic]+".root";
     TFile *target  = new TFile( output_name.c_str(),"RECREATE" );

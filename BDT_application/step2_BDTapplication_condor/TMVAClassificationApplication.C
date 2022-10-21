@@ -958,15 +958,27 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
         ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight;
          }
 	 else if(weight_name=="central"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	   if (system_unc=="jesup"){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jesTotalup);
+	   }else if (system_unc=="jesdo"){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jesTotaldo);
+	   }
+	   else if (system_unc=="jerup"){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jerup);
+	   }else if (system_unc=="jerdo"){
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_jerdo);
+	   }
+	   else{
+	     histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF);
+	   }
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
 	 else if(weight_name=="pileup_up"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF); //fixme gkole (with ctag_SF_puup)
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PUWeightup);
 	   ctag_norm+=genweight*norm_scale*lumi*(puWeightUp/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
 	 else if(weight_name=="pileup_down"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF); // fixme gkole (with ctag_SF_pudown
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF*ctag_SF_PUWeightdo);
 	   ctag_norm+=genweight*norm_scale*lumi*(puWeightDown/puWeight)*mu_id*ele_id*trig_SF*charFlip_SF;
 	 }
          else if(weight_name=="prefire_up"){
@@ -1060,19 +1072,19 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_pdfdo;
 	 }
 	 else if(weight_name=="sig_scaleup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF_LHEScaleWeightmuFup*ctag_SF_LHEScaleWeightmuRup);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup;
 	 }
 	 else if(weight_name=="sig_scaledo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF_LHEScaleWeightmuFdo*ctag_SF_LHEScaleWeightmuRdo);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo;
 	 }
 	 else if(weight_name=="sig_psup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF_PSWeightFSRup*ctag_SF_PSWeightISRup);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup;
 	 }
 	 else if(weight_name=="sig_psdo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF_PSWeightFSRdo*ctag_SF_PSWeightISRdo);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo;
          }
 	 // ctag uncertainty

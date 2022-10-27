@@ -143,8 +143,9 @@ if __name__=='__main__':
       
       coups=['rtc04','rtu04']
       
-      A_masses = ['250','300','350','400','550','700']
-      S_masses = ['200','250','300','350','500','650']
+      A_masses = ['250','300','350','400','550','700','800','900','1000']
+      S_masses = ['200','250','300','350','500','650','750','850','950']
+
       for coup in coups:
           for index, mass in enumerate(A_masses):
             iin = 'ttc_a_%s_s_%s_%s.root'%(A_masses[index], S_masses[index], coup)

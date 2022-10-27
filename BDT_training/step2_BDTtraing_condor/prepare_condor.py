@@ -73,9 +73,9 @@ if __name__ == "__main__":
     elif args.sampletype == 'interference':
       signals=['interference']
       couplings=['rtc04','rtu04']
-      #masses = ['250','300','350','400','550','700'] # asume this A mass
-      masses = ['250'] # asume this A mass
-      #S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
+      masses = ['250','300','350','400','550','700','800','900','1000'] # asume this A mass
+      # masses = ['350'] # asume this A mass
+      # S_masses = ['200','250','300','350','500','650','750','850','900'] # assume S mass = A-50
     else:
       signals=['a']
       couplings=['rtc04','rtu04'] #keep in mind (rtc01, vs rtc04)

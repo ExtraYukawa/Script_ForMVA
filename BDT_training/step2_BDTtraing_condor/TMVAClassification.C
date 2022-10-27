@@ -198,6 +198,10 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
        signal_name="ttc_a_300_s_250_"+cp;
        signal_filename="ttc_a_300_s_250_"+cp+".root";
      }
+     else if (mass=="350_300"){
+       signal_name="ttc_a_350_s_300_"+cp;
+       signal_filename="ttc_a_350_s_300_"+cp+".root";
+     }
      else if (mass=="400_350"){
        signal_name="ttc_a_400_s_350_"+cp;
        signal_filename="ttc_a_250_s_200_"+cp+".root";
@@ -206,9 +210,24 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
        signal_name="ttc_a_550_s_500_"+cp;
        signal_filename="ttc_a_550_s_500_"+cp+".root";
      }
-     else{
+     else if (mass=="700_650"){
        signal_name="ttc_a_700_s_650_"+cp;
        signal_filename="ttc_a_700_s_650_"+cp+".root";
+     }
+     else if (mass=="800_750"){
+       signal_name="ttc_a_800_s_750_"+cp;
+       signal_filename="ttc_a_800_s_750_"+cp+".root";
+     }
+     else if (mass=="900_850"){
+       signal_name="ttc_a_900_s_850_"+cp;
+       signal_filename="ttc_a_900_s_850_"+cp+".root";
+     }
+     else if (mass=="1000_950"){
+       signal_name="ttc_a_1000_s_950_"+cp;
+       signal_filename="ttc_a_1000_s_950_"+cp+".root";
+     }
+     else{
+       cout << "this should not reach" << endl;
      }
    }
    

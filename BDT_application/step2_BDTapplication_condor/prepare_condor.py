@@ -108,9 +108,9 @@ if __name__ == "__main__":
     elif args.sampletype == 'interference':
       signals=['interference']
       couplings=['rtc04','rtu04']
-      masses = ['250','300','350','400','550','700'] # asume this A mass
+      masses = ['250','300','350','400','550','700','800','900','1000'] # asume this A mass
       # masses = ['250'] # asume this A mass
-      # S_masses = ['200','250','300','350','500','650'] # assume S mass = A-50
+      # S_masses = ['200','250','300','350','500','650','750','850','950'] # assume S mass = A-50
     else:
       signals=['a'] #No need to process for s0 (Efe proved that shapes are same)
       # couplings=['rtc01','rtc04','rtc08','rtc10','rtu01','rtu04','rtu08','rtu10']

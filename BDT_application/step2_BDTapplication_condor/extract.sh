@@ -8,14 +8,14 @@ PWd=`pwd`
 
 #inteference samples
 cps=("rtc04" "rtu04") # Efe proved that other coupling can derived from this 
-mass=(250 300 350 400 550 700) # asume this A mass
+mass=(250 300 350 400 550 700 800 900 1000) # asume this A mass
 #mass=(250) # asume this A mass 
 
 #era=("2016apv" "2016postapv" "2017" "2018")
-era=("2016apv")
+#era=("2016apv")
 #era=("2016postapv")
 #era=("2017")
-#era=("2018")
+era=("2018")
 
 ##for TA extration
 #for k in ${era[*]}

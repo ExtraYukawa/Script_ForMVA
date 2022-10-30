@@ -31,8 +31,104 @@
 using namespace TMVA;
 using namespace std;
 
-// Signal cross-section is taken from https://gist.github.com/efeyazgan/b5926ba4e2f60ef198592872e79c622c
 
+// Interference signal cross-section is taken from: https://gist.github.com/efeyazgan/1d0e39a29b6eed12cc1c3c097430b812
+float Get_InterferenceXS(std::string signal_name=""){
+  if (signal_name.find("ttc_a_250_s_200")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 4.577e-03;
+    if (signal_name.find("rtu04")!= string::npos) return 7.501e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 3.759e-01;
+    if (signal_name.find("rtu10")!= string::npos) return 7.015e-01;
+    if (signal_name.find("rtc01")!= string::npos) return 6.288e-04;
+    if (signal_name.find("rtc04")!= string::npos) return 1.160e-02;
+    if (signal_name.find("rtc08")!= string::npos) return 3.602e-02;
+    if (signal_name.find("rtc10")!= string::npos) return 6.982e-02;
+    }
+  else if (signal_name.find("ttc_a_300_s_250")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 6.467e-03;
+    if (signal_name.find("rtu04")!= string::npos) return 7.858e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 3.703e-01;
+    if (signal_name.find("rtu10")!= string::npos) return 7.034e-01;
+    if (signal_name.find("rtc01")!= string::npos) return 6.718e-04;
+    if (signal_name.find("rtc04")!= string::npos) return 9.750e-03;
+    if (signal_name.find("rtc08")!= string::npos) return 4.636e-02;
+    if (signal_name.find("rtc10")!= string::npos) return 6.556e-02;
+  }
+  else if (signal_name.find("ttc_a_350_s_300")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 3.927e-03;
+    if (signal_name.find("rtu04")!= string::npos) return 6.781e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 3.531e-01;
+    if (signal_name.find("rtu10")!= string::npos) return 3.850e-01;
+    if (signal_name.find("rtc01")!= string::npos) return 6.799e-04;
+    if (signal_name.find("rtc04")!= string::npos) return 7.866e-03;
+    if (signal_name.find("rtc08")!= string::npos) return 3.847e-02;
+    if (signal_name.find("rtc10")!= string::npos) return 4.149e-02;
+  }
+  else if (signal_name.find("ttc_a_400_s_350")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 3.005e-03;
+    if (signal_name.find("rtu04")!= string::npos) return 4.615e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 2.427e-01;
+    if (signal_name.find("rtu10")!= string::npos) return 3.479e-01;
+    if (signal_name.find("rtc01")!= string::npos) return 3.569e-04;
+    if (signal_name.find("rtc04")!= string::npos) return 4.775e-03;
+    if (signal_name.find("rtc08")!= string::npos) return 1.889e-02;
+    if (signal_name.find("rtc10")!= string::npos) return 3.381e-02;
+  }
+  else if (signal_name.find("ttc_a_550_s_500")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 1.597e-03;
+    if (signal_name.find("rtu04")!= string::npos) return 2.336e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 7.732e-02;
+    if (signal_name.find("rtu10")!= string::npos) return 1.490e-01;
+    if (signal_name.find("rtc01")!= string::npos) return 1.575e-04;
+    if (signal_name.find("rtc04")!= string::npos) return 2.685e-03;
+    if (signal_name.find("rtc08")!= string::npos) return 6.510e-03;
+    if (signal_name.find("rtc10")!= string::npos) return 1.195e-02;
+  }
+  else if (signal_name.find("ttc_a_700_s_650")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 7.338e-04;
+    if (signal_name.find("rtu04")!= string::npos) return 1.394e-02;
+    if (signal_name.find("rtu08")!= string::npos) return 4.040e-02;
+    if (signal_name.find("rtu10")!= string::npos) return 6.831e-02;
+    if (signal_name.find("rtc01")!= string::npos) return 4.523e-05;
+    if (signal_name.find("rtc04")!= string::npos) return 9.916e-04;
+    if (signal_name.find("rtc08")!= string::npos) return 4.017e-03;
+    if (signal_name.find("rtc10")!= string::npos) return 3.157e-03;
+  }
+  else if (signal_name.find("ttc_a_800_s_750")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 6.014e-04;
+    if (signal_name.find("rtu04")!= string::npos) return 6.799e-03;
+    if (signal_name.find("rtu08")!= string::npos) return 3.130e-02;
+    if (signal_name.find("rtu10")!= string::npos) return 3.228e-02;
+    if (signal_name.find("rtc01")!= string::npos) return 3.211e-05;
+    if (signal_name.find("rtc04")!= string::npos) return 6.643e-04;
+    if (signal_name.find("rtc08")!= string::npos) return 1.460e-03;
+    if (signal_name.find("rtc10")!= string::npos) return 2.068e-03;
+  }
+  else if (signal_name.find("ttc_a_900_s_850")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 3.261e-04;
+    if (signal_name.find("rtu04")!= string::npos) return 5.533e-03;
+    if (signal_name.find("rtu08")!= string::npos) return 1.373e-02;
+    if (signal_name.find("rtu10")!= string::npos) return 1.586e-02;
+    if (signal_name.find("rtc01")!= string::npos) return 1.987e-05;
+    if (signal_name.find("rtc04")!= string::npos) return 2.888e-04;
+    if (signal_name.find("rtc08")!= string::npos) return 8.026e-04;
+    if (signal_name.find("rtc10")!= string::npos) return 1.185e-03;
+  }
+  else if (signal_name.find("ttc_a_1000_s_950")!= string::npos){
+    if (signal_name.find("rtu01")!= string::npos) return 2.594e-04;
+    if (signal_name.find("rtu04")!= string::npos) return 3.507e-03;
+    if (signal_name.find("rtu08")!= string::npos) return 8.879e-03;
+    if (signal_name.find("rtu10")!= string::npos) return 1.017e-02;
+    if (signal_name.find("rtc01")!= string::npos) return 1.306e-05;
+    if (signal_name.find("rtc04")!= string::npos) return 2.158e-04;
+    if (signal_name.find("rtc08")!= string::npos) return 5.567e-04;
+    if (signal_name.find("rtc10")!= string::npos) return 5.361e-04;
+  }
+  else return 1.0;
+}
+
+
+// Signal cross-section is taken from https://gist.github.com/efeyazgan/b5926ba4e2f60ef198592872e79c622c
 float Get_signalXS(std::string signal_name=""){
   if (signal_name.find("s0")!= string::npos || signal_name.find("MS0")!= string::npos){
     if (signal_name.find("200")!= string::npos){
@@ -1330,11 +1426,27 @@ int TMVAClassificationApplication()
     if(type_=="A")signal_input=signal_input+"ttc_a_"+cp+"_M"+type_+mass;
     if(type_=="S0")signal_input=signal_input+"ttc_s0_"+cp+"_M"+type_+mass;
     if (type_=="a_s"){
-     if (mass=="250_200"){
-       signal_input=signal_input+"ttc_a_250_s_200_"+cp;
-     }else{
-       signal_input=signal_input+"ttc_a_250_s_200_"+cp;
-     }
+      if (mass=="250"){
+	signal_input=signal_input+"ttc_a_250_s_200_"+cp;
+      }else if (mass=="300"){
+	signal_input=signal_input+"ttc_a_300_s_250_"+cp;
+      }else if (mass=="350"){
+	signal_input=signal_input+"ttc_a_350_s_300_"+cp;
+      }else if (mass=="400"){
+	signal_input=signal_input+"ttc_a_400_s_350_"+cp;
+      }else if (mass=="550"){
+	signal_input=signal_input+"ttc_a_550_s_500_"+cp;
+      }else if (mass=="700"){
+	signal_input=signal_input+"ttc_a_700_s_650_"+cp;
+      }else if (mass=="800"){
+	signal_input=signal_input+"ttc_a_800_s_750_"+cp;
+      }else if (mass=="900"){
+	signal_input=signal_input+"ttc_a_900_s_850_"+cp;
+      }else if (mass=="1000"){
+	signal_input=signal_input+"ttc_a_1000_s_950_"+cp;
+      }else{
+	cout << "should not reach here! something is wrong" << endl;
+      }
     }
     TH1F*htemp;
     TH1F*hfake_no_mcsubtraction;
@@ -1343,7 +1455,15 @@ int TMVAClassificationApplication()
     TH1F*hfake_down;
     
     // add signal cross-section
-    float signal_xs=Get_signalXS(signal_input);
+    // add signal cross-section
+    float signal_xs = 1.0;
+
+    if(type_ == "a_s"){
+      signal_xs = Get_InterferenceXS(signal_input);
+    }
+    else{
+      signal_xs = Get_signalXS(signal_input);
+    }
     cout << "Signal cross-section -->" << signal_xs << endl;
 
     std::vector<float> ctagnorms_beforecalibrated;

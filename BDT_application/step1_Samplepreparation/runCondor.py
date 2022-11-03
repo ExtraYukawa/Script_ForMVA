@@ -1,6 +1,6 @@
 import os
 import sys
-import optparse
+import optparse,argparse
 import subprocess
 import json
 import ROOT
@@ -22,11 +22,13 @@ def prepare_shell(shell_file, command, condor, FarmDir):
 if __name__=='__main__':
   
   usage = 'usage: %prog [options]'
-  parser = optparse.OptionParser(usage)
-  parser.add_option('-m', '--method', dest='method', help='[data/slim_mc/slim_data/...]',default='all', type='string')
-  parser.add_option('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type='string')
-  parser.add_option('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type='string')
-  (args,opt) = parser.parse_args()
+  parser = argparse.ArgumentParser(description=usage)
+  parser.add_argument('-m', '--method', dest='method', help='[data/slim_mc/slim_data/...]',default='all', type=str)
+  parser.add_argument('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type=str, choices=["all","2016apv","2016postapv","2017","2018"])
+  parser.add_argument('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type=str, choices=["all","normal","interference","highmass"])
+  parser.add_argument("--test", action="store_true")
+  args = parser.parse_args()
+
 
   Eras_List = ['2016postapv','2016apv','2017','2018']
   Eras = []
@@ -212,6 +214,6 @@ if __name__=='__main__':
           prepare_shell(shell_file, command, condor, FarmDir)
   
   condor.close()
-  os.system('condor_submit %s/condor.sub'%FarmDir)
-
-    
+  if not args.test:
+    print ("Submitting Jobs on Condor")
+    os.system('condor_submit %s/condor.sub'%FarmDir)

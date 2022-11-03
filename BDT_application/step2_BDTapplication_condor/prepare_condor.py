@@ -1,7 +1,7 @@
 import os,json
 import sys
 from os import walk
-import optparse
+import optparse,argparse
 import subprocess
 from collections import OrderedDict
 
@@ -82,10 +82,10 @@ if __name__ == "__main__":
   PWD=os.getcwd()
   wrapper_dir=PWD+'/wrapper.sh'
   usage = 'usage: %prog [options]'
-  parser = optparse.OptionParser(usage)
-  parser.add_option('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type='string')
-  parser.add_option('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type='string')
-  (args,opt) = parser.parse_args()
+  parser = argparse.ArgumentParser(description=usage)
+  parser.add_argument('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type=str, choices=["all","2016apv","2016postapv","2017","2018"])
+  parser.add_argument('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type=str,choices=["all","normal","interference","highmass"])
+  args = parser.parse_args()
 
   os.system('cp ../../python/common.py .')
   from common import inputFile_path

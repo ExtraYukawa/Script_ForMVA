@@ -19,7 +19,7 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
 
   path = str(inputFile_path[era])
 
-  filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3"
+  filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nHad_tau==0 && ttc_2P0F"
   Trigger      = GetTrigger_MC(era)
   MET_filters  = GetMETFilter_MC(era, filein)
 

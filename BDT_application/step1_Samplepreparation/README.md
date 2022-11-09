@@ -50,6 +50,19 @@ ls DoubleMuon*fake_mm.root SingleMuon*fake_mm.root | xargs hadd -f fakelep_mm.ro
 ls MuonEG*fake_em.root SingleMuon*fake_em.root SingleEG*fake_em.root | xargs hadd -f fakelep_em.root
 ```
 
+- Some files need to produce here (2018)
+```
+cd sample/2018
+ls EGamma*_ee.root | grep -v fake | xargs hadd -f data_ee.root
+ls DoubleMuon*_mm.root SingleMuon*_mm.root | grep -v fake | xargs hadd -f data_mm.root
+ls MuonEG*_em.root SingleMuon*_em.root | grep -v fake | xargs hadd -f data_em.root
+
+ls EGamma*fake_ee.root | xargs hadd -f fakelep_ee.root
+ls DoubleMuon*fake_mm.root SingleMuon*fake_mm.root | xargs hadd -f fakelep_mm.root
+ls MuonEG*fake_em.root SingleMuon*fake_em.root | xargs hadd -f fakelep_em.root
+```
+
+
 - Make tar with all file
 ```  
 aa.tar.gz is the compressed file of all the root files except those signal files for easy condor submission

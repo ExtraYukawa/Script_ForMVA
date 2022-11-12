@@ -625,30 +625,50 @@ float muid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, 
 
 //channel 3 is ee, 2 is me, 1 is mm, in me channel, the leading lepton is always muon
 float eleid(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>499.) lep1_pt = 499.;
+  if (lep2_pt>499.) lep2_pt = 499.;  
+
   if(channel==1)return 1.0;
   if(channel==2) return eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)));
   if(channel==3) return eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))*eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)));
 }
 
 float eleid_sysup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>499.) lep1_pt = 499.;
+  if (lep2_pt>499.) lep2_pt = 499.;
+
   if(channel==1)return 1.0;
   if(channel==2) return eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))+eleSF->GetBinError(eleSF->FindBin(lep2_pt, abs(lep2_eta)));
   if(channel==3) return (eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))+eleSF->GetBinError(eleSF->FindBin(lep1_pt, abs(lep1_eta))))*(eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))+eleSF->GetBinError(eleSF->FindBin(lep2_pt, abs(lep2_eta))));
 }
 
 float eleid_sysdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>499.) lep1_pt = 499.;
+  if (lep2_pt>499.) lep2_pt = 499.;
+
   if(channel==1)return 1.0;
   if(channel==2) return eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))-eleSF->GetBinError(eleSF->FindBin(lep2_pt, abs(lep2_eta)));
   if(channel==3) return (eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))-eleSF->GetBinError(eleSF->FindBin(lep1_pt, abs(lep1_eta))))*(eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))-eleSF->GetBinError(eleSF->FindBin(lep2_pt, abs(lep2_eta))));
 }
 
 float eleid_statup(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if (lep1_pt>499.) lep1_pt = 499.;
+  if (lep2_pt>499.) lep2_pt = 499.;
+
   if(channel==1)return 1.0;
   if(channel==2) return eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))+0.001;
   if(channel==3) return (eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))+0.001)*(eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))+0.001);
 }
 
 float eleid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
+
+  if(lep1_pt>499.) lep1_pt = 499.;
+  if(lep2_pt>499.) lep2_pt = 499.;
+
   if(channel==1)return 1.0;
   if(channel==2) return eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))-0.001;
   if(channel==3) return (eleSF->GetBinContent(eleSF->FindBin(lep1_pt, abs(lep1_eta)))-0.001)*(eleSF->GetBinContent(eleSF->FindBin(lep2_pt, abs(lep2_eta)))-0.001);
@@ -656,6 +676,10 @@ float eleid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta,
 
 float lep_trigger(float pt1, float pt2, int channel)
 {
+
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
+
   if(channel==3) return diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2));
   if(channel==1) return dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2));
   if(channel==2) return muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2));
@@ -663,6 +687,10 @@ float lep_trigger(float pt1, float pt2, int channel)
 
 float lep_triggerup(float pt1, float pt2, int channel)
 {
+
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
+
   if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))+diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
   if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))+dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));
   if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2))+muele_trigger->GetBinError(muele_trigger->FindBin(pt1,pt2)));
@@ -670,6 +698,9 @@ float lep_triggerup(float pt1, float pt2, int channel)
 
 float lep_triggerdown(float pt1, float pt2, int channel)
 {
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
+
   if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))-diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
   if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))-dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));
   if(channel==2) return (muele_trigger->GetBinContent(muele_trigger->FindBin(pt1,pt2))-muele_trigger->GetBinError(muele_trigger->FindBin(pt1,pt2)));

@@ -677,8 +677,8 @@ float eleid_statdo(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta,
 float lep_trigger(float pt1, float pt2, int channel)
 {
 
-  if(pt1>199.) pt1 = 199.
-  if(pt2>199.) pt2 = 199.
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
 
   if(channel==3) return diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2));
   if(channel==1) return dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2));
@@ -688,8 +688,8 @@ float lep_trigger(float pt1, float pt2, int channel)
 float lep_triggerup(float pt1, float pt2, int channel)
 {
 
-  if(pt1>199.) pt1 = 199.
-  if(pt2>199.) pt2 = 199.
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
 
   if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))+diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
   if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))+dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));
@@ -698,8 +698,8 @@ float lep_triggerup(float pt1, float pt2, int channel)
 
 float lep_triggerdown(float pt1, float pt2, int channel)
 {
-  if(pt1>199.) pt1 = 199.
-  if(pt2>199.) pt2 = 199.
+  if(pt1>199.) pt1 = 199.;
+  if(pt2>199.) pt2 = 199.;
 
   if(channel==3) return (diele_trigger->GetBinContent(diele_trigger->FindBin(pt1,pt2))-diele_trigger->GetBinError(diele_trigger->FindBin(pt1,pt2)));
   if(channel==1) return (dimu_trigger->GetBinContent(dimu_trigger->FindBin(pt1,pt2))-dimu_trigger->GetBinError(dimu_trigger->FindBin(pt1,pt2)));

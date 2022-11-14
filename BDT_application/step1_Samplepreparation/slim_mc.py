@@ -21,10 +21,8 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
     filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nHad_tau==0 && ttc_2P0F" # lhe_nlepton is 0 in randomized scan samples
-  elif 'ttWW' in filein or 'ttWZ' in filein or 'ttZZ' in filein or 'ttWH' in filein or 'ttZH' in filein or 'tttJ' in filein or 'tttW' in filein or 'WWW' in filein or 'WWZ' in filein or 'ZZZ' in filein or 'WZZ' in filein or 'WWdps' in filein or 'osWW' in filein:
-    filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nGenDressedLepton>1 && nHad_tau==0 && ttc_2P0F"
   else:
-    filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && lhe_nlepton>1 && nHad_tau==0 && ttc_2P0F"
+    filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && (nGenDressedLepton > 1 || lhe_nlepton > 1) && nHad_tau==0 && ttc_2P0F"
 
   # Print filters
   print ("filters: ", filters)

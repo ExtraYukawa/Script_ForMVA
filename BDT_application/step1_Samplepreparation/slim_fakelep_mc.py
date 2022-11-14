@@ -20,26 +20,18 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, channel, era):
 
   if channel == "DoubleMuon":
 
-    if 'ttWW' in filein or 'ttWZ' in filein or 'ttZZ' in filein or 'ttWH' in filein or 'ttZH' in filein:
-      filters="ttc_region==1 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && nGenDressedLepton>1"
-    else:
-      filters="ttc_region==1 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && lhe_nlepton>1"
+    filters="ttc_region==1 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && (nGenDressedLepton>1 || lhe_nlepton >1)"
     fakeweight_definition = "fake_weight(ttc_region,ttc_1P1F,ttc_0P2F,ttc_lep1_faketag,muon_conePt[ttc_l1_id],ttc_l1_eta,muon_conePt[ttc_l2_id],ttc_l2_eta)"
     channel_name = 'mm'
 
   elif channel == "DoubleElectron":
-    if 'ttWW' in filein or 'ttWZ' in filein or 'ttZZ' in filein or 'ttWH' in filein or 'ttZH' in filein:
-      filters="ttc_region==3 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && nGenDressedLepton>1 && (ttc_mll<60 || ttc_mll>120)"
-    else:
-      filters="ttc_region==3 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && lhe_nlepton>1 && (ttc_mll<60 || ttc_mll>120)"
+
+    filters="ttc_region==3 && ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && (nGenDressedLepton>1 || lhe_nlepton>1) && (ttc_mll<60 || ttc_mll>120)"
     fakeweight_definition = "fake_weight(ttc_region,ttc_1P1F,ttc_0P2F,ttc_lep1_faketag,electron_conePt[ttc_l1_id],ttc_l1_eta,electron_conePt[ttc_l2_id],ttc_l2_eta)"
     channel_name = 'ee'
 
   elif channel == "ElectronMuon":
-    if 'ttWW' in filein or 'ttWZ' in filein or 'ttZZ' in filein or 'ttWH' in filein or 'ttZH' in filein:
-      filters="ttc_region==2 && ttc_jets && (ttc_l1_pt>30 || ttc_l2_pt>30) && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && nGenDressedLepton>1"
-    else:
-      filters="ttc_region==2 && ttc_jets && (ttc_l1_pt>30 || ttc_l2_pt>30) && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && lhe_nlepton>1"
+    filters="ttc_region==2 && ttc_jets && (ttc_l1_pt>30 || ttc_l2_pt>30) && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && (ttc_1P1F || ttc_0P2F) && (nGenDressedLepton>1 || lhe_nlepton>1)"
     fakeweight_definition = "fake_weight(ttc_region,ttc_1P1F,ttc_0P2F,ttc_lep1_faketag,muon_conePt[ttc_l1_id],ttc_l1_eta,electron_conePt[ttc_l2_id],ttc_l2_eta)"
     channel_name = 'em'
 

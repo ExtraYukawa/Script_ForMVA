@@ -20,9 +20,9 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
   path = str(inputFile_path[era])
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
-    filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nHad_tau==0 && ttc_2P0F" # lhe_nlepton is 0 in randomized scan samples
+    filters      = "(((ttc_region==1 || ttc_region==3) && ttc_l1_pt>30) || (ttc_region==2 && (ttc_l1_pt>30 || ttc_l2_pt>30))) && ttc_jets && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nHad_tau==0 && ttc_2P0F" # lhe_nlepton is 0 in randomized scan samples
   else:
-    filters      = "ttc_jets && ttc_l1_pt > 30 && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && (nGenDressedLepton > 1 || lhe_nlepton > 1) && nHad_tau==0 && ttc_2P0F"
+    filters      = "(((ttc_region==1 || ttc_region==3) && ttc_l1_pt>30) || (ttc_region==2 && (ttc_l1_pt>30 || ttc_l2_pt>30))) && ttc_jets && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && (nGenDressedLepton > 1 || lhe_nlepton > 1) && nHad_tau==0 && ttc_2P0F"
 
   # Print filters
   print ("filters: ", filters)

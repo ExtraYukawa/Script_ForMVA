@@ -166,10 +166,21 @@ def GetMETFilter_MC(era, fin_name):
 
   process     = FindProcess(era, fin_name)
   subprocess  = fin_name.replace('.root','')
+
+  ######################
+  ## Dict reorganized ##
+  ######################
+
+  # Skim MET dictionary and make the whole code more flexible.
+  MET_list_reorganized = dict()
+  for Process in MET_list["MC"]:
+    for Subprocess in MET_list["MC"][Process]:
+      MET_list_reorganized[Subprocess] = MET_list["MC"][Process][Subprocess]
+
   if 'ttc' not in fin_name:
-    MET_filters = MET_list["MC"][process][subprocess]
+    MET_filters = MET_list_reorganized[subprocess]
   else:
-    MET_filters = MET_list["MC"]["TT"]["TTTo2L"]
+    MET_filters = MET_list_reorganized["TTTo2L"]
   MET_filter  = " && ".join(MET_filters)
 
   return str(MET_filter)

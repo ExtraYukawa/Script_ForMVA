@@ -32,7 +32,7 @@ def GetBackgroundList(era):
   jsonfile.close()
   BackgroundFile_List = []
   for process, desc in samples:
-    if desc[4] == 1: # Correct from desc[5] to desc[4] to be consistent with other steps
+    if desc[4] == 1:
       BackgroundFile_List.append((str((process + ".root")),desc[0]))
   return BackgroundFile_List
 

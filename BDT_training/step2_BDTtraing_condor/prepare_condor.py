@@ -51,6 +51,7 @@ def prepare_BackgroundCommand(era):
     backgroundfile_input += '   input_B%d=TFile::Open(\\"%s\\");\\n'%(count, f[0])
     backgroundfile_readtree += '   TTree *background%d     = (TTree*)input_B%d->Get(\\"SlimTree\\");\\n'%(count,count)
     addbackgroundtree += "   dataloader->AddBackgroundTree( background%d,%f\/%f);\\n"%(count,f[1],float(ttemp.GetBinContent(1)/100000))
+#    addbackgroundtree += "   dataloader->AddBackgroundTree( background%d,%f\/background%d->GetEntries());\\n"%(count,f[1],count)
     ftemp.Close()
 
     count += 1

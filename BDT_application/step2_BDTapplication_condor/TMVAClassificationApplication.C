@@ -795,7 +795,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 
    Float_t genweight, puWeight, puWeightUp, puWeightDown, trig_SF, trig_SFup, trig_SFdo, mu_id, mu_id_sysup, mu_id_sysdo, mu_id_statup, mu_id_statdo, ele_id, ele_id_sysup, ele_id_sysdo, ele_id_statup, ele_id_statdo;
    Float_t ctag_SF, ctag_SF_statup, ctag_SF_statdo, ctag_SF_Extrapup, ctag_SF_Extrapdo, ctag_SF_LHEScaleWeightmuFup, ctag_SF_LHEScaleWeightmuFdo, ctag_SF_LHEScaleWeightmuRup, ctag_SF_LHEScaleWeightmuRdo, ctag_SF_Interpup, ctag_SF_Interpdo, ctag_SF_PSWeightISRup, ctag_SF_PSWeightISRdo, ctag_SF_PSWeightFSRup, ctag_SF_PSWeightFSRdo, ctag_SF_PUWeightup, ctag_SF_PUWeightdo, ctag_SF_XSec_BRUnc_DYJets_bup, ctag_SF_XSec_BRUnc_DYJets_bdo, ctag_SF_XSec_BRUnc_DYJets_cup, ctag_SF_XSec_BRUnc_DYJets_cdo, ctag_SF_XSec_BRUnc_WJets_cup, ctag_SF_XSec_BRUnc_WJets_cdo, ctag_SF_jerup, ctag_SF_jerdo, ctag_SF_jesTotalup, ctag_SF_jesTotaldo, charFlip_SF, charFlip_SFstatup, charFlip_SFstatdo, charFlip_SFsystup, charFlip_SFsystdo, sig_pdfup, sig_pdfdo, sig_scaleup, sig_scaledo, sig_psup, sig_psdo, prefireWeight, prefireWeightup, prefireWeightdo;
-   Float_t fakeweight;
+   Float_t fakeweight, fakeweight_ele_statUp, fakeweight_ele_statDo, fakeweight_mu_statUp, fakeweight_mu_statDo;
 
    theTree->SetBranchAddress( "ttc_region", &ttc_region );
    theTree->SetBranchAddress( "j1_FlavCvB", &j1_FlavCvB );
@@ -870,6 +870,11 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    }
    else if(sample_type==2){ //fakelep
      theTree->SetBranchAddress( "fakeweight", &fakeweight);
+     theTree->SetBranchAddress( "fakeweight_ele_statUp", &fakeweight_ele_statUp);
+     theTree->SetBranchAddress( "fakeweight_ele_statDo", &fakeweight_ele_statDo);
+     theTree->SetBranchAddress( "fakeweight_mu_statUp", &fakeweight_mu_statUp);
+     theTree->SetBranchAddress( "fakeweight_mu_statDo", &fakeweight_mu_statDo);
+     
    }
 
    else if(sample_type==3){ //fakelep_mc
@@ -880,6 +885,11 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ele_id", &ele_id);
      theTree->SetBranchAddress( "ctag_SF", &ctag_SF);
      theTree->SetBranchAddress( "fakeweight", &fakeweight);
+     theTree->SetBranchAddress( "fakeweight_ele_statUp", &fakeweight_ele_statUp);
+     theTree->SetBranchAddress( "fakeweight_ele_statDo", &fakeweight_ele_statDo);
+     theTree->SetBranchAddress( "fakeweight_mu_statUp", &fakeweight_mu_statUp);
+     theTree->SetBranchAddress( "fakeweight_mu_statDo", &fakeweight_mu_statDo);
+
    }
 
    if(system_unc=="central"){
@@ -1049,9 +1059,30 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF);
 	 }
          else if(weight_name=="fakelep")   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), fakeweight);
+         else if(weight_name=="fakelep_ele_statUp") histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), fakeweight_ele_statUp);
+         else if(weight_name=="fakelep_ele_statDo") histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), fakeweight_ele_statDo);
+         else if(weight_name=="fakelep_mu_statUp") histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), fakeweight_mu_statUp);
+         else if(weight_name=="fakelep_mu_statDo") histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), fakeweight_mu_statDo); 
+ 
          else if(weight_name=="fakelep_mc"){
            histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*ctag_SF*fakeweight);
         ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight;
+         }
+         else if(weight_name=="fakelep_mc_ele_statUp"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*ctag_SF*fakeweight_ele_statUp);
+        ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight_ele_statUp;
+         }
+         else if(weight_name=="fakelep_mc_ele_statDo"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*ctag_SF*fakeweight_ele_statDo);
+        ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight_ele_statDo;
+         }
+         else if(weight_name=="fakelep_mc_mu_statUp"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*ctag_SF*fakeweight_mu_statUp);
+        ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight_mu_statUp;
+         }
+         else if(weight_name=="fakelep_mc_mu_statDo"){
+           histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*ctag_SF*fakeweight_mu_statDo);
+        ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*fakeweight_mu_statDo;
          }
 	 else if(weight_name=="central"){
 	   if (system_unc=="jesup"){
@@ -1168,19 +1199,19 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_pdfdo;
 	 }
 	 else if(weight_name=="sig_scaleup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF_LHEScaleWeightmuFup*ctag_SF_LHEScaleWeightmuRup);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup;
 	 }
 	 else if(weight_name=="sig_scaledo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF_LHEScaleWeightmuFdo*ctag_SF_LHEScaleWeightmuRdo);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo;
 	 }
 	 else if(weight_name=="sig_psup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF_PSWeightFSRup*ctag_SF_PSWeightISRup);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup;
 	 }
 	 else if(weight_name=="sig_psdo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF_PSWeightFSRdo*ctag_SF_PSWeightISRdo);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo;
          }
 	 // ctag uncertainty
@@ -1288,8 +1319,12 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    if (weight_name=="nominal_noctag") name_wgt = "_nominal_noctag";
    if (weight_name=="central")        name_wgt = "";
    if (weight_name=="fakelep")        name_wgt = "";
+   if (weight_name=="fakelep_statUp") name_wgt = "_fake_statUp";
+   if (weight_name=="fakelep_statDo") name_wgt = "_fake_statDown";
    if (weight_name=="data")           name_wgt = "";
    if (weight_name=="fakelep_mc")     name_wgt = "_fake";
+   if (weight_name=="fakelep_mc_statUp") name_wgt = "_fake_statUp";
+   if (weight_name=="fakelep_mc_statDo") name_wgt = "_fake_statDown";
    if (weight_name=="pileup_up")      name_wgt = "_pileupUp";
    if (weight_name=="pileup_down")    name_wgt = "_pileupDown";
    if (weight_name=="prefire_up")     name_wgt = "_prefireUp";
@@ -1331,16 +1366,16 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    if (weight_name=="ctag_statdo")    name_wgt = "_ctagYEARstatDown";
    if (weight_name=="ctag_Extrapup")   name_wgt = "_ctagYEARExtrapUp";
    if (weight_name=="ctag_Extrapdo")   name_wgt = "_ctagYEARExtrapDown";
-   if (weight_name=="ctag_LHEScaleWeightmuFup") name_wgt = "_ctagYEARLHEmuFUp";
-   if (weight_name=="ctag_LHEScaleWeightmuFdo") name_wgt = "_ctagYEARLHEmuFDown";
-   if (weight_name=="ctag_LHEScaleWeightmuRup") name_wgt = "_ctagYEARLHEmuRUp";
-   if (weight_name=="ctag_LHEScaleWeightmuRdo") name_wgt = "_ctagYEARLHEmuRDown";
+   if (weight_name=="ctag_LHEScaleWeightmuFup") name_wgt = "_ctagLHEmuFUp";
+   if (weight_name=="ctag_LHEScaleWeightmuFdo") name_wgt = "_ctagLHEmuFDown";
+   if (weight_name=="ctag_LHEScaleWeightmuRup") name_wgt = "_ctagLHEmuRUp";
+   if (weight_name=="ctag_LHEScaleWeightmuRdo") name_wgt = "_ctagLHEmuRDown";
    if (weight_name=="ctag_Interpup")              name_wgt = "_ctagYEARInterpUp";
    if (weight_name=="ctag_Interpdo")              name_wgt = "_ctagYEARInterpDown";
-   if (weight_name=="ctag_PSWeightFSRup")       name_wgt = "_ctagYEARPSFSRUp";
-   if (weight_name=="ctag_PSWeightFSRdo")       name_wgt = "_ctagYEARPSFSRDown";
-   if (weight_name=="ctag_PSWeightISRup")       name_wgt = "_ctagYEARPSISRUp";
-   if (weight_name=="ctag_PSWeightISRdo")       name_wgt = "_ctagYEARPSISRDown";
+   if (weight_name=="ctag_PSWeightFSRup")       name_wgt = "_ctagPSFSRUp";
+   if (weight_name=="ctag_PSWeightFSRdo")       name_wgt = "_ctagPSFSRDown";
+   if (weight_name=="ctag_PSWeightISRup")       name_wgt = "_ctagPSISRUp";
+   if (weight_name=="ctag_PSWeightISRdo")       name_wgt = "_ctagPSISRDown";
    if (weight_name=="ctag_PUWeightup")          name_wgt = "_ctagYEARPUUp";
    if (weight_name=="ctag_PUWeightdo")          name_wgt = "_ctagYEARPUDown";
    if (weight_name=="ctag_XSec_BRUnc_DYJets_bup")       name_wgt = "_ctagDYXSbUp";
@@ -1453,6 +1488,11 @@ int TMVAClassificationApplication()
     TH1F*hfake;
     TH1F*hfake_up;
     TH1F*hfake_down;
+    TH1F*hfake_ele_statUp;
+    TH1F*hfake_ele_statDo;
+    TH1F*hfake_mu_statUp;
+    TH1F*hfake_mu_statDo;
+
     
     // add signal cross-section
     // add signal cross-section
@@ -1512,12 +1552,28 @@ int TMVAClassificationApplication()
    std::cout<<"start looping fake"<<std::endl;
    if(ic==0) {
      hfake_no_mcsubtraction=Getoutput("", "fakelep_ee", 1., 1,"fakelep","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statUp      =Getoutput("", "fakelep_ee", 1., 1,"fakelep_ele_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statDo      =Getoutput("", "fakelep_ee", 1., 1,"fakelep_ele_statDo","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statUp       =Getoutput("", "fakelep_ee", 1., 1,"fakelep_mu_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statDo       =Getoutput("", "fakelep_ee", 1., 1,"fakelep_mu_statDo","central", mass, channels[ic], type_, cp, 2);
+
    }
    if(ic==1) {
      hfake_no_mcsubtraction=Getoutput("", "fakelep_em", 1., 1,"fakelep","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statUp      =Getoutput("", "fakelep_em", 1., 1,"fakelep_ele_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statDo      =Getoutput("", "fakelep_em", 1., 1,"fakelep_ele_statDo","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statUp       =Getoutput("", "fakelep_em", 1., 1,"fakelep_mu_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statDo       =Getoutput("", "fakelep_em", 1., 1,"fakelep_mu_statDo","central", mass, channels[ic], type_, cp, 2);
+
+
    }
    if(ic==2) {
      hfake_no_mcsubtraction=Getoutput("", "fakelep_mm", 1., 1,"fakelep","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statUp      =Getoutput("", "fakelep_mm", 1., 1,"fakelep_ele_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_ele_statDo      =Getoutput("", "fakelep_mm", 1., 1,"fakelep_ele_statDo","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statUp       =Getoutput("", "fakelep_mm", 1., 1,"fakelep_mu_statUp","central", mass, channels[ic], type_, cp, 2);
+     hfake_mu_statDo       =Getoutput("", "fakelep_mm", 1., 1,"fakelep_mu_statDo","central", mass, channels[ic], type_, cp, 2);
+
    }
 
    hfake=(TH1F*)hfake_no_mcsubtraction->Clone();
@@ -1526,6 +1582,15 @@ int TMVAClassificationApplication()
    for(int is=0;is<samples.size();is++){
      htemp=Getoutput("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"fakelep_mc","central",mass,channels[ic],type_,cp,3);
      hfake->Add(htemp);
+     htemp=Getoutput("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"fakelep_mc_ele_statUp","central",mass,channels[ic],type_,cp,3);
+     hfake_ele_statUp->Add(htemp);
+     htemp=Getoutput("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"fakelep_mc_ele_statDo","central",mass,channels[ic],type_,cp,3);
+     hfake_ele_statDo->Add(htemp);
+     htemp=Getoutput("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"fakelep_mc_mu_statUp","central",mass,channels[ic],type_,cp,3);
+     hfake_mu_statUp->Add(htemp);
+     htemp=Getoutput("",samples[is]+"_fake_"+channels[ic],xss[is],eff_N[is],"fakelep_mc_mu_statDo","central",mass,channels[ic],type_,cp,3);
+     hfake_mu_statDo->Add(htemp);
+
    }
 
    hfake_up=(TH1F*)hfake->Clone();
@@ -1535,10 +1600,18 @@ int TMVAClassificationApplication()
 
    hfake_no_mcsubtraction->SetNameTitle("ttcYEAR_TTTo1L_noMCsub","ttcYEAR_TTTo1L_noMCsub");
    hfake->SetNameTitle("ttcYEAR_TTTo1L","ttcYEAR_TTTo1L");
+   hfake_ele_statUp->SetNameTitle("ttcYEAR_TTTo1L_fakeYEAReleStatUp", "ttcYEAR_TTTo1L_fakeYEAReleStatUp");
+   hfake_ele_statDo->SetNameTitle("ttcYEAR_TTTo1L_fakeYEAReleStatDown", "ttcYEAR_TTTo1L_fakeYEAReleStatDown");
+   hfake_mu_statUp->SetNameTitle("ttcYEAR_TTTo1L_fakeYEARmuStatUp", "ttcYEAR_TTTo1L_fakeYEARmuStatUp");
+   hfake_mu_statDo->SetNameTitle("ttcYEAR_TTTo1L_fakeYEARmuStatDown", "ttcYEAR_TTTo1L_fakeYEARmuStatDown");
    hfake_up->SetNameTitle("ttcYEAR_TTTo1L_fakeUp","ttcYEAR_TTTo1L_fakeUp");
    hfake_down->SetNameTitle("ttcYEAR_TTTo1L_fakeDown","ttcYEAR_TTTo1L_fakeDown");
    target->cd();
    hfake->Write();
+   hfake_ele_statUp->Write();
+   hfake_ele_statDo->Write();
+   hfake_mu_statUp->Write();
+   hfake_mu_statDo->Write();
    hfake_up->Write();
    hfake_down->Write();
 

@@ -21,7 +21,7 @@ def Slim_module(filein,nin,mass_flag,era):
   path = str(inputFile_path[era])
 
 
-  filters="ttc_jets && ttc_l1_pt>30 && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && ttc_2P0F"
+  filters="(((ttc_region==1 || ttc_region==3) && ttc_l1_pt>30) || (ttc_region==2 && (ttc_l1_pt>30 || ttc_l2_pt>30))) && ttc_jets && ttc_met>30 && ttc_mll>20 && ttc_drll>0.3 && nHad_tau==0 && ttc_2P0F"
 
   Trigger      = GetTrigger_MC(era)
   MET_filters  = GetMETFilter_MC(era, filein)

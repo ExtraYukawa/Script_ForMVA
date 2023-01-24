@@ -21,7 +21,7 @@ TFile*f_ele=TFile::Open("../../data/fr_data_ele_"+era+".root");
 TH2D*h_m=(TH2D*)f_mu->Get("fakerate");
 TH2D*h_e=(TH2D*)f_ele->Get("fakerate");
 
-float fake_weight(int ttc_region, bool ttc_1P1F, bool ttc_0P2F, bool ttc_lep1_faketag, float l1_pt, float l1_eta, float l2_pt, float l2_eta){
+float fake_weight(int ttc_region, bool ttc_1P1F, bool ttc_0P2F, bool ttc_lep1_faketag, float l1_pt, float l1_eta, float l2_pt, float l2_eta, int iw){
   if (l1_pt>70.) l1_pt=70.;
   if (l2_pt>70.) l2_pt=70.;
   if (fabs(l1_eta)>2.3) l1_eta=2.3;
@@ -29,39 +29,47 @@ float fake_weight(int ttc_region, bool ttc_1P1F, bool ttc_0P2F, bool ttc_lep1_fa
   float w_temp=1.0;
   float fakerate1=1.0;
   float fakerate2=1.0;
+  float sigma_e = 0.0;
+  float sigma_m = 0.0;
+  // iw = 0: nominal, 1: Electron_StatUp, 2: Electron_StatDown, 3: Muon_StatUp, 4: Muon_StatDown
+  if(iw == 1)      sigma_e =  1.0;
+  else if(iw == 2) sigma_e = -1.0;
+  else if(iw == 3) sigma_m =  1.0;
+  else if(iw == 4) sigma_m = -1.0;
+
   if (ttc_region==1){
     if(ttc_1P1F){
-      if(ttc_lep1_faketag) fakerate1=h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt));
-      else fakerate1=h_m->GetBinContent(h_m->FindBin(fabs(l2_eta), l2_pt));
+      if(ttc_lep1_faketag) fakerate1 = h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l1_eta), l1_pt));
+      else fakerate1 = h_m->GetBinContent(h_m->FindBin(fabs(l2_eta), l2_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l2_eta), l2_pt));
       w_temp=-1*fakerate1/(1-fakerate1);
     }
     if(ttc_0P2F){
-          fakerate1=h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt));
-          fakerate2=h_m->GetBinContent(h_m->FindBin(fabs(l2_eta), l2_pt));
+          fakerate1 = h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l1_eta), l1_pt));
+          fakerate2 = h_m->GetBinContent(h_m->FindBin(fabs(l2_eta), l2_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l2_eta), l2_pt));
           w_temp=fakerate1*fakerate2/((1-fakerate1)*(1-fakerate2));
     }
   }
   if (ttc_region==2){
     if(ttc_1P1F){
-      if(ttc_lep1_faketag) fakerate1=h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt));
-      else fakerate1=h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt));
+      if(ttc_lep1_faketag) fakerate1 = h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l1_eta), l1_pt));
+      else fakerate1 = h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l2_eta), l2_pt));
       w_temp=-1*fakerate1/(1-fakerate1);
     }
     if(ttc_0P2F){
-          fakerate1=h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt));
-          fakerate2=h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt));
+          fakerate1 = h_m->GetBinContent(h_m->FindBin(fabs(l1_eta), l1_pt)) + sigma_m*h_m->GetBinError(h_m->FindBin(fabs(l1_eta), l1_pt));
+          fakerate2 = h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l2_eta), l2_pt));
           w_temp=fakerate1*fakerate2/((1-fakerate1)*(1-fakerate2));
     }
   }
   if (ttc_region==3){
     if(ttc_1P1F){
-      if(ttc_lep1_faketag) fakerate1=h_e->GetBinContent(h_e->FindBin(fabs(l1_eta), l1_pt));
-      else fakerate1=h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt));
+      if(ttc_lep1_faketag) fakerate1 = h_e->GetBinContent(h_e->FindBin(fabs(l1_eta), l1_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l1_eta), l1_pt));
+      else fakerate1 = h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l2_eta), l2_pt));
       w_temp=-1*fakerate1/(1-fakerate1);
     }
     if(ttc_0P2F){
-          fakerate1=h_e->GetBinContent(h_e->FindBin(fabs(l1_eta), l1_pt));
-          fakerate2=h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt));
+          fakerate1 = h_e->GetBinContent(h_e->FindBin(fabs(l1_eta), l1_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l1_eta), l1_pt));
+          fakerate2 = h_e->GetBinContent(h_e->FindBin(fabs(l2_eta), l2_pt)) + sigma_e*h_e->GetBinError(h_e->FindBin(fabs(l2_eta), l2_pt));
           w_temp=fakerate1*fakerate2/((1-fakerate1)*(1-fakerate2));
     }
   }

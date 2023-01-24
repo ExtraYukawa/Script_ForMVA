@@ -1199,19 +1199,19 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_pdfdo;
 	 }
 	 else if(weight_name=="sig_scaleup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF_LHEScaleWeightmuFup*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaleup;
 	 }
 	 else if(weight_name=="sig_scaledo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF_LHEScaleWeightmuFdo*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_scaledo;
 	 }
 	 else if(weight_name=="sig_psup"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF_PSWeightFSRup*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psup;
 	 }
 	 else if(weight_name=="sig_psdo"){
-	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF_PSWeightFSRdo*ctag_SF);
+	   histBdtG->Fill( reader->EvaluateMVA( "BDTG method"), genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo*ctag_SF);
 	   ctag_norm+=genweight*norm_scale*lumi*mu_id*ele_id*trig_SF*charFlip_SF*sig_psdo;
          }
 	 // ctag uncertainty

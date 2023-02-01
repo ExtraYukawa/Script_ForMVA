@@ -53,7 +53,7 @@ ls DoubleMuon*fake_mm.root SingleMuon*fake_mm.root | xargs hadd -f fakelep_mm.ro
 ls MuonEG*fake_em.root SingleMuon*fake_em.root SingleEG*fake_em.root | xargs hadd -f fakelep_em.root
 ```
 
-- For (2018)
+- For (``2018``)
 ```
 cd sample/2018
 ls EGamma*_ee.root | grep -v fake | xargs hadd -f data_ee.root

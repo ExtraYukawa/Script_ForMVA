@@ -1,17 +1,19 @@
 - Normal samples
 ```
-python prepare_condor.py --era 2016postapv
+python prepare_condor.py --era 2016apv
 ```
 
 - highmass:
 ```
-python prepare_condor.py --era 2016postapv -s highmass
+python prepare_condor.py --era 2016apv -s highmass
 ```
 
 - inteference:
 ```
-python prepare_condor.py --era 2016postapv -s interference
+python prepare_condor.py --era 2016apv -s interference
 ```
+
+** Repeat for other era's: 2016postapv, 2017, 2018
 
 - Submit to condor:
 ```
@@ -24,4 +26,4 @@ condor_q
 sh extract.sh
 ```
 
-put the final BDT outputs under e.g., /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_output/2018/
+put the final BDT outputs under e.g., /eos/cms/store/group/phys_top/ExtraYukawa/<BDT_yourchoice>/BDT_output/2018/

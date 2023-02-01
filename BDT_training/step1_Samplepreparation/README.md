@@ -6,13 +6,15 @@ python runCondor.py --era 2016apv
 
 - For highmass
 ```
-python runCondor.py --era 2016postapv -s highmass
+python runCondor.py --era 2016apv -s highmass
 ```
 
 - For interference samples:
 ```
-python runCondor.py --era 2016postapv -s interference
+python runCondor.py --era 2016apv -s interference
 ```
+
+** Repeat for other era's: 2016postapv, 2017, 2018
 
 simply by using "python slim.py" to get the inputs for the BDT training, several things to be stressed:
 

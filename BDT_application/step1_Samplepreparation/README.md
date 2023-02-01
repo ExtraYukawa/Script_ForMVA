@@ -15,7 +15,9 @@ python runCondor.py --era 2016apv -s interference
 ```
 ** Repeat for other era's: 2016postapv, 2017, 2018
 
-Some files need to produce here (2016apv)
+## Some files need to produce here
+
+- For (``2016apv``)
 ```
 cd sample/2016apv
 hadd -f data_ee.root *_B2_ee.root *_C_ee.root *_D_ee.root *_E_ee.root *_F_ee.root
@@ -27,7 +29,7 @@ hadd -f fakelep_mm.root DoubleMuon_*_fake_mm.root SingleMuon_*_fake_mm.root
 hadd -f fakelep_em.root MuonEG_*_fake_em.root SingleEG_*_fake_em.root SingleMuon_*_fake_em.root
 ```
 
-- Some files need to produce here (2016postapv)
+- For (``2016postapv``)
 ```
 cd sample/2016postapv
 hadd -f data_ee.root *_F_ee.root *_G_ee.root *_H_ee.root
@@ -39,7 +41,7 @@ hadd -f fakelep_mm.root DoubleMuon_*_fake_mm.root SingleMuon_*_fake_mm.root
 hadd -f fakelep_em.root MuonEG_*_fake_em.root SingleEG_*_fake_em.root SingleMuon_*_fake_em.root
 
 ```
-- Some files need to produce here (2017)
+- For (``2017``)
 ```
 cd sample/2017
 ls DoubleEG*_ee.root SingleEG*_ee.root | grep -v fake | xargs hadd -f data_ee.root
@@ -51,7 +53,7 @@ ls DoubleMuon*fake_mm.root SingleMuon*fake_mm.root | xargs hadd -f fakelep_mm.ro
 ls MuonEG*fake_em.root SingleMuon*fake_em.root SingleEG*fake_em.root | xargs hadd -f fakelep_em.root
 ```
 
-- Some files need to produce here (2018)
+- For (2018)
 ```
 cd sample/2018
 ls EGamma*_ee.root | grep -v fake | xargs hadd -f data_ee.root

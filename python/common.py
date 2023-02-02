@@ -17,6 +17,14 @@ inputFile_path = {
   '2018':        '/eos/cms/store/group/phys_top/ExtraYukawa/2018/'
 }
 
+store_place   = '/afs/cern.ch/user/t/tihsu/ExYukawa/CMSSW_10_6_29/src/Script_ForMVA/PrepareJetMatchingSample/sample'
+inputFile_path_skim = {
+  '2016apv':     store_place + "/2016apv/",
+  '2016postapv': store_place + "/2016postapv/",
+  '2017':        store_place + "/2017/",
+  '2018':        store_place + '/2018/'
+}
+
 subera_list = {
   '2016apv':     ['B2','C','D','E','F'],
   '2016postapv': ['F','G','H'],
@@ -73,18 +81,27 @@ def GetTrainingFile(era, isTrain): # -1: drop, 0: used not for training, 1: used
   print(TrainingFile_List)
   return TrainingFile_List
 
-def GetDataFile(era, channel):
-  
-  suberas = subera_list[era]
-  samples = channel_list[era][channel]
+def GetDataFile(era, channel=None):
 
-  middle = '_' if '2016' in era else ''
+  if channel is None:
+    jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
+    samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+    jsonfile.close()
+    datafile_list = []
+    for process, desc in samples:
+      if desc[1] == 0:
+        datafile_list.append(str((process + ".root")))  
+  else:  
+    suberas = subera_list[era]
+    samples = channel_list[era][channel]
 
-  datafile_list = []
+    middle = '_' if '2016' in era else ''
 
-  for sample in samples:
-    for subera in suberas:
-      datafile_list.append(str(sample + middle + subera + '.root'))  
+    datafile_list = []
+
+    for sample in samples:
+      for subera in suberas:
+        datafile_list.append(str(sample + middle + subera + '.root'))  
 
   return datafile_list
 
@@ -139,9 +156,12 @@ def GetTrigger_Data(era, fin_name, channel):
        DiLepton_slc_run[Name].push_back(i)
 
   if "EGamma" in fin_name:
-     Trigger = "(" + str(trig_command_list[channel]["Data"][subera]["DoubleEG"]) + ")||(" + str(trig_command_list[channel]["Data"][subera]["SingleEG"]) + ")"
+    if channel == "DoubleElectron":
+      Trigger = "(" + str(trig_command_list[channel]["Data"][subera]["DoubleEG"]) + ")||(" + str(trig_command_list[channel]["Data"][subera]["SingleEG"]) + ")"
+    else:
+      Trigger = trig_command_list[channel]["Data"][subera]["SingleEG"]
   else:
-     Trigger = trig_command_list[channel]["Data"][subera][dataset]
+    Trigger = trig_command_list[channel]["Data"][subera][dataset]
 
   p1 = re.compile(r'[{](.*?)[}]', re.S)
   variables = re.findall(p1,Trigger)

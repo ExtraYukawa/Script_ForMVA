@@ -17,12 +17,12 @@ inputFile_path = {
   '2018':        '/eos/cms/store/group/phys_top/ExtraYukawa/2018/'
 }
 
-store_place   = '/afs/cern.ch/user/t/tihsu/ExYukawa/CMSSW_10_6_29/src/Script_ForMVA/PrepareJetMatchingSample/sample'
+skimstore_place   = '/eos/user/t/tihsu/BDT/ntuple_skim'
 inputFile_path_skim = {
-  '2016apv':     store_place + "/2016apv/",
-  '2016postapv': store_place + "/2016postapv/",
-  '2017':        store_place + "/2017/",
-  '2018':        store_place + '/2018/'
+  '2016apv':     skimstore_place + "/2016apv/",
+  '2016postapv': skimstore_place + "/2016postapv/",
+  '2017':        skimstore_place + "/2017/",
+  '2018':        skimstore_place + '/2018/'
 }
 
 subera_list = {

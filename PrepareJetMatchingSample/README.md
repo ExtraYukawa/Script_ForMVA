@@ -29,7 +29,7 @@ python runCondor.py --step 1
 python runCondor.py --step 1 -s highmass
 python runCondor.py --step 1 -s interference
 ```
-## Step2 Run combination
+## Step2 Run Jet match algorithm
 Run Jet index algorithm and add new branch in TTree. Results are stored in `${EOSDIR}/ntuple_reindex/`.
 ```
 python runCondor.py --step 2

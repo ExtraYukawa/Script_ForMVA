@@ -36,7 +36,7 @@ if __name__=='__main__':
   parser.add_argument('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type=str,choices=["all","2016apv","2016postapv","2017","2018"])
   parser.add_argument('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type=str, choices=["all","normal","interference","highmass"])
   parser.add_argument("--test", action="store_true")
-  parser.add_argument("--step", dest='step', help='0:Generate ntuple, 1: runAlgorithm, 2: MergeResult', default=0, type=int, choices=[0,1,2])
+  parser.add_argument("--step", dest='step', help='0:Generate ntuple, 1: run Combination, 2: run algorithm and mergeResult', default=0, type=int, choices=[0,1,2])
   args = parser.parse_args()
 
   Eras_List = ['2016postapv','2016apv','2017','2018']

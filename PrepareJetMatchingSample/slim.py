@@ -6,7 +6,7 @@ import json
 import optparse
 from collections import OrderedDict
 from math import sqrt
-from common import inputFile_path
+from common import inputFile_path, store_place
 from common import GetTrigger_MC, GetMETFilter_MC, GetTrigger_Data, GetMETFilter_Data
 
 
@@ -64,7 +64,8 @@ def Slim_module(filein,era,mass_flag, isMC, channel):
   else:
     fileOut = filein.split('.')[0]+"_" + channel_name + ".root"
 
-  fileOut = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileOut
+  skimstore_place = store_place + "ntuple_skim/"
+  fileOut = skimstore_place + era + "/" + fileOut
   
   print ("Output file: ", fileOut)
 
@@ -78,13 +79,13 @@ def Slim_module(filein,era,mass_flag, isMC, channel):
     elif "highmass.root" in filein.split('_'):
       print ("===> highmass samples <===")
       fileOut = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
-      fileOut = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileOut
+      fileOut = skimstore_place + era + "/" + fileOut
       print ("Output filename changed to: ", fileOut)
       df_filein_tree = ROOT.RDataFrame("Events",path+filein)
     else:
       print ("normal samples")
       fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
-      fileOut = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileOut
+      fileOut = skimstore_place + era + "/" + fileOut
       print ("Output filename changed to: ", fileOut)
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree      = df_filein_tree_temp.Filter(mass_flag)
@@ -97,11 +98,11 @@ def Slim_module(filein,era,mass_flag, isMC, channel):
 
   columns = ROOT.std.vector("string")()
   if isMC:
-    for c in ('nJet','nMuon','nElectron','ttc_region','ttc_l1_id','ttc_l1_pdgid','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_id','ttc_l2_pdgid','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_jets','ttc_met','ttc_met_phi','ttc_mll','ttc_drll','nHad_tau','ttc_2P0F','ttc_1P1F','ttc_0P2F','nGenDressedLepton','lhe_nlepton','PrefireWeight','PrefireWeight_Up','PrefireWeight_Down','genWeight','puWeight','puWeightUp','puWeightDown','Jet_btagDeepFlavB','Jet_btagDeepFlavCvB','Jet_btagDeepFlavCvL','MET_T1Smear_pt_jesTotalUp','MET_T1Smear_pt_jesTotalDown','MET_T1Smear_pt_jerUp','MET_T1Smear_pt_jerDown','MET_T1Smear_pt_unclustEnUp','MET_T1Smear_pt_unclustEnDown','MET_T1Smear_phi_jesTotalUp','MET_T1Smear_phi_jesTotalDown','MET_T1Smear_phi_jerUp','MET_T1Smear_phi_jerDown','MET_T1Smear_phi_unclustEnUp','MET_T1Smear_phi_unclustEnDown','Jet_pt','Jet_pt_jesTotalUp','Jet_pt_jesTotalDown','Jet_pt_jerUp','Jet_pt_jerDown','Jet_eta','Jet_phi','Jet_mass','Jet_mass_nom','Jet_mass_jesTotalUp','Jet_mass_jesTotalDown','Jet_mass_jerUp','Jet_mass_jerDown','Jet_puId','Jet_pt_nom','Jet_hadronFlavour','Muon_correctedUp_pt','Muon_correctedDown_pt','GenDressedLepton_eta','GenDressedLepton_phi','GenDressedLepton_pdgId','PV_npvsGood','PV_x','PV_y','PV_z','nSV','HT','n_tight_jet','tightJets_id_in24'):
+    for c in ('nJet','nMuon','nElectron','ttc_region','ttc_l1_id','ttc_l1_pdgid','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_id','ttc_l2_pdgid','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_jets','ttc_met','ttc_met_phi','ttc_mll','ttc_drll','nHad_tau','ttc_2P0F','ttc_1P1F','ttc_0P2F','nGenDressedLepton','lhe_nlepton','PrefireWeight','PrefireWeight_Up','PrefireWeight_Down','genWeight','puWeight','puWeightUp','puWeightDown','Jet_btagDeepFlavB','Jet_btagDeepFlavCvB','Jet_btagDeepFlavCvL','MET_T1Smear_pt_jesTotalUp','MET_T1Smear_pt_jesTotalDown','MET_T1Smear_pt_jerUp','MET_T1Smear_pt_jerDown','MET_T1Smear_pt_unclustEnUp','MET_T1Smear_pt_unclustEnDown','MET_T1Smear_phi_jesTotalUp','MET_T1Smear_phi_jesTotalDown','MET_T1Smear_phi_jerUp','MET_T1Smear_phi_jerDown','MET_T1Smear_phi_unclustEnUp','MET_T1Smear_phi_unclustEnDown','Jet_pt','Jet_pt_jesTotalUp','Jet_pt_jesTotalDown','Jet_pt_jerUp','Jet_pt_jerDown','Jet_eta','Jet_phi','Jet_mass','Jet_mass_nom','Jet_mass_jesTotalUp','Jet_mass_jesTotalDown','Jet_mass_jerUp','Jet_mass_jerDown','Jet_puId','Jet_pt_nom','Jet_hadronFlavour','Muon_correctedUp_pt','Muon_correctedDown_pt','GenDressedLepton_eta','GenDressedLepton_phi','GenDressedLepton_pdgId','PV_npvsGood','PV_x','PV_y','PV_z','nSV','HT','n_tight_jet','tightJets_id_in24','ttc_lep1_faketag','muon_conePt','electron_conePt'):
       if not (era == '2018' and 'Prefire' in c):
         columns.push_back(c)
   else:
-    for c in ('nJet','nMuon','nElectron','ttc_region','ttc_l1_id','ttc_l1_pdgid','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_id','ttc_l2_pdgid','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_jets','ttc_met','ttc_met_phi','ttc_mll','ttc_drll','nHad_tau','ttc_2P0F','ttc_1P1F','ttc_0P2F','Jet_btagDeepFlavB','Jet_btagDeepFlavCvB','Jet_btagDeepFlavCvL','Jet_pt','Jet_eta','Jet_phi','Jet_mass','Jet_mass_nom','Jet_puId','Jet_pt_nom','Muon_correctedUp_pt','Muon_correctedDown_pt','PV_npvsGood','PV_x','PV_y','PV_z','nSV','HT','n_tight_jet','tightJets_id_in24'):
+    for c in ('nJet','nMuon','nElectron','ttc_region','ttc_l1_id','ttc_l1_pdgid','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_id','ttc_l2_pdgid','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_jets','ttc_met','ttc_met_phi','ttc_mll','ttc_drll','nHad_tau','ttc_2P0F','ttc_1P1F','ttc_0P2F','Jet_btagDeepFlavB','Jet_btagDeepFlavCvB','Jet_btagDeepFlavCvL','Jet_pt','Jet_eta','Jet_phi','Jet_mass','Jet_mass_nom','Jet_puId','Jet_pt_nom','Muon_correctedUp_pt','Muon_correctedDown_pt','PV_npvsGood','PV_x','PV_y','PV_z','nSV','HT','n_tight_jet','tightJets_id_in24','ttc_lep1_faketag','muon_conePt','electron_conePt'):
       columns.push_back(c)
   dOut.Snapshot(treeOut,fileOut,columns)
 

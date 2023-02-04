@@ -13,48 +13,28 @@ from itertools import combinations, permutations
 import uproot
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
-
+from common import store_place
 
 ROOT.gSystem.Load("libGenVector.so")
 np.finfo(np.dtype("float32"))
 
-class NeuralNetwork(nn.Module):
-    def __init__(self,nvars):
-        # return a temporary object of superclass so we can call superclass' methods
-        super(NeuralNetwork, self).__init__()
-        # Initialise layers
-        self.linear_relu_stack = nn.Sequential(
-            nn.Flatten(), #Flattens contiguous range of dimensions into a tensor
-            nn.Linear(nvars,24),
-            nn.ReLU(),
-            nn.Linear(24,12),
-            nn.ReLU(),
-            nn.Linear(12,8),
-            nn.ReLU(),
-            nn.Linear(8,4),
-            nn.ReLU(),
-            nn.Linear(4,1),
-        )
-    # Method to implement operations on input data
-    # Passing input data to model automatically executes models forward method
-    def forward(self, x):
-        logits = self.linear_relu_stack(x)
-        return logits
+skimstore_place = store_place + "ntuple_skim/"
 
 #@nb.njit
 def compute_di_mass(v1, v2):
     return (v1 + v2).mass
 
-def AddEntry(fin_name):
+def AddEntry(fin_name, era, From, To, Tag):
 
   # Update ROOT file
   fin = ROOT.TFile(fin_name, 'update')
   tree_name = 'Events'
   t = fin.Get(tree_name)
   matched_idx = array('i',[-1,-1,-1,-1])
-  Branch_idx  = t.Branch("JetMatched_idx",matched_idx,"JetMatched_idx[4]/I")
+  #Branch_idx  = t.Branch("JetMatched_idx",matched_idx,"JetMatched_idx[4]/I")
   nentries    = t.GetEntries()
   run_event   = nentries
+  fin.Close()
 
   # Use uproot to process data
   try:
@@ -83,14 +63,9 @@ def AddEntry(fin_name):
   l2_p4          = vector.zip({'pt':l2_pt, 'eta':l2_eta, 'phi':l2_phi, 'mass':l2_mass})
 
 
-  # Load DNN 
-  model = NeuralNetwork(30)
-  model.load_state_dict(torch.load('../../HiggsReco/training/model_1e-05_500_100/saved_model.pt'))
-  model.eval()
-
   # Prepare dataframe
   df =[]
-  for row in range(0, len(Jet_pt)):
+  for row in range(From,To):
     tight_jet_id_skim = tight_jet_id[row][:min(n_tight_jet[row],6)]
     combinations_list = list(combinations(tight_jet_id_skim, 2 ))
 
@@ -228,50 +203,11 @@ def AddEntry(fin_name):
     df_ = pd.DataFrame(data=d_entries)
     df.append(df_)
   df = pd.concat(df)
-  # Data Preprocessing
-  colnames = list(d_entries.keys())
-  ct = ColumnTransformer(
-  [('StandardScaler', StandardScaler(), colnames[5:] )],
-      remainder='drop'# Drop nontransformed columns
-  )
-  index_ = df[colnames[:5]]
-  result_ = ct.fit_transform(df)
-  result_ = np.c_[index_, result_]
-  transformed_df = pd.DataFrame(result_,columns=colnames)
-  transformed_df = transformed_df.astype({'Entry':"int",'bmatched_jet_index':'int','lmatched_jet_index':'int','jet3_index':'int','jet4_index':'int'})
-  print(transformed_df)
-  input_columns_ = [
-    'bmatched_jet_pt','bmatched_jet_eta','bmatched_jet_phi','bmatched_jet_mass',
-    'lmatched_jet_pt','lmatched_jet_eta','lmatched_jet_phi','lmatched_jet_mass',
-    'dR_bmatched_lmatched_jets','dR_bmatched_jet_lep1','dR_bmatched_jet_lep2','dR_lmatched_jet_lep1','dR_lmatched_jet_lep2',
-    'invmass_bjlj',
-    'lep1_pt','lep1_eta','lep1_phi','lep1_mass',
-    'lep2_pt','lep2_eta','lep2_phi','lep2_mass',
-    'jet3_pt','jet3_eta','jet3_phi','jet3_mass',
-    'jet4_pt','jet4_eta','jet4_phi','jet4_mass'
-  ]
-  source_combs = transformed_df[input_columns_].values
-  X_input      = torch.tensor(source_combs, dtype=torch.float32)
-  predicted    = torch.sigmoid(model(X_input)).detach().numpy()
-  predicted    = np.array(predicted.reshape(len(predicted)))
-  transformed_df.insert(1, "predicted", predicted)
-  idx = transformed_df.groupby(['Entry'])['predicted'].transform(max) == transformed_df['predicted']
-  df = transformed_df[idx]
-  df = df.set_index("Entry")
+
   
   print(df)
 
-  for entry in range(run_event):
-    t.GetEntry(entry)
-    matched_idx[0] = df['bmatched_jet_index'][entry]
-    matched_idx[1] = df['lmatched_jet_index'][entry]
-    matched_idx[2] = df['jet3_index'][entry]
-    matched_idx[3] = df['jet4_index'][entry]
-    Branch_idx.Fill()
-
-  t.Write()
-
-
+  df.to_hdf((store_place + 'dataframe/' + era + "/" + fin_name.split('/')[-1].split('.')[0] + '_' + str(Tag) + '.h5'),'df',mode='w',format='table',data_columns=True)
 
   fin.Close()
 
@@ -286,6 +222,9 @@ if __name__ == "__main__":
   parser.add_option('-f','--flag',  dest='flag',  help='flag',            default='dummy', type='string')
   parser.add_option('-t','--type',  dest='Type',  help='data/MC',         default='MC', type='string')
   parser.add_option('-c','--channel', dest='channel', help='[DoubleElectron/DoubleMuon/ElectronMuon]', default='DoubleElectron',type='string')
+  parser.add_option('--from', dest='From', help = 'start point', default = 0, type  = 'int')
+  parser.add_option('--to',   dest='To',   help = 'end point', default = 5000, type = 'int')
+  parser.add_option('--tag',  dest='tag',  help = 'Output tag', default = 0, type = 'int')
 
   (args,opt) = parser.parse_args()
 
@@ -308,7 +247,7 @@ if __name__ == "__main__":
       channel_name = 'em'
 
     fileIn = iin.split('.')[0]+"_" + channel_name + ".root"
-  fileIn = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileIn
+  fileIn = skimstore_place + era + "/" + fileIn
 
 
   if 'ttc_a' in iin or 'ttc_s0' in iin:
@@ -319,14 +258,14 @@ if __name__ == "__main__":
     elif "highmass.root" in iin.split('_'):
       print ("===> highmass samples <===")
       fileIn = iin.split('_')[0]+'_'+iin.split('_')[1]+'_'+iin.split('_')[3]+'_M'+iin.split('_')[1].upper()+iin.split('_')[2]+".root"
-      fileIn = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileIn
+      fileIn = skimstore_place + era + "/" + fileIn
     else:
       print ("normal samples")
       fileIn = iin.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
-      fileIn = "/eos/user/t/tihsu/BDT/ntuple_skim/" + era + "/" + fileIn
+      fileIn = skimstore_place + era + "/" + fileIn
 
   print ("Input file: ", fileIn)
-  AddEntry(fileIn)
+  AddEntry(fileIn, era, args.From, args.To, args.tag)
 
   end = time.time()
   print( "wall time:", end-start)

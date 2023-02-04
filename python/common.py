@@ -17,12 +17,14 @@ inputFile_path = {
   '2018':        '/eos/cms/store/group/phys_top/ExtraYukawa/2018/'
 }
 
-skimstore_place   = '/eos/user/t/tihsu/BDT/ntuple_skim'
+# You need to change this directory to your own directory
+
+store_place   = '/eos/user/t/tihsu/BDT/'
 inputFile_path_skim = {
-  '2016apv':     skimstore_place + "/2016apv/",
-  '2016postapv': skimstore_place + "/2016postapv/",
-  '2017':        skimstore_place + "/2017/",
-  '2018':        skimstore_place + '/2018/'
+  '2016apv':     store_place + "ntuple_skim/2016apv/",
+  '2016postapv': store_place + "ntuple_skim/2016postapv/",
+  '2017':        store_place + "ntuple_skim/2017/",
+  '2018':        store_place + 'ntuple_skim/2018/'
 }
 
 subera_list = {
@@ -225,4 +227,35 @@ def DefinePrefireWeight(df_MC_tree, era):
     df_MC_tree = df_MC_tree.Define("PrefireWeight_Down", "1.0f");
 
   return df_MC_tree
+
+def TransFileName(iin, isMC, era, channel,mass_flag='dummy'):
+
+
+  # Function to transform ntuple file name to more handful one.
+
+  # Normal MC
+  fileIn = iin.split('.')[0]+".root"
+
+  # Data
+  if not isMC:
+    if channel == 'DoubleMuon':
+      channel_name = 'mm'
+    elif channel == 'DoubleElectron':
+      channel_name = 'ee'
+    elif channel == 'ElectronMuon':
+      channel_name = 'em'
+    fileIn = iin.split('.')[0]+"_" + channel_name + ".root"
+
+  if 'ttc_a' in iin or 'ttc_s0' in iin:
+    # Interference Signal
+    if "a" in iin.split('_') and "s" in iin.split('_'):
+      pass
+    # highmass Signal
+    elif "highmass.root" in iin.split('_'):
+      fileIn = iin.split('_')[0]+'_'+iin.split('_')[1]+'_'+iin.split('_')[3]+'_M'+iin.split('_')[1].upper()+iin.split('_')[2]+".root"
+    # Normal Signal
+    else:
+      fileIn = iin.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
+
+  return fileIn
 

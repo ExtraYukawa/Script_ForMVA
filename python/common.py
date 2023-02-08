@@ -139,7 +139,10 @@ def GetTrigger_Data(era, fin_name, channel):
        DiLepton_slc_run[Name].push_back(i)
 
   if "EGamma" in fin_name:
-     Trigger = "(" + str(trig_command_list[channel]["Data"][subera]["DoubleEG"]) + ")||(" + str(trig_command_list[channel]["Data"][subera]["SingleEG"]) + ")"
+    if channel == "DoubleElectron":
+      Trigger = "(" + str(trig_command_list[channel]["Data"][subera]["DoubleEG"]) + ")||(" + str(trig_command_list[channel]["Data"][subera]["SingleEG"]) + ")"
+    else:
+      Trigger = trig_command_list[channel]["Data"][subera]["SingleEG"]
   else:
      Trigger = trig_command_list[channel]["Data"][subera][dataset]
 

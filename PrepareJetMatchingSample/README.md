@@ -42,8 +42,8 @@ Test locally should sometimes be tricky because of the environment setting, reco
 ```
 python runCondor.py --step [0/1/2] --test
 ```
-And then you will find the shell files in `CMSSW/Farm_BDT/preslim_step*.sh`, test with that files.
-Otherwise, you need to (sometimes conflict with cmsenv)
+And then you will find the shell files in `CMSSW/Farm_BDT/preslim_step*.sh`, test with that files.\\
+Or you can also source environmental file test with the code. But, sometimes it conflicts with cmsenv.
 ```
 source env.sh
 ```

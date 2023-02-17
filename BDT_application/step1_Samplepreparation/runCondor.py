@@ -42,7 +42,7 @@ if __name__=='__main__':
   os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
 
-  from common import inputFile_path
+  from common import inputFile_path, inputFile_path_skim
   from common import GetTrainingFile, GetDataFile
 
   condor = open('%s/condor.sub'%FarmDir,'w')
@@ -152,7 +152,7 @@ if __name__=='__main__':
           for index, mass in enumerate(A_masses):
             iin = 'ttc_a_%s_s_%s_%s.root'%(A_masses[index], S_masses[index], coup)
             command = "python %s --era %s --train %d --iin %s "%(python_file, Era, 1, iin)
-            shell_file = 'slim_%s_%s.sh'%(iin,Era)
+            shell_file = 'slim_mc_%s_%s.sh'%(iin,Era)
             prepare_shell(shell_file, command, condor, FarmDir)
       
     #====================

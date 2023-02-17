@@ -4,8 +4,8 @@ import os
 import math
 import optparse
 from math import sqrt
-from common import inputFile_path
-from common import GetDataFile, GetTrigger_Data, GetMETFilter_Data
+from common import inputFile_path, inputFile_path_skim
+from common import GetDataFile, GetTrigger_Data, GetMETFilter_Data,TransFileName
 
 def Slim_module(filein,nin,mass_flag,channel, era):
 
@@ -14,7 +14,7 @@ def Slim_module(filein,nin,mass_flag,channel, era):
   ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
 
-  path = str(inputFile_path[era])
+  path = str(inputFile_path_skim[era])
 
   nevent=nin
 
@@ -58,35 +58,49 @@ def Slim_module(filein,nin,mass_flag,channel, era):
     channel_name = 'em'
 
 
-  fileOut = filein.split('.')[0]+"_fake_" + channel_name + ".root"
+  fileOut = (filein.split('.')[0].replace(channel_name, "fake_" + channel_name)) + ".root"
   fileOut = "sample/" + era + "/" + fileOut
   treeOut = "SlimTree"
 
-  Trigger      = GetTrigger_Data(era, filein, channel)
-  MET_filters  = GetMETFilter_Data(era)
-  filters      = str("(" + filters + ")&&(" + MET_filters + ")")
+  filters      = str("(" + filters + ")")
 
   df_filein = df_filein_tree.Filter(filters)
   df_filein = df_filein.Define("fakeweight",str(fakeweight_definition))
   df_filein = df_filein.Define("fakeweight_ele_statUp", str(fakeweight_ele_statUp_definition))
   df_filein = df_filein.Define("fakeweight_ele_statDo", str(fakeweight_ele_statDo_definition))
   df_filein = df_filein.Define("fakeweight_mu_statUp", str(fakeweight_mu_statUp_definition))
-  df_filein = df_filein.Define("fakeweight_mu_statDo", str(fakeweight_mu_statDo_definition))
+  dOut      = df_filein.Define("fakeweight_mu_statDo", str(fakeweight_mu_statDo_definition))
 
-  dOut      = df_filein.Filter(str(Trigger))
 
-  dOut = dOut.Define("j1_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[0]]")\
-             .Define("j1_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[0]]")\
-             .Define("j1_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[0]]")\
-             .Define("j2_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[1]]")\
-             .Define("j2_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[1]]")\
-             .Define("j2_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[1]]")\
-             .Define("j3_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[2]]")\
-             .Define("j3_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[2]]")\
-             .Define("j3_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[2]]")\
-             .Define("dr_j1j2","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,1)")\
-             .Define("dr_j1j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,2)")\
-             .Define("dr_j2j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,3)")\
+  dOut = dOut.Define("j1_pt",   "Jet_pt[JetMatched_idx[0]]")\
+             .Define("j1_eta",  "Jet_eta[JetMatched_idx[0]]")\
+             .Define("j1_phi",  "Jet_phi[JetMatched_idx[0]]")\
+             .Define("j1_mass", "Jet_mass[JetMatched_idx[0]]")\
+             .Define("j1_FlavB","Jet_btagDeepFlavB[JetMatched_idx[0]]")\
+             .Define("j1_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[0]]")\
+             .Define("j1_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[0]]")\
+             .Define("j2_pt",   "Jet_pt[JetMatched_idx[1]]")\
+             .Define("j2_eta",  "Jet_eta[JetMatched_idx[1]]")\
+             .Define("j2_phi",  "Jet_phi[JetMatched_idx[1]]")\
+             .Define("j2_mass", "Jet_mass[JetMatched_idx[1]]")\
+             .Define("j2_FlavB","Jet_btagDeepFlavB[JetMatched_idx[1]]")\
+             .Define("j2_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[1]]")\
+             .Define("j2_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[1]]")\
+             .Define("j3_pt",   "Jet_pt[JetMatched_idx[2]]")\
+             .Define("j3_eta",  "Jet_eta[JetMatched_idx[2]]")\
+             .Define("j3_phi",  "Jet_phi[JetMatched_idx[2]]")\
+             .Define("j3_mass", "Jet_mass[JetMatched_idx[2]]")\
+             .Define("j3_FlavB","Jet_btagDeepFlavB[JetMatched_idx[2]]")\
+             .Define("j3_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[2]]")\
+             .Define("j3_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[2]]")\
+             .Define("dr_j1j2","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,1)")\
+             .Define("dr_j1j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,2)")\
+             .Define("dr_j2j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,3)")\
+             .Define("ttc_mllj1","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,1)")\
+             .Define("ttc_mllj2","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,2)")\
+             .Define("ttc_mllj3","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,3)")
+
+
 
 
   columns = ROOT.std.vector("string")()
@@ -108,13 +122,13 @@ if __name__ == "__main__":
 
   (args,opt) = parser.parse_args()
 
-  iin = args.iin
   istrain = args.train
   flag = args.flag
   channel = args.channel
   era = args.era
+  iin = TransFileName(args.iin, False, era, channel)
 
-  path = str(inputFile_path[era])
+  path = str(inputFile_path_skim[era])
 
   print('Processing ',iin)
   ftemp=ROOT.TFile.Open(path+iin)

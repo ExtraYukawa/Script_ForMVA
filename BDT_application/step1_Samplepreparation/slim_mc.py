@@ -6,8 +6,8 @@ import json
 import optparse
 from collections import OrderedDict
 from math import sqrt
-from common import inputFile_path
-from common import GetTrainingFile, GetTrigger_MC, GetMETFilter_MC, DefinePrefireWeight
+from common import inputFile_path, inputFile_path_skim
+from common import GetTrainingFile, GetTrigger_MC, GetMETFilter_MC, DefinePrefireWeight, TransFileName
 
 
 def Slim_module(filein,nin,mass_flag, use_fortraining, era):
@@ -17,7 +17,7 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
   ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
 
 
-  path = str(inputFile_path[era])
+  path = str(inputFile_path_skim[era])
 
   if 'ttc_a' in filein or 'ttc_s0' in filein:
     filters      = "(((ttc_region==1 || ttc_region==3) && ttc_l1_pt>30) || (ttc_region==2 && (ttc_l1_pt>30 || ttc_l2_pt>30))) && ttc_jets && ttc_met > 30 && ttc_mll > 20 && ttc_drll > 0.3 && nHad_tau==0 && ttc_2P0F" # lhe_nlepton is 0 in randomized scan samples
@@ -26,10 +26,8 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
 
   # Print filters
   print ("filters: ", filters)
-  Trigger      = GetTrigger_MC(era)
-  MET_filters  = GetMETFilter_MC(era, filein)
 
-  filters      = str("(" + filters + ")&&(" + MET_filters + ")")
+  filters      = str("(" + filters + ")")
 
   # flag for TTto2L and DY for chargeflip SF
   if 'TTTo2L' in filein or 'DY' in filein:
@@ -41,7 +39,7 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
   fileOut = "sample/" + era + "/" + fileOut
 
   treeOut = "SlimTree"
-  nevent=nin
+  nevent  = nin
   if 'TTTo1L' in filein:
     nevent=2*nin
 
@@ -50,23 +48,15 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
       print ("Interference samples all events for evaluation")
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent), 0)
-    elif "highmass.root" in filein.split('_'):
+    elif (("MA800" in filein) or ("MA900" in filein) or ("MA1000" in filein)):
       print ("===> highmass samples <===")
-      fileOut = filein.split('_')[0]+'_'+filein.split('_')[1]+'_'+filein.split('_')[3]+'_M'+filein.split('_')[1].upper()+filein.split('_')[2]+".root"
-      fileOut = "sample/" + era + "/" + fileOut
-      print ("Output filename changed to: ", fileOut)
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       df_filein_tree = df_filein_tree_temp.Range(int(nevent), 0)
     else:
       print ("normal samples")
-      
-      fileOut = filein.split('.')[0]+'_'+mass_flag.split('_')[2]+mass_flag.split('_')[3]+".root"
-      fileOut = "sample/" + era + "/" + fileOut
-    
       df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
       print(mass_flag)
-      df_filein_tree_temp2 = df_filein_tree_temp.Filter(str(mass_flag))
-      df_filein_tree = df_filein_tree_temp2.Range(int(nevent),0)
+      df_filein_tree = df_filein_tree_temp.Range(int(nevent),0)
   elif 'TTTo1L' in filein:
     df_filein_tree_temp = ROOT.RDataFrame("Events",path+filein)
     df_filein_tree = df_filein_tree_temp.Range(int(nevent))
@@ -81,17 +71,28 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
   df_filein_tree = DefinePrefireWeight(df_filein_tree, era)
 
   df_filein_tree = df_filein_tree.Define("genweight","PrefireWeight*puWeight*genWeight/abs(genWeight)")
-  df_filein = df_filein_tree.Filter(filters)
-  dOut = df_filein.Filter(Trigger)
-  dOut = dOut.Define("j1_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[0]]")\
-             .Define("j1_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[0]]")\
-             .Define("j1_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[0]]")\
-             .Define("j2_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[1]]")\
-             .Define("j2_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[1]]")\
-             .Define("j2_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[1]]")\
-             .Define("j3_FlavB","Jet_btagDeepFlavB[tightJets_id_in24[2]]")\
-             .Define("j3_FlavCvB","Jet_btagDeepFlavCvB[tightJets_id_in24[2]]")\
-             .Define("j3_FlavCvL","Jet_btagDeepFlavCvL[tightJets_id_in24[2]]")\
+  dOut = df_filein_tree.Filter(filters)
+  dOut = dOut.Define("j1_pt",   "Jet_pt[JetMatched_idx[0]]")\
+             .Define("j1_eta",  "Jet_eta[JetMatched_idx[0]]")\
+             .Define("j1_phi",  "Jet_phi[JetMatched_idx[0]]")\
+             .Define("j1_mass", "Jet_mass[JetMatched_idx[0]]")\
+             .Define("j1_FlavB","Jet_btagDeepFlavB[JetMatched_idx[0]]")\
+             .Define("j1_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[0]]")\
+             .Define("j1_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[0]]")\
+             .Define("j2_pt",   "Jet_pt[JetMatched_idx[1]]")\
+             .Define("j2_eta",  "Jet_eta[JetMatched_idx[1]]")\
+             .Define("j2_phi",  "Jet_phi[JetMatched_idx[1]]")\
+             .Define("j2_mass", "Jet_mass[JetMatched_idx[1]]")\
+             .Define("j2_FlavB","Jet_btagDeepFlavB[JetMatched_idx[1]]")\
+             .Define("j2_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[1]]")\
+             .Define("j2_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[1]]")\
+             .Define("j3_pt",   "Jet_pt[JetMatched_idx[2]]")\
+             .Define("j3_eta",  "Jet_eta[JetMatched_idx[2]]")\
+             .Define("j3_phi",  "Jet_phi[JetMatched_idx[2]]")\
+             .Define("j3_mass", "Jet_mass[JetMatched_idx[2]]")\
+             .Define("j3_FlavB","Jet_btagDeepFlavB[JetMatched_idx[2]]")\
+             .Define("j3_FlavCvB","Jet_btagDeepFlavCvB[JetMatched_idx[2]]")\
+             .Define("j3_FlavCvL","Jet_btagDeepFlavCvL[JetMatched_idx[2]]")\
              .Define("ttc_met_jesup","MET_T1Smear_pt_jesTotalUp")\
              .Define("ttc_met_jesdo","MET_T1Smear_pt_jesTotalDown")\
              .Define("ttc_met_jerup","MET_T1Smear_pt_jerUp")\
@@ -104,35 +105,38 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
              .Define("ttc_met_phi_jerdo","MET_T1Smear_phi_jerDown")\
              .Define("ttc_met_phi_unclusterEup","MET_T1Smear_phi_unclustEnUp")\
              .Define("ttc_met_phi_unclusterEdo","MET_T1Smear_phi_unclustEnDown")\
-             .Define("dr_j1j2","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,1)")\
-             .Define("dr_j1j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,2)")\
-             .Define("dr_j2j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,3)")\
+             .Define("dr_j1j2","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,1)")\
+             .Define("dr_j1j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,2)")\
+             .Define("dr_j2j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,3)")\
              .Define("HT_jesup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 0, nJet)")\
              .Define("HT_jesdo","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 1, nJet)")\
              .Define("HT_jerup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 2, nJet)")\
              .Define("HT_jerdo","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 3, nJet)")\
-             .Define("ttc_mllj1_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,tightJets_id_in24,3)")\
-             .Define("ttc_mllj1_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,tightJets_id_in24,3)")\
-             .Define("ttc_mllj1_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,tightJets_id_in24,3)")\
-             .Define("ttc_mllj1_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,tightJets_id_in24,3)")\
+             .Define("ttc_mllj1","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,1)")\
+             .Define("ttc_mllj2","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,2)")\
+             .Define("ttc_mllj3","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,3)")\
+             .Define("ttc_mllj1_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_jesup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalUp,Jet_eta,Jet_phi,Jet_mass_jesTotalUp,JetMatched_idx,3)")\
+             .Define("ttc_mllj1_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_jesdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jesTotalDown,Jet_eta,Jet_phi,Jet_mass_jesTotalDown,JetMatched_idx,3)")\
+             .Define("ttc_mllj1_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_jerup","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerUp,Jet_eta,Jet_phi,Jet_mass_jerUp,JetMatched_idx,3)")\
+             .Define("ttc_mllj1_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_jerdo","mllj_jesr(ttc_l1_pt,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_jerDown,Jet_eta,Jet_phi,Jet_mass_jerDown,JetMatched_idx,3)")\
              .Define("ttc_l1_pt_muPtup", "muPtcorr(ttc_l1_pt, ttc_l1_id, ttc_l1_pdgid, Muon_correctedUp_pt)")\
              .Define("ttc_l1_pt_muPtdo", "muPtcorr(ttc_l1_pt, ttc_l1_id, ttc_l1_pdgid, Muon_correctedDown_pt)")\
              .Define("ttc_l2_pt_muPtup", "muPtcorr(ttc_l2_pt, ttc_l2_id, ttc_l2_pdgid, Muon_correctedUp_pt)")\
              .Define("ttc_l2_pt_muPtdo", "muPtcorr(ttc_l2_pt, ttc_l2_id, ttc_l2_pdgid, Muon_correctedDown_pt)")\
-             .Define("ttc_mllj1_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,3)")\
-             .Define("ttc_mllj1_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,1)")\
-             .Define("ttc_mllj2_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,2)")\
-             .Define("ttc_mllj3_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,tightJets_id_in24,3)")\
+             .Define("ttc_mllj1_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_muPtup","mllj_jesr(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,3)")\
+             .Define("ttc_mllj1_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,1)")\
+             .Define("ttc_mllj2_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,2)")\
+             .Define("ttc_mllj3_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,3)")\
              .Define("ttc_mll_muPtup","mll(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
              .Define("ttc_mll_muPtdo","mll(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
              .Define("mu_id","muid(ttc_l1_pt,ttc_l1_eta,ttc_l2_pt,ttc_l2_eta,ttc_region)")\
@@ -219,10 +223,10 @@ if __name__ == "__main__":
 
   era = args.era
   istrain = args.train
-  iin = args.iin
   flag = args.flag
+  iin = TransFileName(args.iin, True, era, None, flag)
 
-  path = str(inputFile_path[era])
+  path = str(inputFile_path_skim[era])
 
   print('Processing ',path+iin)
   ftemp=ROOT.TFile.Open(path+iin)   

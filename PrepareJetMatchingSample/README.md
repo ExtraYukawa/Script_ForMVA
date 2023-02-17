@@ -15,11 +15,11 @@ python runCondor.py --era 2016apv --step 0 -s highmass
 python runCondor.py --era 2016apv --step 0 -s interference
 ```
 
-simply by using "python slim.py" to get the skim ntuples. Results are stored in `${EOSDIR}/ntuple_skim/`. (`${EOSDIR}` is assigned in `python/common.py`, see 2.)
+simply by using "python slim.py" to get the skim ntuples. Results are stored in `${EOSDIR}/ntuple_skim/`. (`${EOSDIR}` is assigned in `../python/common.py`, see 2. below)
 
 1. for each coupilng typy, e.g., rtc, only one coupling strength will be used, since we already checked that the BDT score of rtc 01/04/08/10 are almost the same
 
-2. Output directory is assigned in `python/common.py`. 
+2. Output directory is assigned (variable name: `store_place`) in `../python/common.py`. 
 3. Source env.sh to set up python environment. May need virtualenv to reduce warning message.
 
 ## Step1 Run combination
@@ -47,3 +47,5 @@ Or you can also source environmental file test with the code. But, sometimes it 
 ```
 source env.sh
 ```
+
+## Please Remember to change the store_place in ../python/common.py

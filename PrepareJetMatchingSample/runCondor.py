@@ -15,6 +15,11 @@ def GetEntries(pathIn, iin):
   return nentries
 
 
+def CheckStatus(pathIn, iin, tag):
+  fin = os.path.join(pathIn, iin.replace(".root", "_" + str(tag) + ".h5"))
+  return (not (os.path.getsize(fin) == 0))
+
+
 def prepare_shell(shell_file, command, condor, FarmDir):
 
   cwd       = os.getcwd()
@@ -36,7 +41,8 @@ if __name__=='__main__':
   parser.add_argument('-e', '--era', dest='era', help='[all/2016apv/2016postapv/2017/2018]',default='all',type=str,choices=["all","2016apv","2016postapv","2017","2018"])
   parser.add_argument('-s', '--sampletype', dest='sampletype', help='[all/normal/interference/highmass]',default='normal',type=str, choices=["all","normal","interference","highmass"])
   parser.add_argument("--test", action="store_true")
-  parser.add_argument("--step", dest='step', help='0:Generate ntuple, 1: run Combination, 2: run algorithm and mergeResult', default=0, type=int, choices=[0,1,2])
+  parser.add_argument("--resubmit", action="store_true")
+  parser.add_argument("--step", dest='step', help='0:Generate ntuple, 1: run Combination, 2: run algorithm and mergeResult', default=0, type=int, choices=[0,1,2,3])
   args = parser.parse_args()
 
   Eras_List = ['2016postapv','2016apv','2017','2018']
@@ -62,6 +68,7 @@ if __name__=='__main__':
   condor.write('log    = %s/job_common.log\n'%FarmDir)
   condor.write('executable = %s/$(cfgFile)\n'%FarmDir)
   condor.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
+  condor.write('request_GPUs = 1\n')
   condor.write('+JobFlavour = "tomorrow"\n')
   condor.write('+MaxRuntime = 7200\n')
 
@@ -103,13 +110,23 @@ if __name__=='__main__':
             command =  "source ${WORKDIR}/env.sh\n"
             command += "python addEntry.py --era %s --iin %s --from %d --to %d --tag %d\n"%(Era, iin, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
             shell_file = 'preslim_step1_%s_%s_%d.sh'%(iin, Era, tag)
-            prepare_shell(shell_file, command, condor, FarmDir)
+            if ((args.resubmit and not CheckStatus(store_place + "/dataframe/" + Era, TransFileName(iin, True, Era, None), tag)) or not args.resubmit):
+               if args.resubmit:
+                 print("Resubmit %s"%shell_file)
+               prepare_shell(shell_file, command, condor, FarmDir)
 
         elif args.step == 2:
           command =  "source ${WORKDIR}/env.sh\n"
           command += "python MergeResult.py --era %s --iin %s\n"%(Era, iin)
           shell_file = 'preslim_step2_%s_%s.sh'%(iin, Era)
           prepare_shell(shell_file, command, condor, FarmDir)
+
+        elif args.step == 3:
+          command =  "source ${WORKDIR}/env.sh\n"
+          command += "python ScanResult.py --era %s --iin %s\n"%(Era, iin)
+          shell_file = 'preslim_step3_%s_%s.sh'%(iin, Era)
+          prepare_shell(shell_file, command, condor, FarmDir)
+
 
 
       # data sample
@@ -128,14 +145,23 @@ if __name__=='__main__':
             nEntries = GetEntries(store_place + "/ntuple_skim/" + Era, TransFileName(iin, False, Era, channel))
             for tag in range((nEntries//batchsize)+1):
               command =  "source ${WORKDIR}/env.sh\n"
-              command += "python addEntry.py --era %s --iin %s --from %d --to %d --tag %d\n"%(Era, iin, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
-              shell_file = 'preslim_step1_%s_%s_%d.sh'%(iin, Era, tag)
-              prepare_shell(shell_file, command, condor, FarmDir)
+              command += "python addEntry.py --era %s --iin %s --channel %s --type data --from %d --to %d --tag %d\n"%(Era, iin, channel, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
+              shell_file = 'preslim_step1_data_%s_%s_%s_%d.sh'%(iin, Era, channel, tag)
+              if ((args.resubmit and not CheckStatus(store_place + "/dataframe/" + Era, TransFileName(iin, False, Era, channel), tag)) or not args.resubmit):
+                if args.resubmit:
+                  print("Resubmit %s"%shell_file)
+                prepare_shell(shell_file, command, condor, FarmDir)
           elif args.step == 2:
             shell_file = 'preslim_step2_data_%s_%s_%s.sh'%(iin,Era,channel)
             command =  "source ${WORKDIR}/env.sh\n"
             command += "python MergeResult.py --era %s --channel %s --iin %s --type data\n"%(Era, channel, iin)
             prepare_shell(shell_file, command, condor, FarmDir)
+          elif args.step == 3:
+            shell_file = 'preslim_step3_data_%s_%s_%s.sh'%(iin,Era,channel)
+            command =  "source ${WORKDIR}/env.sh\n"
+            command += "python ScanResult.py --era %s --channel %s --iin %s --type data\n"%(Era, channel, iin)
+            prepare_shell(shell_file, command, condor, FarmDir)
+
 
       #Signal sample
 
@@ -157,14 +183,21 @@ if __name__=='__main__':
                 command =  "source ${WORKDIR}/env.sh\n"
                 command += "python addEntry.py --era %s --iin %s --flag %s --from %d --to %d --tag %d\n"%(Era, iin,flag, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
                 shell_file = 'preslim_step1_%s_%s_%d.sh'%(flag, Era, tag)
-                prepare_shell(shell_file, command, condor, FarmDir)
+                if ((args.resubmit and not CheckStatus(store_place + "/dataframe/" + Era, TransFileName(iin, True, Era, None,flag), tag)) or not args.resubmit):
+                  if args.resubmit:
+                    print("Resubmit %s"%shell_file)
+                  prepare_shell(shell_file, command, condor, FarmDir)
             elif args.step == 2:
               command =  "source ${WORKDIR}/env.sh\n"
               command += "python MergeResult.py --era %s --iin %s --flag %s\n"%(Era, iin, flag)
               shell_file = 'preslim_step2_%s_%s.sh'%(flag,Era)
               prepare_shell(shell_file, command, condor, FarmDir)
 
-
+            elif args.step == 3:
+              command =  "source ${WORKDIR}/env.sh\n"
+              command += "python ScanResult.py --era %s --iin %s --flag %s\n"%(Era, iin, flag)
+              shell_file = 'preslim_step3_%s_%s.sh'%(flag,Era)
+              prepare_shell(shell_file, command, condor, FarmDir)
 
 
     # For interference samples
@@ -194,7 +227,10 @@ if __name__=='__main__':
                 command =  "source ${WORKDIR}/env.sh\n"
                 command += "python addEntry.py --era %s --iin %s --from %d --to %d --tag %d\n"%(Era, iin, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
                 shell_file = 'preslim_step1_%s_%s_%d.sh'%(iin, Era, tag)
-                prepare_shell(shell_file, command, condor, FarmDir)
+                if ((args.resubmit and not CheckStatus(store_place + "/dataframe/" + Era, TransFileName(iin, True, Era, None), tag)) or not args.resubmit):
+                  if args.resubmit:
+                    print("Resubmit %s"%shell_file)
+                  prepare_shell(shell_file, command, condor, FarmDir)
             elif args.step == 2:
               command =  "source ${WORKDIR}/env.sh\n"
               command += "python MergeResult.py --era %s --iin %s\n"%(Era, iin)
@@ -230,7 +266,10 @@ if __name__=='__main__':
                 command =  "source ${WORKDIR}/env.sh\n"
                 command += "python addEntry.py --era %s --iin %s --from %d --to %d --tag %d\n"%(Era, iin, batchsize*tag, min(batchsize*(tag+1),nEntries), tag)
                 shell_file = 'preslim_step1_%s_%s_%d.sh'%(iin, Era, tag)
-                prepare_shell(shell_file, command, condor, FarmDir)
+                if ((args.resubmit and not CheckStatus(store_place + "/dataframe/" + Era, TransFileName(iin, True, Era, None), tag)) or not args.resubmit):
+                  if args.resubmit:
+                    print("Resubmit %s"%shell_file)
+                  prepare_shell(shell_file, command, condor, FarmDir)
             elif args.step == 2:
               command =  "source ${WORKDIR}/env.sh\n"
               command += "python MergeResult.py --era %s --iin %s\n"%(Era, iin)

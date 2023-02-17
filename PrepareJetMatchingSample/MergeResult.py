@@ -52,7 +52,8 @@ def AddEntry(fin_name, era):
   fOut = ROOT.TFile(os.path.join(output_place, era, fin_name), 'RECREATE')
   tree_name = 'Events'
   t    = fin.Get(tree_name)
-  tOut = t.Clone()
+  tOut = t.CloneTree()
+  tOut.SetDirectory(0)
   matched_idx = array('i',[-1,-1,-1,-1])
   Branch_idx  = tOut.Branch("JetMatched_idx",matched_idx,"JetMatched_idx[4]/I")
   nentries    = t.GetEntries()
@@ -68,7 +69,8 @@ def AddEntry(fin_name, era):
   # Scan target file
   FileList = os.listdir(os.path.join(h5py_place,era))
   for f in FileList:
-    if fin_name.split('.')[0] in f:
+    if (fin_name.split('.')[0] == '_'.join(f.split('.')[0].split('_')[:-1])):
+      print(f)
       df_ = pd.read_hdf(os.path.join(h5py_place,era,f))
       df.append(df_)
   # Prepare dataframe
@@ -107,8 +109,21 @@ def AddEntry(fin_name, era):
   print(transformed_df)
   idx = transformed_df.groupby(['Entry'])['predicted'].transform(max) == transformed_df['predicted']
   df = transformed_df[idx]
+  print(df)
+  if not (nentries == len(df)):
+    idx2 = df.groupby(['Entry'])['bmatched_jet_index'].transform(min) == df['bmatched_jet_index']
+    df = df[idx2]
+    if not (nentries == len(df)):
+      idx3 = df.groupby(['Entry'])['lmatched_jet_index'].transform(min) == df['lmatched_jet_index']
+      df = df[idx3]
+      if not (nentries == len(df)):
+        idx4 = df.groupby(['Entry'])['jet3_index'].transform(min) == df['jet3_index']
+        df = df[idx4]
+
+
   df = df.sort_values(by=['Entry'])
   df = df.set_index("Entry")  
+
   print(df)
 
   # Check
@@ -124,9 +139,6 @@ def AddEntry(fin_name, era):
   fOut.cd()
   tOut.Write()
   fOut.Close()
-
-
-
   fin.Close()
 
   return 0

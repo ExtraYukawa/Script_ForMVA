@@ -21,10 +21,10 @@ inputFile_path = {
 
 store_place   = '/eos/user/t/tihsu/BDT/'
 inputFile_path_skim = {
-  '2016apv':     store_place + "ntuple_skim/2016apv/",
-  '2016postapv': store_place + "ntuple_skim/2016postapv/",
-  '2017':        store_place + "ntuple_skim/2017/",
-  '2018':        store_place + 'ntuple_skim/2018/'
+  '2016apv':     store_place + "ntuple_reindex/2016apv/",
+  '2016postapv': store_place + "ntuple_reindex/2016postapv/",
+  '2017':        store_place + "ntuple_reindex/2017/",
+  '2018':        store_place + 'ntuple_reindex/2018/'
 }
 
 subera_list = {

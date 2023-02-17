@@ -27,7 +27,7 @@ def compute_di_mass(v1, v2):
 def AddEntry(fin_name, era, From, To, Tag):
 
   # Update ROOT file
-  fin = ROOT.TFile(fin_name, 'update')
+  fin = ROOT.TFile(fin_name, 'READ')
   tree_name = 'Events'
   t = fin.Get(tree_name)
   matched_idx = array('i',[-1,-1,-1,-1])
@@ -141,10 +141,10 @@ def AddEntry(fin_name, era, From, To, Tag):
           jet4_mass.append(Jet_p4[row][idx].mass)
           break
       if jet4_index_ == -1:
-          jet4_pt.append(0)
-          jet4_eta.append(0)
-          jet4_phi.append(0)
-          jet4_mass.append(0)
+          jet4_pt.append(-9.0)
+          jet4_eta.append(-9.0)
+          jet4_phi.append(-9.0)
+          jet4_mass.append(-9.0)
       jet3_index.append(jet3_index_)
       jet4_index.append(jet4_index_)
 

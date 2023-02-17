@@ -37,3 +37,13 @@ python runCondor.py --step 2 -s highmass
 python runCondor.py --step 2 -s interference
 ```
 
+## Test Locally
+Test locally should sometimes be tricky because of the environment setting, recommend way is:
+```
+python runCondor.py --step [0/1/2] --test
+```
+And then you will find the shell files in `CMSSW/Farm_BDT/preslim_step*.sh`, test with that files.
+Otherwise, you need to (sometimes conflict with cmsenv)
+```
+source env.sh
+```

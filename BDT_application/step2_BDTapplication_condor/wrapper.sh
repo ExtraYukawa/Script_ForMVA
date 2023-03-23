@@ -11,7 +11,7 @@ HOME=$PWD
 # copy BDT weights, one central weight and six systematic weights
 mkdir BDT_weights_0
 cd BDT_weights_0
-cp /eos/user/t/tihsu/database/ExtraYukawa_BDT/BDT_weight/YEAR/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_0/dataset_ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_central/weights/TMVAClassification_BDTG.weights.xml .
+cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_weights/YEAR/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS/ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_0/dataset_ttc_SIGTYPE_COUPLING_MSIGTYPEMASS_central/weights/TMVAClassification_BDTG.weights.xml .
 cd $HOME
 
 

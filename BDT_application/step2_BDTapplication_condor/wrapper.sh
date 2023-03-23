@@ -1,8 +1,8 @@
 #!/bin/bash -e 
 echo "TEST FIRST" 
 echo "copy input root file"
-cp /eos/user/t/tihsu/database/ExtraYukawa_BDT/BDT_input_forApplication//YEAR/SIGNALROOT .
-cp /eos/user/t/tihsu/database/ExtraYukawa_BDT/BDT_input_forApplication//YEAR/aa.tar.gz .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/YEAR/SIGNALROOT .
+eos cp /eos/cms/store/group/phys_top/ExtraYukawa/BDT/BDT_input_application/YEAR/aa.tar.gz .
 tar zxf aa.tar.gz
 rm aa.tar.gz
 PWD=`pwd`

@@ -462,217 +462,29 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    Float_t j3_FlavCvB, j3_FlavCvL;
    Int_t ttc_region;
 
-   if(system_unc=="central"){
-     reader->AddVariable( "HT", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met", &ttc_met);
-     reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
-   }
-   if(system_unc=="jesup"){
-     reader->AddVariable( "HT_jesup", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_jesup", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_jesup", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_jesup", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_jesup", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_jesup", &ttc_mllj3);
-   }
-   if(system_unc=="jesdo"){
-     reader->AddVariable( "HT_jesdo", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_jesdo", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_jesdo", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_jesdo", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_jesdo", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_jesdo", &ttc_mllj3);
-   }
-   if(system_unc=="jerup"){
-     reader->AddVariable( "HT_jerup", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_jerup", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_jerup", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_jerup", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_jerup", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_jerup", &ttc_mllj3);
-   }
-   if(system_unc=="jerdo"){
-     reader->AddVariable( "HT_jerdo", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_jerdo", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_jerdo", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_jerdo", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_jerdo", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_jerdo", &ttc_mllj3);
-   }
-   if(system_unc=="unclusterEup"){
-     reader->AddVariable( "HT", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_unclusterEup", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_unclusterEup", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
-   }
-   if(system_unc=="unclusterEdo"){
-     reader->AddVariable( "HT", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met_unclusterEdo", &ttc_met);
-     reader->AddVariable( "ttc_met_phi_unclusterEdo", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
-   }
-   if(system_unc=="muPtup"){
-     reader->AddVariable( "HT", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt_muPtup", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt_muPtup", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met", &ttc_met);
-     reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll_muPtup", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_muPtup", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_muPtup", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_muPtup", &ttc_mllj3);
-   }
-   if(system_unc=="muPtdo"){
-     reader->AddVariable( "HT", &HT );
-     reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
-     reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
-     reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
-     reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
-     reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
-     reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
-     reader->AddVariable( "dr_j1j2", &dr_j1j2);
-     reader->AddVariable( "dr_j1j3", &dr_j1j3);
-     reader->AddVariable( "dr_j2j3", &dr_j2j3);
-     reader->AddVariable( "ttc_l1_pt_muPtdo", &ttc_l1_pt );
-     reader->AddVariable( "ttc_l2_pt_muPtdo", &ttc_l2_pt);
-     reader->AddVariable( "ttc_met", &ttc_met);
-     reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
-     reader->AddVariable( "ttc_mll_muPtdo", &ttc_mll);
-     reader->AddVariable( "ttc_mllj1_muPtdo", &ttc_mllj1);
-     reader->AddVariable( "ttc_mllj2_muPtdo", &ttc_mllj2);
-     reader->AddVariable( "ttc_mllj3_muPtdo", &ttc_mllj3);
-   }
+   reader->AddVariable( "HT", &HT );
+   reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
+   reader->AddVariable( "j1_FlavCvL", &j1_FlavCvL );
+   reader->AddVariable( "j2_FlavCvB", &j2_FlavCvB );
+   reader->AddVariable( "j2_FlavCvL", &j2_FlavCvL );
+   reader->AddVariable( "j3_FlavCvB", &j3_FlavCvB );
+   reader->AddVariable( "j3_FlavCvL", &j3_FlavCvL );
+   reader->AddVariable( "dr_j1j2", &dr_j1j2);
+   reader->AddVariable( "dr_j1j3", &dr_j1j3);
+   reader->AddVariable( "dr_j2j3", &dr_j2j3);
+   reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
+   reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
+   reader->AddVariable( "ttc_met", &ttc_met);
+   reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
+   reader->AddVariable( "ttc_mll", &ttc_mll);
+   reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
+   reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
+   reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
 
    // Book the MVA methods
 
    TString dir    = "";
-   if(system_unc=="central"){
-     dir    = "./BDT_weights_0/";
-   }
-   if(system_unc=="jesup"){
-     dir    = "./BDT_weights_1/";
-   }
-   if(system_unc=="jesdo"){
-     dir    = "./BDT_weights_2/";
-   }
-   if(system_unc=="jerup"){
-     dir    = "./BDT_weights_3/";
-   }
-   if(system_unc=="jerdo"){
-     dir    = "./BDT_weights_4/";
-   }
-   if(system_unc=="unclusterEup"){
-     dir    = "./BDT_weights_5/";
-   }
-   if(system_unc=="unclusterEdo"){
-     dir    = "./BDT_weights_6/";
-   }
-   if(system_unc=="muPtup"){
-     dir    = "./BDT_weights_7/";
-   }
-   if(system_unc=="muPtdo"){
-     dir    = "./BDT_weights_8/";
-   }
+   dir    = "./BDT_weights_0/";
 
    TString prefix = "TMVAClassification";
 

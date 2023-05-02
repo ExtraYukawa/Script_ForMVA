@@ -1,5 +1,7 @@
-// modified from: https://github.com/fsimone91/Tau3Mu_Analysis_MVA/blob/3a971173be6afdbcc6bfbd1e34f630945f31f60d/MVA_2018/plot_utils/plot_TMVA_ROC.C#L9 
+//==============
+// Last used:
 //root -l -b plot_TMVA_customROC.C\(\"200\"\)
+//==============
 
 #include "TH1F.h"
 #include <cmath>
@@ -46,6 +48,8 @@ void plot_TMVA_customROC(TString mass){
     gStyle->SetOptStat(0);
     leg->AddEntry(ROC, "m_{A}="+mass+" GeV, #rho_{tc}=0.4","l");
     ROC->Draw("hist");
+
+    // when "classID==0 that means <signal>" check for example TestTree->Draw("className","classID==1")
     
     while (reader.Next()) {
       if ((*reader_bdt) >= bdt_cut and (*reader_classid) == 0) {

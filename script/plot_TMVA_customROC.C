@@ -52,9 +52,9 @@ void plot_TMVA_customROC(TString mass){
     // when "classID==0 that means <signal>" check for example TestTree->Draw("className","classID==1")
     
     while (reader.Next()) {
-      if ((*reader_bdt) >= bdt_cut and (*reader_classid) == 0) {
+      if ((*reader_bdt) > bdt_cut and (*reader_classid) == 0) {
 	n_a_true_positive += 1.;
-      } else if((*reader_bdt) >= bdt_cut and (*reader_classid) == 1){
+      } else if((*reader_bdt) > bdt_cut and (*reader_classid) == 1){
 	n_a_false_positive += 1.;
       }
 
@@ -70,8 +70,19 @@ void plot_TMVA_customROC(TString mass){
     cout<<"signal efficiency = TP/P "<<n_a_true_positive/(n_a_true_positive+n_a_false_negative_rej)<<endl;
     cout<<"bkg rejection = TN_rej/N "<<n_a_true_negative_rej/(n_a_false_positive+n_a_true_negative_rej)<<endl;
     Double_t x[1], y[1];
-    x[0] = n_a_true_positive/(n_a_true_positive+n_a_false_negative_rej);
-    y[0] = n_a_true_negative_rej/(n_a_false_positive+n_a_true_negative_rej);
+
+    cout << "Draw the WP using BDT produced Signal and Background histogram" << endl;
+    TH1F *MVA_BDTG_effS = (TH1F*)f_tmva->Get("dataset_ttc_a_rtc04_MA"+mass+"_central/Method_BDTG/BDTG/MVA_BDTG_effS");
+    double xy_S = MVA_BDTG_effS->GetBinContent(MVA_BDTG_effS->FindBin(-0.6));
+    cout << "Signal Efficiency: " << xy_S << endl;
+
+    TH1F *MVA_BDTG_effB = (TH1F*)f_tmva->Get("dataset_ttc_a_rtc04_MA"+mass+"_central/Method_BDTG/BDTG/MVA_BDTG_effB");
+    double xy_B = MVA_BDTG_effB->GetBinContent(MVA_BDTG_effB->FindBin(-0.6));
+    cout << "Background Efficiency: " << xy_B << endl;
+    cout << "Background rejection: " << (1.0-xy_B) << endl;
+    
+    x[0] = xy_S;
+    y[0] = (1.0-xy_B); //n_a_true_negative_rej/(n_a_false_positive+n_a_true_negative_rej);
     TGraph* gr = new TGraph(1,x,y);
     TLatex *l = new TLatex(0.5, 0.5, "label");
     l->SetTextSize(0.025);

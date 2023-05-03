@@ -74,13 +74,15 @@ void plot_TMVA_customROC(TString mass){
     cout << "Draw the WP using BDT produced Signal and Background histogram" << endl;
     TH1F *MVA_BDTG_effS = (TH1F*)f_tmva->Get("dataset_ttc_a_rtc04_MA"+mass+"_central/Method_BDTG/BDTG/MVA_BDTG_effS");
     double xy_S = MVA_BDTG_effS->GetBinContent(MVA_BDTG_effS->FindBin(-0.6));
-    cout << "Signal Efficiency: " << xy_S << endl;
+    cout << "Signal Efficiency: " << Form("%0.2f",xy_S) << endl;
 
     TH1F *MVA_BDTG_effB = (TH1F*)f_tmva->Get("dataset_ttc_a_rtc04_MA"+mass+"_central/Method_BDTG/BDTG/MVA_BDTG_effB");
     double xy_B = MVA_BDTG_effB->GetBinContent(MVA_BDTG_effB->FindBin(-0.6));
-    cout << "Background Efficiency: " << xy_B << endl;
-    cout << "Background rejection: " << (1.0-xy_B) << endl;
     
+    cout << "Background rejection: " << Form("%0.2f", (1.0-xy_B)) << endl;
+    
+    cout << "Background Efficiency: " << Form("%0.2f", xy_B) << endl;
+
     x[0] = xy_S;
     y[0] = (1.0-xy_B); //n_a_true_negative_rej/(n_a_false_positive+n_a_true_negative_rej);
     TGraph* gr = new TGraph(1,x,y);

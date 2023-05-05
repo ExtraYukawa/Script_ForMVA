@@ -1,4 +1,5 @@
 //==============
+// Need input BDT root file to make customBDT roc plot
 // Last used:
 //root -l -b plot_TMVA_customROC.C\(\"200\"\)
 //==============

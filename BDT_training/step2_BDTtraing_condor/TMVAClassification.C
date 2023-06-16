@@ -281,7 +281,7 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    dataloader->AddVariable( "ttc_l1_pt", 'F' );
    dataloader->AddVariable( "ttc_l2_pt", 'F' );
    dataloader->AddVariable( "ttc_met", 'F' );
-   dataloader->AddVariable( "ttc_met_phi", 'F' );
+   //dataloader->AddVariable( "ttc_met_phi", 'F' );
    dataloader->AddVariable( "ttc_mll", 'F' );
    dataloader->AddVariable( "ttc_mllj1", 'F' );
    dataloader->AddVariable( "ttc_mllj2", 'F' );

@@ -448,6 +448,14 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
      dataloader->AddVariable( "ttc_mllj2_muPtdo", 'F' );
      dataloader->AddVariable( "ttc_mllj3_muPtdo", 'F' );
    }
+   dataloader->AddSpectator("j1_pt",'F');
+   dataloader->AddSpectator("j1_eta",'F');
+   dataloader->AddSpectator("j1_phi",'F');
+   dataloader->AddSpectator("j1_mass",'F');
+   dataloader->AddSpectator("j2_pt",'F');
+   dataloader->AddSpectator("j2_eta",'F');
+   dataloader->AddSpectator("j2_phi",'F');
+   dataloader->AddSpectator("j2_mass",'F');
 
    // You can add so-called "Spectator variables", which are not used in the MVA training,
    // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the

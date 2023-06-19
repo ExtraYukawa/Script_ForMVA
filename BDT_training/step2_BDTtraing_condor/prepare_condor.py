@@ -91,7 +91,7 @@ if __name__ == "__main__":
       couplings=['rtc04','rtu04'] #keep in mind (rtc01, vs rtc04)
       masses=['200','300','350','400','500','600','700']
       
-    system_unc=["central","jesup","jesdo","jerup","jerdo","metUnslusEnup","metUnslusEndo","muPtup","muPtdo"]
+    system_unc=["central"]
 
     init_input, backgroundfile_input, backgroundfile_readtree, addbackgroundtree = prepare_BackgroundCommand(Era)
     print(init_input)

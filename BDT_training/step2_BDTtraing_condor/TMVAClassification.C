@@ -268,195 +268,24 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    // Define the input variables that shall be used for the MVA training
    // note that you may also use variable expressions, such as: "3*var1/var2*abs(var3)"
    // [all types of expressions that can also be parsed by TTree::Draw( "expression" )]
-   if(system_unc=="central"){
-     dataloader->AddVariable( "HT", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met", 'F' );
-     dataloader->AddVariable( "ttc_met_phi", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1", 'F' );
-     dataloader->AddVariable( "ttc_mllj2", 'F' );
-     dataloader->AddVariable( "ttc_mllj3", 'F' );
-   }
-   if(system_unc=="jesup"){
-     dataloader->AddVariable( "HT_jesup", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_jesup", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_jesup", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_jesup", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_jesup", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_jesup", 'F' );
-   }
-   if(system_unc=="jesdo"){
-     dataloader->AddVariable( "HT_jesdo", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_jesdo", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_jesdo", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_jesdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_jesdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_jesdo", 'F' );
-   }
-   if(system_unc=="jerup"){
-     dataloader->AddVariable( "HT_jerup", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_jerup", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_jerup", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_jerup", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_jerup", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_jerup", 'F' );
-   }
-   if(system_unc=="jerdo"){
-     dataloader->AddVariable( "HT_jerdo", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_jerdo", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_jerdo", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_jerdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_jerdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_jerdo", 'F' );
-   }
-   if(system_unc=="metUnslusEnup"){
-     dataloader->AddVariable( "HT", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_unclusterEup", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_unclusterEup", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1", 'F' );
-     dataloader->AddVariable( "ttc_mllj2", 'F' );
-     dataloader->AddVariable( "ttc_mllj3", 'F' );
-   }
-   if(system_unc=="metUnslusEndo"){
-     dataloader->AddVariable( "HT", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt", 'F' );
-     dataloader->AddVariable( "ttc_met_unclusterEdo", 'F' );
-     dataloader->AddVariable( "ttc_met_phi_unclusterEdo", 'F' );
-     dataloader->AddVariable( "ttc_mll", 'F' );
-     dataloader->AddVariable( "ttc_mllj1", 'F' );
-     dataloader->AddVariable( "ttc_mllj2", 'F' );
-     dataloader->AddVariable( "ttc_mllj3", 'F' );
-   }
-   if(system_unc=="muPtup"){
-     dataloader->AddVariable( "HT", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt_muPtup", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt_muPtup", 'F' );
-     dataloader->AddVariable( "ttc_met", 'F' );
-     dataloader->AddVariable( "ttc_met_phi", 'F' );
-     dataloader->AddVariable( "ttc_mll_muPtup", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_muPtup", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_muPtup", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_muPtup", 'F' );
-   }
-   if(system_unc=="muPtdo"){
-     dataloader->AddVariable( "HT", 'F' );
-     dataloader->AddVariable( "j1_FlavCvB", 'F' );
-     dataloader->AddVariable( "j1_FlavCvL", 'F' );
-     dataloader->AddVariable( "j2_FlavCvB", 'F' );
-     dataloader->AddVariable( "j2_FlavCvL", 'F' );
-     dataloader->AddVariable( "j3_FlavCvB", 'F' );
-     dataloader->AddVariable( "j3_FlavCvL", 'F' );
-     dataloader->AddVariable( "dr_j1j2", 'F' );
-     dataloader->AddVariable( "dr_j1j3", 'F' );
-     dataloader->AddVariable( "dr_j2j3", 'F' );
-     dataloader->AddVariable( "ttc_l1_pt_muPtdo", 'F' );
-     dataloader->AddVariable( "ttc_l2_pt_muPtdo", 'F' );
-     dataloader->AddVariable( "ttc_met", 'F' );
-     dataloader->AddVariable( "ttc_met_phi", 'F' );
-     dataloader->AddVariable( "ttc_mll_muPtdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj1_muPtdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj2_muPtdo", 'F' );
-     dataloader->AddVariable( "ttc_mllj3_muPtdo", 'F' );
-   }
-   dataloader->AddSpectator("j1_pt",'F');
-   dataloader->AddSpectator("j1_eta",'F');
-   dataloader->AddSpectator("j1_phi",'F');
-   dataloader->AddSpectator("j1_mass",'F');
-   dataloader->AddSpectator("j2_pt",'F');
-   dataloader->AddSpectator("j2_eta",'F');
-   dataloader->AddSpectator("j2_phi",'F');
-   dataloader->AddSpectator("j2_mass",'F');
-
+   dataloader->AddVariable( "HT", 'F' );
+   dataloader->AddVariable( "j1_FlavCvB", 'F' );
+   dataloader->AddVariable( "j1_FlavCvL", 'F' );
+   dataloader->AddVariable( "j2_FlavCvB", 'F' );
+   dataloader->AddVariable( "j2_FlavCvL", 'F' );
+   dataloader->AddVariable( "j3_FlavCvB", 'F' );
+   dataloader->AddVariable( "j3_FlavCvL", 'F' );
+   dataloader->AddVariable( "dr_j1j2", 'F' );
+   dataloader->AddVariable( "dr_j1j3", 'F' );
+   dataloader->AddVariable( "dr_j2j3", 'F' );
+   dataloader->AddVariable( "ttc_l1_pt", 'F' );
+   dataloader->AddVariable( "ttc_l2_pt", 'F' );
+   dataloader->AddVariable( "ttc_met", 'F' );
+   //dataloader->AddVariable( "ttc_met_phi", 'F' );
+   dataloader->AddVariable( "ttc_mll", 'F' );
+   dataloader->AddVariable( "ttc_mllj1", 'F' );
+   dataloader->AddVariable( "ttc_mllj2", 'F' );
+   dataloader->AddVariable( "ttc_mllj3", 'F' );
    // You can add so-called "Spectator variables", which are not used in the MVA training,
    // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
    // input variables, the response values of all trained MVAs, and the spectator variables

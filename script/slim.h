@@ -766,6 +766,18 @@ float mll(float l1_pt, float l1_eta, float l1_phi, float l1_mass, float l2_pt, f
   return inv_mass;
 }
 
+float mjj( ROOT::VecOps::RVec<float> jet_pt, ROOT::VecOps::RVec<float> jet_eta, ROOT::VecOps::RVec<float> jet_phi, ROOT::VecOps::RVec<float> jet_mass, ROOT::VecOps::RVec<Int_t> jet_id, int id)
+{
+  float inv_mass = 0.;
+  ROOT::Math::PtEtaPhiMVector j1(jet_pt[jet_id[0]],jet_eta[jet_id[0]],jet_phi[jet_id[0]],jet_mass[jet_id[0]]);
+  ROOT::Math::PtEtaPhiMVector j2(jet_pt[jet_id[1]],jet_eta[jet_id[1]],jet_phi[jet_id[1]],jet_mass[jet_id[1]]);
+  ROOT::Math::PtEtaPhiMVector j3(jet_pt[jet_id[2]],jet_eta[jet_id[2]],jet_phi[jet_id[2]],jet_mass[jet_id[2]]);
+  if(id==1) inv_mass = (j1+j2).M();
+  if(id==2) inv_mass = (j1+j3).M();
+  if(id==3) inv_mass = (j2+j3).M();
+  return inv_mass;
+}
+
 float muPtcorr(float lep_pt, int lep_id, int lep_pdgid, ROOT::VecOps::RVec<float> mu_corrPt_variated){
   float pt = lep_pt;
   if(abs(lep_pdgid)==13) pt = mu_corrPt_variated[lep_id];

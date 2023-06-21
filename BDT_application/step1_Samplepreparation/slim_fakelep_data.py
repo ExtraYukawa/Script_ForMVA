@@ -87,10 +87,12 @@ def Slim_module(filein,nin,mass_flag,channel, era):
              .Define("dr_j1j2","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,1)")\
              .Define("dr_j1j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,2)")\
              .Define("dr_j2j3","deltaR_jet(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,3)")\
-
+             .Define("m_j1j2","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,1)")\
+             .Define("m_j1j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,2)")\
+             .Define("m_j2j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,tightJets_id_in24,3)")
 
   columns = ROOT.std.vector("string")()
-  for c in ('ttc_region','HT','j1_pt','j1_eta','j1_phi','j1_mass','j2_pt','j2_eta','j2_phi','j2_mass','j3_pt','j3_eta','j3_phi','j3_mass','j1_FlavB','j1_FlavCvB','j1_FlavCvL','j2_FlavB','j2_FlavCvB','j2_FlavCvL','j3_FlavB','j3_FlavCvB','j3_FlavCvL','PV_npvsGood','PV_x','PV_y','PV_z','nSV','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_met','ttc_met_phi','ttc_mll','ttc_mllj1','ttc_mllj2','ttc_mllj3','dr_j1j2','dr_j1j3','dr_j2j3','fakeweight','fakeweight_ele_statUp','fakeweight_ele_statDo','fakeweight_mu_statUp','fakeweight_mu_statDo'):
+  for c in ('ttc_region','HT','j1_pt','j1_eta','j1_phi','j1_mass','j2_pt','j2_eta','j2_phi','j2_mass','j3_pt','j3_eta','j3_phi','j3_mass','j1_FlavB','j1_FlavCvB','j1_FlavCvL','j2_FlavB','j2_FlavCvB','j2_FlavCvL','j3_FlavB','j3_FlavCvB','j3_FlavCvL','PV_npvsGood','PV_x','PV_y','PV_z','nSV','ttc_l1_pt','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_pt','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_met','ttc_met_phi','ttc_mll','ttc_mllj1','ttc_mllj2','ttc_mllj3','dr_j1j2','dr_j1j3','dr_j2j3','m_j1j2','m_j1j3','m_j2j3','fakeweight','fakeweight_ele_statUp','fakeweight_ele_statDo','fakeweight_mu_statUp','fakeweight_mu_statDo'):
     columns.push_back(c)
   dOut.Snapshot(treeOut,fileOut,columns)
 

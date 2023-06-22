@@ -101,6 +101,24 @@ def Slim_module(filein,nin,mass_flag,era):
              .Define("m_j1j2","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,1)")\
              .Define("m_j1j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,2)")\
              .Define("m_j2j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,3)")\
+             .Define("m_j1l1","mll(j1_pt, j1_eta, j1_phi, j1_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j1l2","mll(j1_pt, j1_eta, j1_phi, j1_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("m_j2l1","mll(j2_pt, j2_eta, j2_phi, j2_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j2l2","mll(j2_pt, j2_eta, j2_phi, j2_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("m_j3l1","mll(j3_pt, j3_eta, j3_phi, j3_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j3l2","mll(j3_pt, j3_eta, j3_phi, j3_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("m_j1j2l1", "inv_mass(j1_pt, j1_eta, j1_phi, j1_mass, j2_pt, j2_eta, j2_phi, j2_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j1j2l2", "inv_mass(j1_pt, j1_eta, j1_phi, j1_mass, j2_pt, j2_eta, j2_phi, j2_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("m_j1j3l1", "inv_mass(j1_pt, j1_eta, j1_phi, j1_mass, j3_pt, j3_eta, j3_phi, j3_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j1j3l2", "inv_mass(j1_pt, j1_eta, j1_phi, j1_mass, j3_pt, j3_eta, j3_phi, j3_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("m_j2j3l1", "inv_mass(j2_pt, j2_eta, j2_phi, j2_mass, j3_pt, j3_eta, j3_phi, j3_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("m_j2j3l2", "inv_mass(j2_pt, j2_eta, j2_phi, j2_mass, j3_pt, j3_eta, j3_phi, j3_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("dr_j1l1", "deltaR(j1_pt, j1_eta, j1_phi, j1_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("dr_j1l2", "deltaR(j1_pt, j1_eta, j1_phi, j1_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("dr_j2l1", "deltaR(j2_pt, j2_eta, j2_phi, j2_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("dr_j2l2", "deltaR(j2_pt, j2_eta, j2_phi, j2_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
+             .Define("dr_j3l1", "deltaR(j3_pt, j3_eta, j3_phi, j3_mass, ttc_l1_pt, ttc_l1_eta, ttc_l1_phi, ttc_l1_mass)")\
+             .Define("dr_j3l2", "deltaR(j3_pt, j3_eta, j3_phi, j3_mass, ttc_l2_pt, ttc_l2_eta, ttc_l2_phi, ttc_l2_mass)")\
              .Define("HT_jesup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 0, nJet)")\
              .Define("HT_jesdo","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 1, nJet)")\
              .Define("HT_jerup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 2, nJet)")\
@@ -127,12 +145,11 @@ def Slim_module(filein,nin,mass_flag,era):
              .Define("ttc_mllj2_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,2)")\
              .Define("ttc_mllj3_muPtdo","mllj_jesr(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass,Jet_pt_nom,Jet_eta,Jet_phi,Jet_mass_nom,JetMatched_idx,3)")\
              .Define("ttc_mll_muPtup","mll(ttc_l1_pt_muPtup,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtup,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
-             .Define("ttc_mll_muPtdo","mll(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")\
-
+             .Define("ttc_mll_muPtdo","mll(ttc_l1_pt_muPtdo,ttc_l1_eta,ttc_l1_phi,ttc_l1_mass,ttc_l2_pt_muPtdo,ttc_l2_eta,ttc_l2_phi,ttc_l2_mass)")
 
 
   columns = ROOT.std.vector("string")()
-  for c in ('ttc_region','genweight','HT','j1_pt','j1_eta','j1_phi','j1_mass','j2_pt','j2_eta','j2_phi','j2_mass','j3_pt','j3_eta','j3_phi','j3_mass','j1_FlavB','j1_FlavCvB','j1_FlavCvL','j2_FlavB','j2_FlavCvB','j2_FlavCvL','j3_FlavB','j3_FlavCvB','j3_FlavCvL','PV_npvsGood','PV_x','PV_y','PV_z','nSV','ttc_l1_pt','ttc_l1_pt_muPtup','ttc_l1_pt_muPtdo','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_pt','ttc_l2_pt_muPtup','ttc_l2_pt_muPtdo','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_met','ttc_met_phi','ttc_mll','ttc_mllj1','ttc_mllj2','ttc_mllj3','puWeight','puWeightUp','puWeightDown','ttc_met_jesup','ttc_met_jesdo','ttc_met_jerup','ttc_met_jerdo','ttc_met_unclusterEup','ttc_met_unclusterEdo','ttc_met_phi_jesup','ttc_met_phi_jesdo','ttc_met_phi_jerup','ttc_met_phi_jerdo','ttc_met_phi_unclusterEup','ttc_met_phi_unclusterEdo','dr_j1j2','dr_j1j3','dr_j2j3','HT_jesup','HT_jesdo','HT_jerup','HT_jerdo','ttc_mllj1_jesup','ttc_mllj1_jesdo','ttc_mllj1_jerup','ttc_mllj1_jerdo','ttc_mllj2_jesup','ttc_mllj2_jesdo','ttc_mllj2_jerup','ttc_mllj2_jerdo','ttc_mllj3_jesup','ttc_mllj3_jesdo','ttc_mllj3_jerup','ttc_mllj3_jerdo','ttc_mllj1_muPtup','ttc_mllj2_muPtup','ttc_mllj3_muPtup','ttc_mllj1_muPtdo','ttc_mllj2_muPtdo','ttc_mllj3_muPtdo','ttc_mll_muPtup','ttc_mll_muPtdo','m_j1j2', 'm_j1j3', 'm_j2j3'):
+  for c in ('ttc_region','genweight','HT','j1_pt','j1_eta','j1_phi','j1_mass','j2_pt','j2_eta','j2_phi','j2_mass','j3_pt','j3_eta','j3_phi','j3_mass','j1_FlavB','j1_FlavCvB','j1_FlavCvL','j2_FlavB','j2_FlavCvB','j2_FlavCvL','j3_FlavB','j3_FlavCvB','j3_FlavCvL','PV_npvsGood','PV_x','PV_y','PV_z','nSV','ttc_l1_pt','ttc_l1_pt_muPtup','ttc_l1_pt_muPtdo','ttc_l1_eta','ttc_l1_phi','ttc_l1_mass','ttc_l2_pt','ttc_l2_pt_muPtup','ttc_l2_pt_muPtdo','ttc_l2_eta','ttc_l2_phi','ttc_l2_mass','ttc_met','ttc_met_phi','ttc_mll','ttc_mllj1','ttc_mllj2','ttc_mllj3','puWeight','puWeightUp','puWeightDown','ttc_met_jesup','ttc_met_jesdo','ttc_met_jerup','ttc_met_jerdo','ttc_met_unclusterEup','ttc_met_unclusterEdo','ttc_met_phi_jesup','ttc_met_phi_jesdo','ttc_met_phi_jerup','ttc_met_phi_jerdo','ttc_met_phi_unclusterEup','ttc_met_phi_unclusterEdo','dr_j1j2','dr_j1j3','dr_j2j3','HT_jesup','HT_jesdo','HT_jerup','HT_jerdo','ttc_mllj1_jesup','ttc_mllj1_jesdo','ttc_mllj1_jerup','ttc_mllj1_jerdo','ttc_mllj2_jesup','ttc_mllj2_jesdo','ttc_mllj2_jerup','ttc_mllj2_jerdo','ttc_mllj3_jesup','ttc_mllj3_jesdo','ttc_mllj3_jerup','ttc_mllj3_jerdo','ttc_mllj1_muPtup','ttc_mllj2_muPtup','ttc_mllj3_muPtup','ttc_mllj1_muPtdo','ttc_mllj2_muPtdo','ttc_mllj3_muPtdo','ttc_mll_muPtup','ttc_mll_muPtdo','m_j1j2', 'm_j1j3', 'm_j2j3', 'm_j1l1','m_j1l2','m_j2l1', 'm_j2l2', 'm_j3l1', 'm_j3l2', 'm_j1j2l1', 'm_j1j2l2', 'm_j2j3l1', 'm_j2j3l2', 'm_j1j3l1', 'm_j1j3l2', 'dr_j1l1','dr_j1l2','dr_j2l1','dr_j2l2','dr_j3l1','dr_j3l2'):
     columns.push_back(c)
   dOut.Snapshot(treeOut,fileOut,columns)
 

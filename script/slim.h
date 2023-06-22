@@ -532,6 +532,12 @@ float deltaR_jet( ROOT::VecOps::RVec<float> jet_pt, ROOT::VecOps::RVec<float> je
   return deltar;
 }
 
+float deltaR(float p1_pt, float p1_eta, float p1_phi, float p1_mass, float p2_pt, float p2_eta, float p2_phi, float p2_mass)
+{
+  ROOT::Math::PtEtaPhiMVector p1(p1_pt, p1_eta, p1_phi, p1_mass);
+  ROOT::Math::PtEtaPhiMVector p2(p2_pt, p2_eta, p2_phi, p2_mass);
+  return ROOT::Math::VectorUtil::DeltaR(p1,p2);
+}
 
 //channel 3 is ee, 2 is me, 1 is mm, in me channel, the leading lepton is always muon
 float muid(float lep1_pt, float lep1_eta, float lep2_pt, float lep2_eta, int channel){
@@ -777,6 +783,15 @@ float mjj( ROOT::VecOps::RVec<float> jet_pt, ROOT::VecOps::RVec<float> jet_eta, 
   if(id==3) inv_mass = (j2+j3).M();
   return inv_mass;
 }
+
+float inv_mass(float p1_pt, float p1_eta, float p1_phi, float p1_mass, float p2_pt, float p2_eta, float p2_phi, float p2_mass, float p3_pt, float p3_eta, float p3_phi, float p3_mass)
+{
+  ROOT::Math::PtEtaPhiMVector p1(p1_pt, p1_eta, p1_phi, p1_mass);
+  ROOT::Math::PtEtaPhiMVector p2(p2_pt, p2_eta, p2_phi, p2_mass);
+  ROOT::Math::PtEtaPhiMVector p3(p3_pt, p3_eta, p3_phi, p3_mass);
+
+  return (p1+p2+p3).M();
+} 
 
 float muPtcorr(float lep_pt, int lep_id, int lep_pdgid, ROOT::VecOps::RVec<float> mu_corrPt_variated){
   float pt = lep_pt;

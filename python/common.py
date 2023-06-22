@@ -19,7 +19,7 @@ inputFile_path = {
 
 # You need to change this directory to your own directory
 
-store_place   = '/eos/user/t/tihsu/BDT/'
+store_place   = '/eos/user/t/tihsu/BDT_JetMatch/'
 inputFile_path_skim = {
   '2016apv':     store_place + "ntuple_reindex/2016apv/",
   '2016postapv': store_place + "ntuple_reindex/2016postapv/",

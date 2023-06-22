@@ -136,6 +136,7 @@ if __name__ == "__main__":
           os.system(r'sed -i "s/TMVAClassificationApplication.C/TMVAClassificationApplication_%s.C/g" wrapper_%s.sh' %(Era, Era))
 
           os.system(r'cp ../../TMVAClassificationApplication.C TMVAClassificationApplication_%s.C' %(Era) )
+          os.system(r'cp ../../plotBDT_2D.C plotBDT_2D.C')
           os.system(r'sed -i "s/MASS/%s/g" TMVAClassificationApplication_%s.C' %(masses[im], Era)) 
           os.system(r'sed -i "s/YEAR/%s/g" TMVAClassificationApplication_%s.C' %(Era, Era))
           os.system(r'sed -i "s/TMVAClassificationApplication()/TMVAClassificationApplication_%s()/g" TMVAClassificationApplication_%s.C' %(Era, Era))
@@ -148,6 +149,11 @@ if __name__ == "__main__":
           os.system(r'sed -i "s/SIGNAL_EOS_INPUT/%s/g" TMVAClassificationApplication_%s.C'%(signal_eos_input,Era))
           os.system(r'sed -i "s/SIGNAL_EFF_COMMAND/%s/g" TMVAClassificationApplication_%s.C'%(signal_eff_command, Era))
           os.system(r'sed -i "s/SAMPLE_PATH/%s/g" TMVAClassificationApplication_%s.C'%(inputFile_path[Era].replace('/','\/'),Era))
+
+          os.system(r'sed -i "s/LOADSAMPLE/%s/g"   plotBDT_2D.C'%(readsample))
+          os.system(r'sed -i "s/LOADXSEC/%s/g"     plotBDT_2D.C'%(readxsec))
+          os.system(r'sed -i "s/LOAD_ISTRAIN/%s/g" plotBDT_2D.C'%(is_train))
+          os.system(r'sed -i "s/SAMPLE_PATH/%s/g"  plotBDT_2D.C'%(inputFile_path[Era].replace('/','\/')))
 
           # Luminosity need to change accordingly
           if Era == "2016apv":

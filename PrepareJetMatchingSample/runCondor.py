@@ -69,8 +69,7 @@ if __name__=='__main__':
   condor.write('executable = %s/$(cfgFile)\n'%FarmDir)
   condor.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
   condor.write('request_GPUs = 1\n')
-  condor.write('+JobFlavour = "tomorrow"\n')
-  condor.write('+MaxRuntime = 7200\n')
+  condor.write('+JobFlavour = "espresso"\n')
 
   cwd = os.getcwd()
 

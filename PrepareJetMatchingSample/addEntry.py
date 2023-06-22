@@ -26,7 +26,7 @@ def compute_di_mass(v1, v2):
 
 def AddEntry(fin_name, era, From, To, Tag):
 
-  # Update ROOT file
+  # Read ROOT file
   fin = ROOT.TFile(fin_name, 'READ')
   tree_name = 'Events'
   t = fin.Get(tree_name)
@@ -48,6 +48,9 @@ def AddEntry(fin_name, era, From, To, Tag):
   Jet_phi        = events.arrays(['Jet_phi'],      entry_stop=run_event)['Jet_phi']
   Jet_mass       = events.arrays(['Jet_mass_nom'], entry_stop=run_event)['Jet_mass_nom']
   Jet_p4         = vector.zip({'pt':Jet_pt, 'eta':Jet_eta, 'phi':Jet_phi, 'mass':Jet_mass})
+  Jet_CvB        = events.arrays(['Jet_btagDeepFlavCvB'], entry_stop=run_event)['Jet_btagDeepFlavCvB']
+  Jet_CvL        = events.arrays(['Jet_btagDeepFlavCvL'], entry_stop=run_event)['Jet_btagDeepFlavCvL']
+  Jet_FlavB      = events.arrays(['Jet_btagDeepFlavB'],   entry_stop=run_event)['Jet_btagDeepFlavB']
   tight_jet_id   = events.arrays(['tightJets_id_in24'], entry_stop=run_event)['tightJets_id_in24']
   n_tight_jet    = events.arrays(['n_tight_jet'],  entry_stop=run_event)['n_tight_jet']
   # Create lepton 4-vectors
@@ -62,6 +65,13 @@ def AddEntry(fin_name, era, From, To, Tag):
   l2_mass        = events.arrays(['ttc_l2_mass'], entry_stop=run_event)['ttc_l2_mass']
   l2_p4          = vector.zip({'pt':l2_pt, 'eta':l2_eta, 'phi':l2_phi, 'mass':l2_mass})
 
+  #########
+  ## MET ##
+  #########
+
+  MET     = events.arrays(['ttc_met'], entry_stop=run_event)['ttc_met']
+  MET_phi = events.arrays(['ttc_met_phi'], entry_stop=run_event)['ttc_met_phi']
+
 
   # Prepare dataframe
   df =[]
@@ -74,11 +84,17 @@ def AddEntry(fin_name, era, From, To, Tag):
     bmatched_jet_phi = []
     bmatched_jet_mass = []
     bmatched_jet_index = []
+    bmatched_jet_CvB = []
+    bmatched_jet_CvL = []
+    bmatched_jet_FlavB = []
     lmatched_jet_pt = []
     lmatched_jet_eta = []
     lmatched_jet_phi = []
     lmatched_jet_mass = []
     lmatched_jet_index = []
+    lmatched_jet_CvB = []
+    lmatched_jet_CvL = []
+    lmatched_jet_FlavB = []
     dR_bmatched_lmatched_jets = []
     dR_bmatched_jet_lep1 = []
     dR_bmatched_jet_lep2 = []
@@ -89,11 +105,17 @@ def AddEntry(fin_name, era, From, To, Tag):
     jet3_eta = []
     jet3_phi = []
     jet3_mass = []
+    jet3_CvB = []
+    jet3_CvL = []
+    jet3_FlavB = []
     jet3_index = []
     jet4_pt = []
     jet4_eta = []
     jet4_phi = []
     jet4_mass = []
+    jet4_CvB = []
+    jet4_CvL = []
+    jet4_FlavB = []
     jet4_index = []
     leading_lept_pt = []
     leading_lept_eta = []
@@ -103,17 +125,24 @@ def AddEntry(fin_name, era, From, To, Tag):
     subleading_lept_eta = []
     subleading_lept_phi = []
     subleading_lept_mass = []
-
+    met = []
+    met_phi = []
     for comb_ in combinations_list:
       bmatched_jet_pt.append(Jet_pt[row][comb_[0]])
       bmatched_jet_eta.append(Jet_eta[row][comb_[0]])
       bmatched_jet_phi.append(Jet_phi[row][comb_[0]])
       bmatched_jet_mass.append(Jet_mass[row][comb_[0]])
+      bmatched_jet_CvB.append(Jet_CvB[row][comb_[0]])
+      bmatched_jet_CvL.append(Jet_CvL[row][comb_[0]])
+      bmatched_jet_FlavB.append(Jet_FlavB[row][comb_[0]])
       bmatched_jet_index.append(comb_[0])
       lmatched_jet_pt.append(Jet_pt[row][comb_[1]])
       lmatched_jet_eta.append(Jet_eta[row][comb_[1]])
       lmatched_jet_phi.append(Jet_phi[row][comb_[1]])
       lmatched_jet_mass.append(Jet_mass[row][comb_[1]])
+      lmatched_jet_CvB.append(Jet_CvB[row][comb_[1]])
+      lmatched_jet_CvL.append(Jet_CvL[row][comb_[1]])
+      lmatched_jet_FlavB.append(Jet_FlavB[row][comb_[1]])
       lmatched_jet_index.append(comb_[1])
       dR_bmatched_lmatched_jets.append(Jet_p4[row][comb_[0]].deltaR(Jet_p4[row][comb_[1]]))
       dR_bmatched_jet_lep1.append(Jet_p4[row][comb_[0]].deltaR(l1_p4[row]))
@@ -133,18 +162,27 @@ def AddEntry(fin_name, era, From, To, Tag):
           jet3_eta.append(Jet_p4[row][idx].eta)
           jet3_phi.append(Jet_p4[row][idx].phi)
           jet3_mass.append(Jet_p4[row][idx].mass)
+          jet3_CvB.append(Jet_CvB[row][idx])
+          jet3_CvL.append(Jet_CvL[row][idx])
+          jet3_FlavB.append(Jet_FlavB[row][idx])
         elif idx not in [comb_[0], comb_[1], jet3_index_]:
           jet4_index_ = idx
           jet4_pt.append(Jet_p4[row][idx].pt)
           jet4_eta.append(Jet_p4[row][idx].eta)
           jet4_phi.append(Jet_p4[row][idx].phi)
           jet4_mass.append(Jet_p4[row][idx].mass)
+          jet4_CvB.append(Jet_CvB[row][idx])
+          jet4_CvL.append(Jet_CvL[row][idx])
+          jet4_FlavB.append(Jet_FlavB[row][idx])
           break
       if jet4_index_ == -1:
           jet4_pt.append(-9.0)
           jet4_eta.append(-9.0)
           jet4_phi.append(-9.0)
           jet4_mass.append(-9.0)
+          jet4_CvB.append(-9.0)
+          jet4_CvL.append(-9.0)
+          jet4_FlavB.append(-9.0)
       jet3_index.append(jet3_index_)
       jet4_index.append(jet4_index_)
 
@@ -156,8 +194,8 @@ def AddEntry(fin_name, era, From, To, Tag):
       subleading_lept_eta.append(l2_eta[row])
       subleading_lept_phi.append(l2_phi[row])
       subleading_lept_mass.append(l2_mass[row])
-
-
+      met.append(MET[row])
+      met_phi.append(MET_phi[row])
       
 
      # print(in_array)
@@ -173,10 +211,16 @@ def AddEntry(fin_name, era, From, To, Tag):
        'bmatched_jet_eta': bmatched_jet_eta,
        'bmatched_jet_phi': bmatched_jet_phi,
        'bmatched_jet_mass': bmatched_jet_mass,
+       'bmatched_jet_CvB': bmatched_jet_CvB,
+       'bmatched_jet_CvL': bmatched_jet_CvL,
+       'bmatched_jet_FlavB': bmatched_jet_FlavB,
        'lmatched_jet_pt': lmatched_jet_pt,
        'lmatched_jet_eta': lmatched_jet_eta,
        'lmatched_jet_phi': lmatched_jet_phi,
        'lmatched_jet_mass': lmatched_jet_mass,
+       'lmatched_jet_CvB': lmatched_jet_CvB,
+       'lmatched_jet_CvL': lmatched_jet_CvL,
+       'lmatched_jet_FlavB': lmatched_jet_FlavB,
        'dR_bmatched_lmatched_jets': dR_bmatched_lmatched_jets,
        'dR_bmatched_jet_lep1': dR_bmatched_jet_lep1,
        'dR_bmatched_jet_lep2': dR_bmatched_jet_lep2,
@@ -195,10 +239,18 @@ def AddEntry(fin_name, era, From, To, Tag):
        'jet3_eta': jet3_eta,
        'jet3_phi': jet3_phi,
        'jet3_mass': jet3_mass,
+       'jet3_CvB': jet3_CvB,
+       'jet3_CvL': jet3_CvL,
+       'jet3_FlavB': jet3_FlavB,
        'jet4_pt': jet4_pt,
        'jet4_eta': jet4_eta,
        'jet4_phi': jet4_phi,
-       'jet4_mass': jet4_mass
+       'jet4_mass': jet4_mass,
+       'jet4_CvB': jet4_CvB,
+       'jet4_CvL': jet4_CvL,
+       'jet4_FlavB': jet4_FlavB,
+       'met': met,
+       'met_phi': met_phi
     }
     df_ = pd.DataFrame(data=d_entries)
     df.append(df_)

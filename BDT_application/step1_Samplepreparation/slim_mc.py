@@ -111,6 +111,18 @@ def Slim_module(filein,nin,mass_flag, use_fortraining, era):
              .Define("m_j1j2","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,1)")\
              .Define("m_j1j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,2)")\
              .Define("m_j2j3","mjj(Jet_pt,Jet_eta,Jet_phi,Jet_mass,JetMatched_idx,3)")\
+             .Define("m_j1j2_jesup", "mjj(Jet_pt_jesTotalUp, Jet_eta, Jet_phi, Jet_mass_jesTotalUp, JetMatched_idx, 1)")\
+             .Define("m_j1j3_jesup", "mjj(Jet_pt_jesTotalUp, Jet_eta, Jet_phi, Jet_mass_jesTotalUp, JetMatched_idx, 2)")\
+             .Define("m_j2j3_jesup", "mjj(Jet_pt_jesTotalUp, Jet_eta, Jet_phi, Jet_mass_jesTotalUp, JetMatched_idx, 3)")\
+             .Define("m_j1j2_jesdo", "mjj(Jet_pt_jesTotalDown, Jet_eta, Jet_phi, Jet_mass_jesTotalDown, JetMatched_idx, 1)")\
+             .Define("m_j1j3_jesdo", "mjj(Jet_pt_jesTotalDown, Jet_eta, Jet_phi, Jet_mass_jesTotalDown, JetMatched_idx, 2)")\
+             .Define("m_j2j3_jesdo", "mjj(Jet_pt_jesTotalDown, Jet_eta, Jet_phi, Jet_mass_jesTotalDown, JetMatched_idx, 3)")\
+             .Define("m_j1j2_jesup", "mjj(Jet_pt_jerUp, Jet_eta, Jet_phi, Jet_mass_jerUp, JetMatched_idx, 1)")\
+             .Define("m_j1j3_jerup", "mjj(Jet_pt_jerUp, Jet_eta, Jet_phi, Jet_mass_jerUp, JetMatched_idx, 2)")\
+             .Define("m_j2j3_jerup", "mjj(Jet_pt_jerUp, Jet_eta, Jet_phi, Jet_mass_jerUp, JetMatched_idx, 3)")\
+             .Define("m_j1j2_jesup", "mjj(Jet_pt_jerDown, Jet_eta, Jet_phi, Jet_mass_jerDown, JetMatched_idx, 1)")\
+             .Define("m_j1j3_jerdo", "mjj(Jet_pt_jerDown, Jet_eta, Jet_phi, Jet_mass_jerDown, JetMatched_idx, 2)")\
+             .Define("m_j2j3_jerdo", "mjj(Jet_pt_jerDown, Jet_eta, Jet_phi, Jet_mass_jerDown, JetMatched_idx, 3)")\
              .Define("HT_jesup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 0, nJet)")\
              .Define("HT_jesdo","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 1, nJet)")\
              .Define("HT_jerup","HT_jesr(tightJets_id_in24, Jet_pt_jesTotalUp, Jet_pt_jesTotalDown, Jet_pt_jerUp, Jet_pt_jerDown, 2, nJet)")\

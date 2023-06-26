@@ -235,8 +235,8 @@ if __name__=='__main__':
               command += "python MergeResult.py --era %s --iin %s\n"%(Era, iin)
               shell_file = 'preslim_step2_%s_%s.sh'%(iin,Era)
               prepare_shell(shell_file, command, condor, FarmDir)
-
-
+              print(shell_file)
+     
     # For highmass samples
     if (args.method == 'slim' or args.method == 'all') and args.sampletype == 'highmass':
 

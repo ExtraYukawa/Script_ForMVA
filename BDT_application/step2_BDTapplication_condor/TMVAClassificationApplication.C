@@ -473,29 +473,29 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    reader->AddVariable( "dr_j1j2", &dr_j1j2);
    reader->AddVariable( "dr_j1j3", &dr_j1j3);
    reader->AddVariable( "dr_j2j3", &dr_j2j3);
-//   reader->AddVariable( "m_j1j2",  &m_j1j2);
-//   reader->AddVariable( "m_j1j3",  &m_j1j3);
-//   reader->AddVariable( "m_j2j3",  &m_j2j3);
-//   reader->AddVariable( "m_j1l1",  &m_j1l1);
-//   reader->AddVariable( "m_j1l2",  &m_j1l2);
-//   reader->AddVariable( "m_j2l1",  &m_j2l1);
-//   reader->AddVariable( "m_j2l2",  &m_j2l2);
-//   reader->AddVariable( "m_j3l1",  &m_j3l1);
-//   reader->AddVariable( "m_j3l2",  &m_j3l2);
-//   reader->AddVariable( "dr_j1l1", &dr_j1l1);
-//   reader->AddVariable( "dr_j1l2", &dr_j1l2);
-//   reader->AddVariable( "dr_j2l1", &dr_j2l1);
-//   reader->AddVariable( "dr_j2l2", &dr_j2l2);
-//   reader->AddVariable( "dr_j3l1", &dr_j3l1);
-//   reader->AddVariable( "dr_j3l2", &dr_j3l2); 
+   reader->AddVariable( "m_j1j2",  &m_j1j2);
+   reader->AddVariable( "m_j1j3",  &m_j1j3);
+   reader->AddVariable( "m_j2j3",  &m_j2j3);
+   reader->AddVariable( "m_j1l1",  &m_j1l1);
+   reader->AddVariable( "m_j1l2",  &m_j1l2);
+   reader->AddVariable( "m_j2l1",  &m_j2l1);
+   reader->AddVariable( "m_j2l2",  &m_j2l2);
+   reader->AddVariable( "m_j3l1",  &m_j3l1);
+   reader->AddVariable( "m_j3l2",  &m_j3l2);
+   reader->AddVariable( "dr_j1l1", &dr_j1l1);
+   reader->AddVariable( "dr_j1l2", &dr_j1l2);
+   reader->AddVariable( "dr_j2l1", &dr_j2l1);
+   reader->AddVariable( "dr_j2l2", &dr_j2l2);
+   reader->AddVariable( "dr_j3l1", &dr_j3l1);
+   reader->AddVariable( "dr_j3l2", &dr_j3l2); 
    reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
    reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
    reader->AddVariable( "ttc_met", &ttc_met);
    //reader->AddVariable( "ttc_met_phi", &ttc_met_phi);
-   reader->AddVariable( "ttc_mll", &ttc_mll);
-   reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
-   reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
-   reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
+//   reader->AddVariable( "ttc_mll", &ttc_mll);
+//   reader->AddVariable( "ttc_mllj1", &ttc_mllj1);
+//   reader->AddVariable( "ttc_mllj2", &ttc_mllj2);
+//   reader->AddVariable( "ttc_mllj3", &ttc_mllj3);
 
    // Book the MVA methods
 

@@ -13,8 +13,9 @@ def prepare_shell(shell_file, command, condor, FarmDir):
     shell.write('#!/bin/bash\n')
     shell.write('WORKDIR=%s\n'%cwd)
     shell.write('cd %s\n'%cmsswBase)
-    shell.write('eval `scram r -sh`\n')
+    #shell.write('eval `scram r -sh`\n')
     shell.write('cd ${WORKDIR}\n')
+    shell.write('source ../../script/env.sh\n')
     shell.write(command)
   condor.write('cfgFile=%s\n'%shell_file)
   condor.write('queue 1\n')
@@ -35,11 +36,19 @@ if __name__=='__main__':
     if args.era == 'all' or args.era == Era:
       Eras.append(Era)
 
-  cmsswBase = os.environ['CMSSW_BASE']
+  cwd = os.getcwd()
+  dir_list = cwd.split('/')
+  cmssw_list = []
+  for dir_ in dir_list:
+    cmssw_list.append(dir_)
+    if 'CMSSW' in dir_: break
+  cmsswBase = '/'.join(cmssw_list)
   FarmDir   = '%s/Farm_BDT'%cmsswBase
   cwd       = os.getcwd()
   os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
+  os.system('cp %s/../../python/DNN_application.py .'%cwd)
+  os.system('cp %s/../../data/DNN_Flav_MET_threeJet_model_v2.* script/.'%cwd)
   from common import inputFile_path
   from common import GetTrainingFile, GetDataFile
 
@@ -49,7 +58,7 @@ if __name__=='__main__':
   condor.write('log    = %s/job_common.log\n'%FarmDir)
   condor.write('executable = %s/$(cfgFile)\n'%FarmDir)
   condor.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
-  condor.write('+JobFlavour = "tomorrow"\n')
+  condor.write('+JobFlavour = "longlunch"\n')
   condor.write('+MaxRuntime = 7200\n')
 
   cwd = os.getcwd()

@@ -8,7 +8,16 @@ from collections import OrderedDict
 ##  Basic SetUp ##
 ##################
 
-cmsswBase = os.environ['CMSSW_BASE']
+
+cwd = os.getcwd()
+dir_list = cwd.split('/')
+cmssw_list = []
+for dir_ in dir_list:
+  cmssw_list.append(dir_)
+  if 'CMSSW' in dir_: break
+cmsswBase = '/'.join(cmssw_list)
+
+#cmsswBase = os.environ['CMSSW_BASE']
 
 inputFile_path = {
   '2016apv':     '/eos/cms/store/group/phys_top/ExtraYukawa/2016apvMerged/',
@@ -52,7 +61,8 @@ def FindProcess(era, fin_name):
   subprocess = fin_name.replace('.root','')
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
-  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+#  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  samples = json.load(jsonfile, object_pairs_hook=OrderedDict).items()
   jsonfile.close()
   process = None
 
@@ -64,7 +74,8 @@ def FindProcess(era, fin_name):
 
 def GetTrainingFile(era, isTrain): # -1: drop, 0: used not for training, 1: used for training
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
-  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+#  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  samples = json.load(jsonfile, object_pairs_hook=OrderedDict).items()
   jsonfile.close()
   TrainingFile_List = []
   for process, desc in samples:
@@ -91,11 +102,13 @@ def GetDataFile(era, channel):
 def GetTrigger_MC(era):
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/DiLeptonTriggers_%s.json'%era))
-  trig_list = json.load(jsonfile, encoding='utf-8')
+  #trig_list = json.load(jsonfile, encoding='utf-8')
+  trig_list = json.load(jsonfile)
   jsonfile.close()
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/Trigger_command_%s.json'%era))
-  trig_command_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+#  trig_command_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+  trig_command_list = json.load(jsonfile)
   jsonfile.close()
 
   ee_trigger = trig_command_list['DoubleElectron']['MC']
@@ -109,11 +122,13 @@ def GetTrigger_MC(era):
 def GetTrigger_Data(era, fin_name, channel):
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/DiLeptonTriggers_%s.json'%era))
-  run_dict = json.load(jsonfile, encoding='utf-8')
+#  run_dict = json.load(jsonfile, encoding='utf-8')
+  run_dict = json.load(jsonfile)
   jsonfile.close()
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/Trigger_command_%s.json'%era))
-  trig_command_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+#  trig_command_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+  trig_command_list = json.load(jsonfile)
   jsonfile.close()
 
   sample_list = channel_list[era][channel]
@@ -164,7 +179,8 @@ def GetTrigger_Data(era, fin_name, channel):
 def GetMETFilter_MC(era, fin_name):
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/%s_MET_Filters.json'%era))
-  MET_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+#  MET_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+  MET_list = json.load(jsonfile)
   jsonfile.close()
 
   process     = FindProcess(era, fin_name)
@@ -192,7 +208,8 @@ def GetMETFilter_MC(era, fin_name):
 def GetMETFilter_Data(era):
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/%s_MET_Filters.json'%era))
-  MET_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+#  MET_list = json.load(jsonfile, encoding='utf-8',object_pairs_hook=OrderedDict)
+  MET_list = json.load(jsonfile)
   jsonfile.close()
 
   MET_filters = MET_list["Data"]

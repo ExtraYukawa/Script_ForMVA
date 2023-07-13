@@ -48,7 +48,7 @@ if __name__=='__main__':
   os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
   os.system('cp %s/../../python/DNN_application.py .'%cwd)
-  os.system('cp %s/../../data/DNN_Flav_MET_threeJet_model_v2.* script/.'%cwd)
+  os.system('cp %s/../../data/DNN_woBDTinput.* .'%cwd)
   from common import inputFile_path
   from common import GetTrainingFile, GetDataFile
 

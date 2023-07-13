@@ -16,9 +16,6 @@ ROOT.gSystem.Load("libGenVector.so")
 def Slim_module(filein,nin,mass_flag,era):
 
   TTC_header_path = os.path.join("script/slim_"+era+".h")
-  pyTorch_header_path = os.path.join("script/","DNN_Flav_MET_threeJet_model.hxx")
-  #ROOT.gInterpreter.Declare('#include "{}"'.format(pyTorch_header_path))
-#  ROOT.gSystem.AddIncludePath(' -I{}'.format(os.getcwd()))
   ROOT.gInterpreter.Declare('#include "{}"'.format(TTC_header_path))
   path = str(inputFile_path[era])
 
@@ -72,7 +69,7 @@ def Slim_module(filein,nin,mass_flag,era):
   df_filein = df_filein_tree.Filter(filters)
   dOut = df_filein.Filter(Trigger)
   # JetMatchIdx 
-  dOut = Build_DNN_Command('Flav_MET_threeJet_model_v2',dOut) #JetMatched_idx is defined in this function
+  dOut = Build_DNN_Command('woBDTinput',dOut) #JetMatched_idx is defined in this function
   dOut = dOut.Define("j1_pt_DNN",   "Jet_pt[JetMatched_idx[0]]")\
              .Define("j1_eta_DNN",  "Jet_eta[JetMatched_idx[0]]")\
              .Define("j1_phi_DNN",  "Jet_phi[JetMatched_idx[0]]")\

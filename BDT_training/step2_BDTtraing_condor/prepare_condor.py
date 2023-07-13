@@ -7,10 +7,8 @@ from collections import OrderedDict
 import ROOT
 
 os.system('cp ../../python/common.py .')
-from common import inputFile_path
+from common import inputFile_path, cmsswBase
 
-
-cmsswBase = os.environ['CMSSW_BASE']
 
 def prepare_condor(sample,coupling,mass):
   WHICH_SAMPLE=sample

@@ -13,9 +13,6 @@ using namespace std;
 using namespace ROOT::VecOps;
 using namespace TMVA::Experimental;
 
-std::string headerModelFile = std::string("script/DNN_Flav_MET_threeJet_model_v2.hxx");
-std::string cmd = std::string("#include \"") + headerModelFile + std::string("\"");
-auto ret = gInterpreter->Declare(cmd.c_str());
 
 
 TString era = "EraToBeReplaced";

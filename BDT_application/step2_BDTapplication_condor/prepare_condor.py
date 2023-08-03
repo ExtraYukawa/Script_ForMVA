@@ -5,7 +5,6 @@ import optparse,argparse
 import subprocess
 from collections import OrderedDict
 
-cmsswBase = os.environ['CMSSW_BASE']
 
 def prepare_condor(signal,coupling,mass, era):
   WHICH_SAMPLE=signal
@@ -41,6 +40,7 @@ def prepare_condor(signal,coupling,mass, era):
 
 
 def GetSampleList(era):
+
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
   samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
   jsonfile.close()
@@ -88,7 +88,7 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   os.system('cp ../../python/common.py .')
-  from common import inputFile_path
+  from common import inputFile_path, cmsswBase
 
 
   Eras_List = ['2016postapv','2016apv','2017','2018']

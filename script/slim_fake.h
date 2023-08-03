@@ -113,4 +113,25 @@ bool Triggers(int run, bool triggers, std::vector<int> vec){
     }
     return false;
 }
+float deltaR(float p1_pt, float p1_eta, float p1_phi, float p1_mass, float p2_pt, float p2_eta, float p2_phi, float p2_mass)
+{
+  ROOT::Math::PtEtaPhiMVector p1(p1_pt, p1_eta, p1_phi, p1_mass);
+  ROOT::Math::PtEtaPhiMVector p2(p2_pt, p2_eta, p2_phi, p2_mass);
+  return ROOT::Math::VectorUtil::DeltaR(p1,p2);
+}
+float mll(float l1_pt, float l1_eta, float l1_phi, float l1_mass, float l2_pt, float l2_eta, float l2_phi, float l2_mass){
+  float inv_mass = 0.;
+  ROOT::Math::PtEtaPhiMVector l1(l1_pt, l1_eta, l1_phi, l1_mass);
+  ROOT::Math::PtEtaPhiMVector l2(l2_pt, l2_eta, l2_phi, l2_mass);
+  inv_mass = (l1+l2).M();
+  return inv_mass;
+}
+float inv_mass(float p1_pt, float p1_eta, float p1_phi, float p1_mass, float p2_pt, float p2_eta, float p2_phi, float p2_mass, float p3_pt, float p3_eta, float p3_phi, float p3_mass)
+{
+  ROOT::Math::PtEtaPhiMVector p1(p1_pt, p1_eta, p1_phi, p1_mass);
+  ROOT::Math::PtEtaPhiMVector p2(p2_pt, p2_eta, p2_phi, p2_mass);
+  ROOT::Math::PtEtaPhiMVector p3(p3_pt, p3_eta, p3_phi, p3_mass);
+
+  return (p1+p2+p3).M();
+}
 

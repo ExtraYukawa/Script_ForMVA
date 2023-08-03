@@ -461,6 +461,7 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    Float_t j2_FlavCvB, j2_FlavCvL;
    Float_t j3_FlavCvB, j3_FlavCvL;
    Int_t ttc_region;
+   Float_t m_j1j2, m_j1j3, m_j2j3, m_j1l1, m_j1l2, m_j2l1, m_j2l2, m_j3l1, m_j3l2, dr_j1l1, dr_j1l2, dr_j2l1, dr_j2l2, dr_j3l1, dr_j3l2; 
 
    reader->AddVariable( "HT", &HT );
    reader->AddVariable( "j1_FlavCvB", &j1_FlavCvB );
@@ -472,6 +473,21 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    reader->AddVariable( "dr_j1j2", &dr_j1j2);
    reader->AddVariable( "dr_j1j3", &dr_j1j3);
    reader->AddVariable( "dr_j2j3", &dr_j2j3);
+   reader->AddVariable( "m_j1j2",  &m_j1j2);
+   reader->AddVariable( "m_j1j3",  &m_j1j3);
+   reader->AddVariable( "m_j2j3",  &m_j2j3);
+   reader->AddVariable( "m_j1l1",  &m_j1l1);
+   reader->AddVariable( "m_j1l2",  &m_j1l2);
+   reader->AddVariable( "m_j2l1",  &m_j2l1);
+   reader->AddVariable( "m_j2l2",  &m_j2l2);
+   reader->AddVariable( "m_j3l1",  &m_j3l1);
+   reader->AddVariable( "m_j3l2",  &m_j3l2);
+   reader->AddVariable( "dr_j1l1", &dr_j1l1);
+   reader->AddVariable( "dr_j1l2", &dr_j1l2);
+   reader->AddVariable( "dr_j2l1", &dr_j2l1);
+   reader->AddVariable( "dr_j2l2", &dr_j2l2);
+   reader->AddVariable( "dr_j3l1", &dr_j3l1);
+   reader->AddVariable( "dr_j3l2", &dr_j3l2); 
    reader->AddVariable( "ttc_l1_pt", &ttc_l1_pt );
    reader->AddVariable( "ttc_l2_pt", &ttc_l2_pt);
    reader->AddVariable( "ttc_met", &ttc_met);
@@ -619,6 +635,12 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    theTree->SetBranchAddress( "dr_j1j2", &dr_j1j2);
    theTree->SetBranchAddress( "dr_j1j3", &dr_j1j3);
    theTree->SetBranchAddress( "dr_j2j3", &dr_j2j3);
+   theTree->SetBranchAddress( "dr_j1l1", &dr_j1l1);
+   theTree->SetBranchAddress( "dr_j1l2", &dr_j1l2);
+   theTree->SetBranchAddress( "dr_j2l1", &dr_j2l1);
+   theTree->SetBranchAddress( "dr_j2l2", &dr_j2l2);
+   theTree->SetBranchAddress( "dr_j3l1", &dr_j3l1);
+   theTree->SetBranchAddress( "dr_j3l2", &dr_j3l2);
    theTree->SetBranchAddress( "ttc_l1_eta", &ttc_l1_eta );
    theTree->SetBranchAddress( "ttc_l2_eta", &ttc_l2_eta);
    if((sample_type==0) || (sample_type==1)){ // MC
@@ -714,6 +736,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2", &m_j3l2);
    }
    if(system_unc=="jesup"){
      theTree->SetBranchAddress( "HT_jesup", &HT );
@@ -725,6 +756,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2_jesup", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3_jesup", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3_jesup", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_jesup", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_jesup", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_jesup", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_jesup", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_jesup", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_jesup", &m_j3l2);
    }
    if(system_unc=="jesdo"){
      theTree->SetBranchAddress( "HT_jesdo", &HT );
@@ -736,6 +776,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2_jesdo", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3_jesdo", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3_jesdo", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_jesdo", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_jesdo", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_jesdo", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_jesdo", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_jesdo", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_jesdo", &m_j3l2);
    }
    if(system_unc=="jerup"){
      theTree->SetBranchAddress( "HT_jerup", &HT );
@@ -747,6 +796,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2_jerup", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3_jerup", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3_jerup", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_jerup", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_jerup", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_jerup", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_jerup", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_jerup", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_jerup", &m_j3l2);
    }
    if(system_unc=="jerdo"){
      theTree->SetBranchAddress( "HT_jerdo", &HT );
@@ -758,6 +816,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2_jerdo", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3_jerdo", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3_jerdo", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_jerdo", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_jerdo", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_jerdo", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_jerdo", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_jerdo", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_jerdo", &m_j3l2); 
    }
    if(system_unc=="unclusterEup"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -769,6 +836,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2", &m_j3l2);
    }
    if(system_unc=="unclusterEdo"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -780,6 +856,15 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2", &m_j3l2);
    }
    if(system_unc=="muPtup"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -791,6 +876,16 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt_muPtup", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt_muPtup", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll_muPtup", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_muPtup", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_muPtup", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_muPtup", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_muPtup", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_muPtup", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_muPtup", &m_j3l2);
+
    }
    if(system_unc=="muPtdo"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -802,6 +897,16 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "ttc_l1_pt_muPtdo", &ttc_l1_pt );
      theTree->SetBranchAddress( "ttc_l2_pt_muPtdo", &ttc_l2_pt);
      theTree->SetBranchAddress( "ttc_mll_muPtdo", &ttc_mll);
+     theTree->SetBranchAddress( "m_j1j2", &m_j1j2);
+     theTree->SetBranchAddress( "m_j1j3", &m_j1j3);
+     theTree->SetBranchAddress( "m_j2j3", &m_j2j3);
+     theTree->SetBranchAddress( "m_j1l1_muPtdo", &m_j1l1);
+     theTree->SetBranchAddress( "m_j1l2_muPtdo", &m_j1l2);
+     theTree->SetBranchAddress( "m_j2l1_muPtdo", &m_j2l1);
+     theTree->SetBranchAddress( "m_j2l2_muPtdo", &m_j2l2);
+     theTree->SetBranchAddress( "m_j3l1_muPtdo", &m_j3l1);
+     theTree->SetBranchAddress( "m_j3l2_muPtdo", &m_j3l2);
+     
    }
 
 

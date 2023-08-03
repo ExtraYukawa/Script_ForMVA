@@ -281,6 +281,24 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    dataloader->AddVariable( "m_j1j2", 'F' );
    dataloader->AddVariable( "m_j1j3", 'F' );
    dataloader->AddVariable( "m_j2j3", 'F' );
+   dataloader->AddVariable( "m_j1l1", 'F' );
+   dataloader->AddVariable( "m_j1l2", 'F' );
+   dataloader->AddVariable( "m_j2l1", 'F' );
+   dataloader->AddVariable( "m_j2l2", 'F' );
+   dataloader->AddVariable( "m_j3l1", 'F' );
+   dataloader->AddVariable( "m_j3l2", 'F' );
+   dataloader->AddVariable( "dr_j1l1", 'F');
+   dataloader->AddVariable( "dr_j1l2", 'F');
+   dataloader->AddVariable( "dr_j2l1", 'F');
+   dataloader->AddVariable( "dr_j2l2", 'F');
+   dataloader->AddVariable( "dr_j3l1", 'F');
+   dataloader->AddVariable( "dr_j3l2", 'F');
+   /*dataloader->AddVariable( "m_j1j2l1", 'F');
+   dataloader->AddVariable( "m_j1j2l2", 'F');
+   dataloader->AddVariable( "m_j2j3l1", 'F');
+   dataloader->AddVariable( "m_j2j3l2", 'F');
+   dataloader->AddVariable( "m_j1j3l1", 'F');
+   dataloader->AddVariable( "m_j1j3l2", 'F');*/
    dataloader->AddVariable( "ttc_l1_pt", 'F' );
    dataloader->AddVariable( "ttc_l2_pt", 'F' );
    dataloader->AddVariable( "ttc_met", 'F' );
@@ -289,6 +307,40 @@ void TMVAClassification_run( TString myMethodList = "", string mass="",string sy
    dataloader->AddVariable( "ttc_mllj1", 'F' );
    dataloader->AddVariable( "ttc_mllj2", 'F' );
    dataloader->AddVariable( "ttc_mllj3", 'F' );
+
+   /*dataloader->AddVariable( "j1_FlavCvB_DNN", 'F' );
+   dataloader->AddVariable( "j1_FlavCvL_DNN", 'F' );
+   dataloader->AddVariable( "j2_FlavCvB_DNN", 'F' );
+   dataloader->AddVariable( "j2_FlavCvL_DNN", 'F' );
+   dataloader->AddVariable( "j3_FlavCvB_DNN", 'F' );
+   dataloader->AddVariable( "j3_FlavCvL_DNN", 'F' );*/
+   /*dataloader->AddVariable( "dr_j1j2_DNN", 'F' );
+   dataloader->AddVariable( "dr_j1j3_DNN", 'F' );
+   dataloader->AddVariable( "dr_j2j3_DNN", 'F' );
+   dataloader->AddVariable( "m_j1j2_DNN", 'F' );
+   dataloader->AddVariable( "m_j1j3_DNN", 'F' );
+   dataloader->AddVariable( "m_j2j3_DNN", 'F' );
+   dataloader->AddVariable( "m_j1l1_DNN", 'F' );
+   dataloader->AddVariable( "m_j1l2_DNN", 'F' );
+   dataloader->AddVariable( "m_j2l1_DNN", 'F' );
+   dataloader->AddVariable( "m_j2l2_DNN", 'F' );
+   dataloader->AddVariable( "m_j3l1_DNN", 'F' );
+   dataloader->AddVariable( "m_j3l2_DNN", 'F' );
+   dataloader->AddVariable( "dr_j1l1_DNN", 'F');
+   dataloader->AddVariable( "dr_j1l2_DNN", 'F');
+   dataloader->AddVariable( "dr_j2l1_DNN", 'F');
+   dataloader->AddVariable( "dr_j2l2_DNN", 'F');
+   dataloader->AddVariable( "dr_j3l1_DNN", 'F');
+   dataloader->AddVariable( "dr_j3l2_DNN", 'F');
+   dataloader->AddVariable( "m_j1j2l1_DNN", 'F');
+   dataloader->AddVariable( "m_j1j2l2_DNN", 'F');
+   dataloader->AddVariable( "m_j2j3l1_DNN", 'F');
+   dataloader->AddVariable( "m_j2j3l2_DNN", 'F');
+   dataloader->AddVariable( "m_j1j3l1_DNN", 'F');
+   dataloader->AddVariable( "m_j1j3l2_DNN", 'F');
+   dataloader->AddVariable( "ttc_mllj1_DNN", 'F' );
+   dataloader->AddVariable( "ttc_mllj2_DNN", 'F' );
+   dataloader->AddVariable( "ttc_mllj3_DNN", 'F' );*/
    // You can add so-called "Spectator variables", which are not used in the MVA training,
    // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
    // input variables, the response values of all trained MVAs, and the spectator variables

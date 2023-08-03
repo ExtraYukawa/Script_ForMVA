@@ -58,7 +58,7 @@ if __name__=='__main__':
   condor.write('log    = %s/job_common.log\n'%FarmDir)
   condor.write('executable = %s/$(cfgFile)\n'%FarmDir)
   condor.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
-  condor.write('+JobFlavour = "longlunch"\n')
+  condor.write('+JobFlavour = "tomorrow"\n')
   condor.write('+MaxRuntime = 7200\n')
 
   cwd = os.getcwd()

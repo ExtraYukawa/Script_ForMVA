@@ -36,14 +36,14 @@ if __name__=='__main__':
     if args.era == 'all' or args.era == Era:
       Eras.append(Era)
 
-  cmsswBase = os.environ['CMSSW_BASE']
-  FarmDir   = '%s/Farm_BDT'%cmsswBase
   cwd       = os.getcwd()
-  os.system('mkdir -p %s'%FarmDir)
   os.system('cp %s/../../python/common.py .'%cwd)
 
-  from common import inputFile_path
+  from common import inputFile_path, cmsswBase
   from common import GetTrainingFile, GetDataFile
+  
+  FarmDir   = '%s/Farm_BDT'%cmsswBase
+  os.system('mkdir -p %s'%FarmDir)
 
   condor = open('%s/condor.sub'%FarmDir,'w')
   condor.write('output = %s/job_common.out\n'%FarmDir)

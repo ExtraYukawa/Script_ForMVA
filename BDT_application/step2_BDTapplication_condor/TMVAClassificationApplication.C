@@ -456,7 +456,6 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
    // - the variable names MUST corresponds in name and type to those given in the weight file(s) used
    Float_t HT, ttc_l1_pt, ttc_l2_pt, ttc_met, ttc_met_phi, ttc_mll, ttc_mllj1, ttc_mllj2, ttc_mllj3;
    Float_t dr_j1j2, dr_j1j3, dr_j2j3;
-   Float_t m_j1j2, m_j1j3, m_j2j3;
    Float_t ttc_l1_eta,ttc_l2_eta;
    Float_t j1_FlavCvB, j1_FlavCvL;
    Float_t j2_FlavCvB, j2_FlavCvL;

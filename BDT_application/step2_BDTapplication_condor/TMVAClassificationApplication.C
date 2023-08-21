@@ -885,7 +885,6 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "m_j2l2_muPtup", &m_j2l2);
      theTree->SetBranchAddress( "m_j3l1_muPtup", &m_j3l1);
      theTree->SetBranchAddress( "m_j3l2_muPtup", &m_j3l2);
-
    }
    if(system_unc=="muPtdo"){
      theTree->SetBranchAddress( "HT", &HT );
@@ -906,7 +905,6 @@ TH1F* Getoutput( TString myMethodList = "", std::string input_name="",float xs=1
      theTree->SetBranchAddress( "m_j2l2_muPtdo", &m_j2l2);
      theTree->SetBranchAddress( "m_j3l1_muPtdo", &m_j3l1);
      theTree->SetBranchAddress( "m_j3l2_muPtdo", &m_j3l2);
-     
    }
 
 

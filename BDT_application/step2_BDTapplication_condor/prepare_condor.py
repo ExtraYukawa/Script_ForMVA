@@ -42,7 +42,7 @@ def prepare_condor(signal,coupling,mass, era):
 def GetSampleList(era):
 
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
-  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  samples  = json.load(jsonfile, object_pairs_hook=OrderedDict).items()
   jsonfile.close()
   SampleFile_List = []
   for process, desc in samples:
@@ -65,7 +65,7 @@ def prepare_SampleCommand(era):
 
 def GetEventList(era):
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/input_das_events_' + str(era) + 'UL.json'))
-  events  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  events  = json.load(jsonfile, object_pairs_hook=OrderedDict).items()
   jsonfile.close()
   EventFile_List = []
   for process, desc in events:

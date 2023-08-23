@@ -26,7 +26,7 @@ def prepare_condor(sample,coupling,mass):
 
 def GetBackgroundList(era):
   jsonfile = open(os.path.join(cmsswBase + '/src/Script_ForMVA/data/sample_' + str(era) + 'UL.json'))
-  samples  = json.load(jsonfile, encoding='utf-8', object_pairs_hook=OrderedDict).items()
+  samples  = json.load(jsonfile, object_pairs_hook=OrderedDict).items()
   jsonfile.close()
   BackgroundFile_List = []
   for process, desc in samples:

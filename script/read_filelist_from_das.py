@@ -10,11 +10,13 @@
 # hadd Target path: TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8.root:/
 # *** Error in `hadd': corrupted size vs. prev_size: 0x000000000518aae0 ***
 #***************
-# wget https://raw.githubusercontent.com/ExtraYukawa/ttc_bar/lep_mvaID/scripts/haddnano.py
+# wget https://github.com/ExtraYukawa/ttc_bar/blob/lxplus-9/scripts/haddnano.py (with raw link from web)
 # python haddnano.py output.root *.root 
 # root -l output.root
 # Events->GetEntries("GenModel_TAToTTQ_MA_200_TuneCP5_13TeV_G2HDM_rtc04_madgraphMLM_pythia8")
 # (long long) 521871
+# or
+# run the script https://github.com/ExtraYukawa/Script_ForMVA/blob/main/script/print_branch_entries.py
 
 
 

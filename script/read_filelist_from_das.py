@@ -3,19 +3,19 @@
 # python read_filelist_from_das.py --nick TAToTTQ_MA-200to700GeV_rtc04 --query /TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-rp_106X_mc2017_realistic_v9-v2/NANOAODSIM --outputfile test2.txt
 # chmod a+x test2.txt 
 # ./test2.txt 
-# cd /tmp/gkole/TAToTTQ_MA-200to700GeV_rtc04
+# cd /tmp/$USER/TAToTTQ_MA-200to700GeV_rtc04
+
 #***************
-# hadd -f TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8.root *.root 
-# crashed**********
-# hadd Target path: TAToTTQ_MA-200to700GeV_TuneCP5_13TeV_G2HDM-rtc04-madgraphMLM-pythia8.root:/
-# *** Error in `hadd': corrupted size vs. prev_size: 0x000000000518aae0 ***
+# hadd all the files
 #***************
 # wget https://github.com/ExtraYukawa/ttc_bar/blob/lxplus-9/scripts/haddnano.py (with raw link from web)
 # python haddnano.py output.root *.root 
 # root -l output.root
+# if you want only interactively the do in the following way:
 # Events->GetEntries("GenModel_TAToTTQ_MA_200_TuneCP5_13TeV_G2HDM_rtc04_madgraphMLM_pythia8")
 # (long long) 521871
-# or
+
+# OR
 # run the script https://github.com/ExtraYukawa/Script_ForMVA/blob/main/script/print_branch_entries.py
 
 
